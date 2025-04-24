@@ -5,7 +5,6 @@ import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import SectionHeader from "@/components/section-header";
-import * as SiIcons from "react-icons/si";
 import { RoadmapItem, roadmapItems } from "@/data/roadmap";
 
 interface MilestoneCardProps {
@@ -15,7 +14,6 @@ interface MilestoneCardProps {
 }
 
 const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
-  const Icon = SiIcons[item.icon as keyof typeof SiIcons];
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.1, once: true });
@@ -38,12 +36,8 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 * index }}
     >
       <div className="md:w-1/2 md:px-8">
-        <div className="p-6 rounded-xl  border border-transparent hover:border-purple-500 transition-colors animate-border bg-border-spin">
+        <div className="p-6 rounded-xl bg-black/20 backdrop-blur-sm hover:bg-purple-500/10 transition-all duration-300">
           <div className="flex items-center mb-4">
-            <Icon
-              className="w-5 h-5 text-purple-400 mr-2"
-              aria-label={`${item.title} icon`}
-            />
             {item.completed ? (
               <CheckCircle2
                 className="h-5 w-5 text-purple-400 mr-2"
@@ -94,9 +88,9 @@ export function RoadmapSection() {
     <section id="roadmap" className="py-20 md:py-32 relative overflow-hidden">
       <div className="container relative z-10">
         <SectionHeader
-          title1="CancerFun’s"
+          title1="CancerFun's"
           title2="Roadmap to a Cure"
-          description="Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana’s blockchain."
+          description="Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain."
         />
         <div className="relative">
           <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-700 -translate-x-1/2 hidden md:block" />

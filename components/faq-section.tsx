@@ -5,7 +5,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { faqItems } from "@/data/faq";
-import * as SiIcons from "react-icons/si";
 
 export function FaqSection() {
   return (
@@ -25,7 +24,6 @@ export function FaqSection() {
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((faq, index) => {
-              const Icon = SiIcons[faq.icon as keyof typeof SiIcons];
               return (
                 <AccordionItem
                   key={index}
@@ -33,14 +31,7 @@ export function FaqSection() {
                   className="border-web3-gray"
                 >
                   <AccordionTrigger className="text-left hover:text-web3-primary">
-                    {/* {faq.question} */}
-                    <div className="flex items-center">
-                      <Icon
-                        className="w-5 h-5 text-purple-400 mr-2"
-                        aria-label={`${faq.question} icon`}
-                      />
-                      {faq.question}
-                    </div>
+                    {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground">
                     {faq.answer}

@@ -27,6 +27,39 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const element = document.getElementById(targetId);
+      
+      if (element) {
+        const start = window.pageYOffset;
+        const end = element.getBoundingClientRect().top + window.pageYOffset;
+        const duration = 1500; // Durasi scroll dalam milliseconds (1.5 detik)
+        const startTime = performance.now();
+
+        function animate(currentTime: number) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          // Fungsi easing untuk smooth scroll yang lebih halus
+          const easeInOutQuart = (t: number) => 
+            t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+
+          const currentPosition = start + (end - start) * easeInOutQuart(progress);
+          window.scrollTo(0, currentPosition);
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -95,6 +128,7 @@ export function Navbar() {
             <Link
               key={index}
               href={item.href ?? "#"}
+              onClick={(e) => handleSmoothScroll(e, item.href)}
               className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
             >
               {item.label}
@@ -127,6 +161,7 @@ export function Navbar() {
                 <SheetTrigger key={index} asChild>
                   <Link
                     href={item.href}
+                    onClick={(e) => handleSmoothScroll(e, item.href)}
                     className="text-lg hover:text-[#a857ff] transition-all duration-300 relative group inline-block transform hover:scale-105"
                   >
                     {item.label}

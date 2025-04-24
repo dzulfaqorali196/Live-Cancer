@@ -9,17 +9,7 @@ export const SiteSettings = {
     "CancerFun democratizes cancer research funding via BIO tokens on Solana's blockchain, empowering patients, researchers, and crypto users to innovate in immunotherapy and AI diagnostics.",
   generator: "v0.dev",
   contact: {
-    address: {
-      line1: "1720 Research Park Dr",
-      line2: "",
-      country: "United States",
-      state: "California",
-      city: "Davis",
-      postalCode: "95618",
-    },
-    email: "cancerfunn@gmail.com",
-    phone: "+1.6474772056",
-    fax: "+1.6474772056",
+    email: "info@cancercoin.fun",
   },
   socials: [
     {
@@ -34,3 +24,5 @@ export const SiteSettings = {
     },
   ],
 };
+
+const videoSrc = window.innerWidth < 768 ? '/HeroSection/spline-mobile.webm' : '/HeroSection/spline.webm';

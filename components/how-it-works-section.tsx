@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import SectionHeader from "@/components/section-header";
 import { howItWorksSteps } from "@/constants/howitwork-steps";
 import { motion } from "framer-motion";
@@ -54,21 +52,6 @@ export function HowItWorksSection() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div 
-          className="mt-20 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-[#a857ff] to-[#8a3dd9] hover:opacity-90 text-white transition-all duration-300 text-lg px-8 py-6 rounded-2xl shadow-lg hover:shadow-[#a857ff]/20 hover:scale-105"
-          >
-            Start Now <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </motion.div>
       </div>
     </section>
   );

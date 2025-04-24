@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Application } from "@splinetool/runtime";
 import {
   motion,
   useAnimation,
@@ -11,6 +10,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Routes } from "@/constants/routes";
+import { Loader2 } from "lucide-react";
+import { useVideoSource } from "@/lib/utils/video";
 
 // Animation variants
 const headerVariants = {
@@ -47,10 +48,12 @@ const buttonVariants = {
 export function HeroSection2() {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const inView = useInView(ref, { amount: 0.1, once: true });
   const shouldReduceMotion = useReducedMotion();
-  const [isLoadingSpline, setIsLoadingSpline] = useState(true);
-  const splineRef = useRef<Application | null>(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const videoSrc = useVideoSource();
 
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -58,14 +61,13 @@ export function HeroSection2() {
     if (projectsSection) {
       const start = window.pageYOffset;
       const end = projectsSection.offsetTop;
-      const duration = 1200; // Durasi dalam milliseconds (1.2 detik)
+      const duration = 1200;
       const startTime = performance.now();
 
       function animate(currentTime: number) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         
-        // Easing function untuk smooth scroll
         const easeInOutCubic = (t: number) => 
           t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
@@ -88,140 +90,212 @@ export function HeroSection2() {
   }, [controls, inView, shouldReduceMotion]);
 
   useEffect(() => {
-    // Nonaktifkan sementara untuk development
-    if (process.env.NODE_ENV === 'development') {
-      setIsLoadingSpline(false);
-      return;
-    }
+    if (videoRef.current) {
+      const video = videoRef.current;
+      video.playbackRate = 0.75;
 
-    const timeout = setTimeout(() => {
-      const canvas = document.getElementById("hero-spline-scene") as HTMLCanvasElement;
-      if (!canvas) return;
-
-      const app = new Application(canvas);
-      splineRef.current = app;
-      
-      app
-        .load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode")
-        .then(() => setIsLoadingSpline(false))
-        .catch((err) => {
-          console.error("Spline load error:", err);
-          setIsLoadingSpline(false);
-        });
-
-      return () => {
-        app.dispose();
+      const handleProgress = () => {
+        if (video.buffered.length > 0) {
+          const duration = video.duration;
+          const buffered = video.buffered.end(0);
+          const progress = Math.round((buffered / duration) * 100);
+          setLoadingProgress(progress);
+        }
       };
-    }, 200);
+      
+      const handleCanPlay = () => {
+        setIsVideoReady(true);
+        video.play().catch(() => {
+          // Handle autoplay error silently
+        });
+      };
 
-    return () => clearTimeout(timeout);
+      video.addEventListener('progress', handleProgress);
+      video.addEventListener('canplay', handleCanPlay);
+      video.addEventListener('playing', () => setIsVideoReady(true));
+      
+      return () => {
+        video.removeEventListener('progress', handleProgress);
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('playing', () => setIsVideoReady(true));
+      };
+    }
+  }, [videoSrc]);
+
+  // Add preload hint
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'video';
+    link.href = videoSrc;
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [videoSrc]); // Update preload when source changes
+
+  // Fungsi untuk menghandle smooth looping
+  useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      
+      // Set playback quality
+      video.playbackRate = 0.75; // Sedikit lebih lambat untuk transisi lebih halus
+      
+      // Preload video untuk smooth playback
+      video.preload = "auto";
+      
+      // Handle looping dengan crossfade
+      const handleTimeUpdate = () => {
+        const duration = video.duration;
+        const timeLeft = duration - video.currentTime;
+        
+        // Mulai fade out 0.5 detik sebelum video berakhir
+        if (timeLeft < 0.5) {
+          video.style.opacity = `${timeLeft * 2}`; // Linear fade out
+        } else if (video.currentTime < 0.5) {
+          // Fade in di awal video
+          video.style.opacity = `${video.currentTime * 2}`;
+        } else {
+          video.style.opacity = '1';
+        }
+      };
+
+      // Handle ketika video selesai
+      const handleEnded = () => {
+        // Reset posisi video dengan smooth
+        video.currentTime = 0;
+        video.play();
+      };
+
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      video.addEventListener('ended', handleEnded);
+
+      // Cleanup
+      return () => {
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+        video.removeEventListener('ended', handleEnded);
+      };
+    }
   }, []);
 
   return (
     <section
-      className="relative overflow-hidden w-full bg-black"
-      style={{ minHeight: "150vh" }}
+      className="relative overflow-hidden w-full bg-black flex flex-col"
+      style={{ minHeight: "100vh" }}
     >
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-[#1a0b33] opacity-90" />
+      {/* Background gradient overlay - subtle */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-[#1a0b33]/30 opacity-60" />
 
-      {/* Spline Scene Container with gradient mask */}
-      <div className="absolute inset-0 h-[85vh] w-full">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black z-10" />
-        <canvas
-          id="hero-spline-scene"
-          className="w-full h-full relative z-0 [&>div]:hidden"
+      {/* Video Container - Seamless */}
+      <div className="relative w-full h-screen overflow-hidden" style={{ marginTop: "-5vh" }}>
+        {/* Gradient untuk transisi yang lebih halus */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
+             style={{
+               background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.95) 100%)'
+             }}
         />
+        
+        <video
+          ref={videoRef}
+          className={`w-full h-full object-cover transition-all duration-700 ${
+            isVideoReady ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ 
+            filter: 'brightness(1.2)',
+            transform: 'scale(1.02)',
+            objectPosition: 'center 15%',
+            transition: 'opacity 500ms ease-in-out'
+          }}
+          playsInline
+          autoPlay
+          muted
+          loop
+          preload="auto"
+          poster={window.innerWidth < 768 ? '/HeroSection/poster-mobile.jpg' : '/HeroSection/poster.jpg'}
+        >
+          <source src={videoSrc} type="video/webm" />
+        </video>
       </div>
 
-      {/* Additional dark gradient overlay for bottom blend */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-[50vh] bg-gradient-to-b from-transparent via-black to-black z-10" 
-        style={{ transform: 'translateY(2px)' }}
-      />
-
-      {/* Loading Overlay */}
-      {isLoadingSpline && (
-        <div className="absolute inset-0 z-20 bg-black/80 flex items-center justify-center">
-          <div className="text-white text-sm animate-pulse">
-            Loading visualization...
+      {/* Loading Overlay - Simplified */}
+      {!isVideoReady && (
+        <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 transition-opacity duration-300">
+          <Loader2 className="h-8 w-8 text-purple-400 animate-spin" />
+          <div className="flex flex-col items-center">
+            <div className="text-white text-sm mb-2">Loading visualization...</div>
+            <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-purple-400 transition-all duration-300 rounded-full"
+                style={{ width: `${loadingProgress}%` }}
+              />
+            </div>
+            <div className="text-gray-400 text-xs mt-1">{loadingProgress}%</div>
           </div>
         </div>
       )}
 
-      {/* Main Content Container */}
-      <div className="relative z-10 w-full h-full pt-24">
-        {/* Content Wrapper - Positioned below Spline */}
-        <div className="absolute bottom-0 left-0 right-0 w-full" style={{ top: "90vh" }}>
-          <div 
-            className="w-full px-8 py-16 relative"
-            style={{
-              background: "linear-gradient(to bottom, transparent, black 15%)",
-            }}
-          >
-            {/* Main Header */}
-            <div
-              ref={ref}
-              className="max-w-[1400px] mx-auto mb-8"
+      {/* Content Container - Absolute positioning untuk overlay yang lebih baik */}
+      <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
+        <div className="w-full max-w-[1400px] mx-auto px-8">
+          {/* Main Header */}
+          <div ref={ref} className="mb-8">
+            <motion.h1
+              className="font-normal text-white leading-tight md:text-[60px] text-4xl"
+              variants={headerVariants}
+              initial="hidden"
+              animate={controls}
             >
-              <motion.h1
-                className="font-normal text-white leading-tight"
-                style={{ fontSize: "60px", lineHeight: "1.2" }}
-                variants={headerVariants}
-                initial="hidden"
-                animate={controls}
-              >
-                We are the catalyst driving{" "}
-                <span className="block text-[#a857ff]" style={{ fontSize: "60px" }}>
-                  decentralized in cancer research
-                </span>
-              </motion.h1>
-            </div>
+              We are the catalyst driving{" "}
+              <span className="block text-[#a857ff] md:text-[60px] text-4xl">
+                decentralized in cancer research
+              </span>
+            </motion.h1>
+          </div>
 
-            {/* Subheader with CTAs */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 max-w-[1400px] mx-auto">
-              <motion.p
-                className="text-[#94A3B8] max-w-[1000px] whitespace-pre-line"
-                style={{ fontSize: "20px", lineHeight: "1.5" }}
-                variants={paragraphVariants}
-                initial="hidden"
-                animate={controls}
-              >
-                {"CancerFun is a platform for cancer research and development, engineered by researchers to accelerate\nCancer Focused Decentralized Science"}
-              </motion.p>
+          {/* Subheader with CTAs */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <motion.p
+              className="text-[#94A3B8] max-w-[600px] md:text-[20px] text-base"
+              variants={paragraphVariants}
+              initial="hidden"
+              animate={controls}
+            >
+              Nucleo is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
+            </motion.p>
 
-              <div className="flex items-center gap-4">
-                <motion.div custom={0.3} variants={buttonVariants} initial="hidden" animate={controls}>
-                  <Button
-                    className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] text-[20px] font-medium"
-                    style={{ 
-                      height: "57px", 
-                      width: "178px",
-                      lineHeight: "24px",
-                      padding: "8px 16px"
-                    }}
-                  >
-                    <Link href={Routes.TOKEN}>Get $CANCER</Link>
-                  </Button>
-                </motion.div>
+            <div className="flex items-center gap-4">
+              <motion.div custom={0.3} variants={buttonVariants} initial="hidden" animate={controls}>
+                <Button
+                  className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
+                  style={{ 
+                    height: "56px", 
+                    width: "166px",
+                    lineHeight: "24px",
+                    padding: "8px 16px"
+                  }}
+                >
+                  <Link href={Routes.TOKEN}>Get $NUCLEO</Link>
+                </Button>
+              </motion.div>
 
-                <motion.div custom={0.4} variants={buttonVariants} initial="hidden" animate={controls}>
-                  <motion.button
-                    whileTap="tap"
-                    variants={buttonVariants}
-                    onClick={scrollToProjects}
-                    className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] text-[20px] font-medium"
-                    style={{ 
-                      height: "56px", 
-                      width: "166px",
-                      lineHeight: "24px",
-                      padding: "8px 16px"
-                    }}
-                  >
-                    Get Started
-                  </motion.button>
-                </motion.div>
-              </div>
+              <motion.div custom={0.4} variants={buttonVariants} initial="hidden" animate={controls}>
+                <motion.button
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  onClick={scrollToProjects}
+                  className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
+                  style={{ 
+                    height: "56px", 
+                    width: "166px",
+                    lineHeight: "24px",
+                    padding: "8px 16px"
+                  }}
+                >
+                  Get Started
+                </motion.button>
+              </motion.div>
             </div>
           </div>
         </div>

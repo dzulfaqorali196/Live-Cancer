@@ -1,14 +1,13 @@
 import FollowUs from "@/components/contact/followus";
 import { ContactForm } from "@/components/contact/form";
 import SectionHeader from "@/components/section-header";
-import { SiteSettings } from "@/constants/settings";
 
 export const metadata = {
-  title: "Connect with CancerCoin | CancerCoin",
+  title: "Connect with CancerFun | CancerFun",
   description:
-    "Reach out to the CancerCoin team to join our mission of funding decentralized cancer research with BIO tokens on Solana’s blockchain.",
+    "Reach out to the CancerFun team to join our mission of funding decentralized cancer research with BIO tokens on Solana's blockchain.",
   keywords: [
-    "CancerCoin",
+    "CancerFun",
     "BIO token",
     "cancer research",
     "Solana blockchain",
@@ -23,7 +22,7 @@ export default function ContactPage() {
       <div className="container">
         <SectionHeader
           title1="Connect with"
-          title2="CancerCoin"
+          title2="CancerFun"
           description="Have questions about our platform? Want to join our mission to fund cancer research? We'd love to hear from you."
         />
 
@@ -31,39 +30,15 @@ export default function ContactPage() {
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold text-white mb-4">
-                Our Office
-              </h3>
-              <p className="text-gray-300">
-                {SiteSettings.contact.address.line1}
-                <br />
-                {SiteSettings.contact.address.city},{" "}
-                {SiteSettings.contact.address.state}{" "}
-                {SiteSettings.contact.address.postalCode}
-                <br />
-                {SiteSettings.contact.address.country}
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold text-white mb-4">
                 Contact Information
               </h3>
               <p className="text-gray-300 mb-2">
                 Email:{" "}
                 <a
-                  href={`mailto:${SiteSettings.contact.email}`}
+                  href="mailto:info@cancercoin.fun"
                   className="text-purple-400 hover:text-purple-300"
                 >
-                  {SiteSettings.contact.email}
-                </a>
-              </p>
-              <p className="text-gray-300">
-                Phone:{" "}
-                <a
-                  href={`tel:${SiteSettings.contact.phone}`}
-                  className="text-purple-400 hover:text-purple-300"
-                >
-                  {SiteSettings.contact.phone}
+                  info@cancercoin.fun
                 </a>
               </p>
             </div>

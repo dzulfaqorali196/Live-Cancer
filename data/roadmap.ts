@@ -1,6 +1,5 @@
 export interface RoadmapItem {
   quarter: string;
-  icon: string;
   title: string;
   completed: boolean;
   items: string[];
@@ -9,7 +8,6 @@ export interface RoadmapItem {
 export const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q2 2025",
-    icon: "SiStarship",
     title: "Launch CancerFun Platform",
     completed: true,
     items: [
@@ -21,7 +19,6 @@ export const roadmapItems: RoadmapItem[] = [
   },
   {
     quarter: "Q4 2025",
-    icon: "SiHiveBlockchain",
     title: "Activate Community Governance",
     completed: false,
     items: [
@@ -33,7 +30,6 @@ export const roadmapItems: RoadmapItem[] = [
   },
   {
     quarter: "Q2 2026",
-    icon: "SiGoogleearth",
     title: "Expand Global Research Network",
     completed: false,
     items: [
@@ -45,7 +41,6 @@ export const roadmapItems: RoadmapItem[] = [
   },
   {
     quarter: "Q3 2026",
-    icon: "SiInternetcomputer",
     title: "Launch Transparency Dashboard",
     completed: false,
     items: [
@@ -57,7 +52,6 @@ export const roadmapItems: RoadmapItem[] = [
   },
   {
     quarter: "Q4 2026",
-    icon: "SiBitcoin",
     title: "Achieve Key Research Milestones",
     completed: false,
     items: [
@@ -69,7 +63,6 @@ export const roadmapItems: RoadmapItem[] = [
   },
   {
     quarter: "Q4 2026",
-    icon: "SiSolana",
     title: "Build Developer Ecosystem",
     completed: false,
     items: [
@@ -83,9 +76,9 @@ export const roadmapItems: RoadmapItem[] = [
 
 export function RoadmapSection() {
   return {
-    title: "CancerCoin’s Roadmap to a Cure",
+    title: "CancerCoin's Roadmap to a Cure",
     subtitle:
-      "Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana’s blockchain.",
+      "Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain.",
     milestones: roadmapItems,
   };
 }
