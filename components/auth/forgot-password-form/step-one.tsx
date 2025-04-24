@@ -22,7 +22,7 @@ import FormFooter from "@/components/auth/footer";
 import { Loader2 } from "lucide-react";
 import { Routes } from "@/constants/routes";
 
-export function ForgotPasswordStepOne() {
+const ForgotPasswordStepOne = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { updateStep } = useForgotPasswordStep();
@@ -106,4 +106,6 @@ export function ForgotPasswordStepOne() {
       </div>
     </div>
   );
-} 
+}
+
+export default ForgotPasswordStepOne; 
