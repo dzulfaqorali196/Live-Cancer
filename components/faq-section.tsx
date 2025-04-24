@@ -61,12 +61,16 @@ export function FaqSection() {
   return (
     <motion.section 
       id="faq" 
-      className="py-20 md:py-32 bg-web3-dark"
+      className="py-20 md:py-32 bg-web3-dark relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
-      <div className="container">
+      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-[#0f0f0f]/0 via-[#0f0f0f]/80 via-[#0f0f0f] to-web3-dark pointer-events-none"></div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black to-web3-dark pointer-events-none"></div>
+
+      <div className="container relative z-10">
         <motion.div 
           className="text-center max-w-3xl mx-auto mb-16"
           variants={containerVariants}

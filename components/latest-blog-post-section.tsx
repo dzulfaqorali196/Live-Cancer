@@ -45,12 +45,14 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
   return (
     <motion.section 
       id="features" 
-      className="py-20 md:py-32 bg-web3-dark"
+      className="py-20 md:py-32 bg-web3-dark relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black via-black to-web3-dark pointer-events-none"></div>
+
       <div className="container">
         <motion.div variants={contentVariants}>
           <SectionHeader

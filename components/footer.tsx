@@ -65,7 +65,7 @@ const socialIconVariants = {
 export function Footer() {
   return (
     <motion.footer 
-      className="bg-web3-darker border-t border-web3-gray"
+      className="bg-web3-darker border-web3-gray"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}

@@ -85,7 +85,11 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
 
 export function RoadmapSection() {
   return (
-    <section id="roadmap" className="py-20 md:py-32 relative overflow-hidden">
+    <section id="roadmap" className="py-20 md:py-32 relative overflow-hidden bg-black">
+      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black to-black pointer-events-none"></div>
+      
+      <div className="absolute bottom-0 left-0 right-0 h-[400px] bg-gradient-to-t from-black via-black to-black pointer-events-none"></div>
+      
       <div className="container relative z-10">
         <SectionHeader
           title1="CancerFun's"

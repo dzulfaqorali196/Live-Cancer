@@ -58,7 +58,18 @@ export function CtaSection() {
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
-      <div className="absolute inset-0 bg-linear-to-b from-web3-darker to-web3-dark"></div>
+      <div className="absolute inset-0 bg-web3-dark"></div>
+      
+      {/* Gradient ungu horizontal */}
+      <div className="absolute inset-0 bg-gradient-to-r from-web3-dark via-web3-primary/20 to-web3-dark"></div>
+      
+      {/* Efek glow ungu tambahan */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[400px] bg-web3-primary/10 blur-[100px]"></div>
+      
+      {/* Gradient atas dan bawah */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-web3-dark via-web3-dark to-transparent pointer-events-none z-10"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-web3-darker via-web3-darker to-transparent pointer-events-none z-10"></div>
+      
       <motion.div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-web3-primary/10 blur-3xl pointer-events-none"
         variants={glowVariants}

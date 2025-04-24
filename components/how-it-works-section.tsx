@@ -92,21 +92,27 @@ export function HowItWorksSection() {
   return (
     <motion.section
       id="how-it-works"
-      className="py-20 md:py-32 relative overflow-hidden bg-gradient-to-b from-black via-black to-[#0c0c0c]"
+      className="py-20 md:py-32 relative overflow-hidden bg-[#0f0f0f]"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
-      {/* Background Effects */}
+      {/* Gradient overlay di bagian atas untuk blend dengan roadmap */}
+      <div className="absolute top-0 left-0 right-0 h-[400px] bg-gradient-to-b from-black via-black to-[#0f0f0f] pointer-events-none"></div>
+
+      {/* Gradient overlay di bagian bawah */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-web3-dark via-[#0f0f0f] via-[#0f0f0f]/80 to-[#0f0f0f]/0 pointer-events-none"></div>
+
+      {/* Background Effects dengan opacity yang lebih rendah */}
       <motion.div 
-        className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#a857ff]/5 blur-3xl pointer-events-none"
+        className="absolute -bottom-32 left-0 w-[600px] h-[600px] rounded-full bg-[#a857ff]/3 blur-[120px] pointer-events-none"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
       />
       <motion.div 
-        className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[#a857ff]/5 blur-3xl pointer-events-none"
+        className="absolute -top-32 right-0 w-[600px] h-[600px] rounded-full bg-[#a857ff]/3 blur-[120px] pointer-events-none"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}

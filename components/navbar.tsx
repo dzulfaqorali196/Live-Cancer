@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -46,8 +47,11 @@ const itemVariants = {
 };
 
 export function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isLogoHovered, setIsLogoHovered] = React.useState(false);
+  const scrollTimeout = React.useRef<NodeJS.Timeout>();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -58,36 +62,50 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const targetId = href.substring(1);
+  // Efek untuk menangani scroll ke section setelah navigasi
+  React.useEffect(() => {
+    if (pathname === '/home' && window.location.hash) {
+      const targetId = window.location.hash.substring(1);
       const element = document.getElementById(targetId);
       
       if (element) {
-        const start = window.pageYOffset;
-        const end = element.getBoundingClientRect().top + window.pageYOffset;
-        const duration = 1500; // Durasi scroll dalam milliseconds (1.5 detik)
-        const startTime = performance.now();
+        // Pertama scroll ke atas halaman
+        window.scrollTo({ top: 0, behavior: 'auto' });
 
-        function animate(currentTime: number) {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
+        // Kemudian scroll ke target section setelah delay
+        const scrollToElement = () => {
+          const yOffset = -100; // Offset untuk navbar
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        };
 
-          // Fungsi easing untuk smooth scroll yang lebih halus
-          const easeInOutQuart = (t: number) => 
-            t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
-
-          const currentPosition = start + (end - start) * easeInOutQuart(progress);
-          window.scrollTo(0, currentPosition);
-
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          }
-        }
-
-        requestAnimationFrame(animate);
+        // Tunggu konten dimuat dan animasi scroll ke atas selesai
+        setTimeout(scrollToElement, 800);
       }
+    }
+  }, [pathname]);
+
+  const handleSmoothScroll = async (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    if (href.startsWith('#')) {
+      const targetId = href.substring(1);
+      
+      if (pathname !== '/home') {
+        // Reset scroll position dan navigasi ke home dengan hash
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        router.push(`/home#${targetId}`);
+      } else {
+        // Jika sudah di home, langsung scroll
+        const element = document.getElementById(targetId);
+        if (element) {
+          const yOffset = -100; // Offset untuk navbar
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    } else {
+      router.push(href);
     }
   };
 
@@ -119,23 +137,37 @@ export function Navbar() {
               height={32}
             />
           </div>
-          <div className="relative w-24 h-6 block md:hidden lg:block">
-                <motion.div
-                  key="logo"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.1 }}
-                  className="absolute left-0 top-0 w-full h-full"
-                >
-                  <Image
-                    src="/images/cancercoin-text.png"
-                    alt={SiteSettings.title.full}
-                    className="w-full h-full object-contain"
-                    width={96}
-                    height={24}
-                  />
-                </motion.div>
+          <div className="relative w-24 h-6 block md:hidden lg:block overflow-hidden">
+            <motion.div
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ 
+                opacity: isLogoHovered ? 0 : 1,
+                y: isLogoHovered ? -20 : 0
+              }}
+              transition={{ duration: 0.2 }}
+              className="absolute left-0 top-0 w-full h-full"
+            >
+              <Image
+                src="/images/cancercoin-text.png"
+                alt={SiteSettings.title.full}
+                className="w-full h-full object-contain"
+                width={96}
+                height={24}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: isLogoHovered ? 1 : 0,
+                y: isLogoHovered ? 0 : 20
+              }}
+              transition={{ duration: 0.2 }}
+              className="absolute left-0 top-0 w-full h-full flex items-center justify-start text-lg font-semibold"
+            >
+              <span className="text-[#a857ff]">Go</span>
+              <span className="mx-1"> </span>
+              <span className="text-green-500">Home</span>
+            </motion.div>
           </div>
           <span className="sr-only">{SiteSettings.title.short}</span>
         </Link>
@@ -152,13 +184,13 @@ export function Navbar() {
               custom={index}
             >
               <Link
-              href={item.href ?? "#"}
+                href={item.href ?? "#"}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-              className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
-            </Link>
+                className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
