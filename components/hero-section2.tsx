@@ -239,63 +239,68 @@ export function HeroSection2() {
       {/* Content Container - Absolute positioning untuk overlay yang lebih baik */}
       <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
         <div className="w-full max-w-[1400px] mx-auto px-8">
-          {/* Main Header */}
-          <div ref={ref} className="mb-8">
-            <motion.h1
-              className="font-normal text-white leading-tight md:text-[60px] text-4xl"
-              variants={headerVariants}
-              initial="hidden"
-              animate={controls}
-            >
-              We are the catalyst driving{" "}
-              <span className="block text-[#a857ff] md:text-[60px] text-4xl">
-                decentralized in cancer research
-              </span>
-            </motion.h1>
-          </div>
+          {/* Subtle dark overlay untuk text area */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px] rounded-xl -m-4 p-4" />
+            
+            {/* Main Header */}
+            <div ref={ref} className="mb-8 relative">
+              <motion.h1
+                className="font-normal text-white leading-tight md:text-[60px] text-4xl"
+                variants={headerVariants}
+                initial="hidden"
+                animate={controls}
+              >
+                We are the catalyst driving{" "}
+                <span className="block text-[#a857ff] md:text-[60px] text-4xl">
+                  decentralized in cancer research
+                </span>
+              </motion.h1>
+            </div>
 
-          {/* Subheader with CTAs */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-            <motion.p
-              className="text-[#94A3B8] max-w-[600px] md:text-[20px] text-base"
-              variants={paragraphVariants}
-              initial="hidden"
-              animate={controls}
-            >
-              Nucleo is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
-            </motion.p>
+            {/* Subheader with CTAs */}
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative">
+              <motion.p
+                className="text-[#94A3B8] max-w-[600px] md:text-[20px] text-base"
+                variants={paragraphVariants}
+                initial="hidden"
+                animate={controls}
+              >
+                Nucleo is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
+              </motion.p>
 
-            <div className="flex items-center gap-4">
-              <motion.div custom={0.3} variants={buttonVariants} initial="hidden" animate={controls}>
-                <Button
-                  className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
-                  style={{ 
-                    height: "56px", 
-                    width: "166px",
-                    lineHeight: "24px",
-                    padding: "8px 16px"
-                  }}
-                >
-                  <Link href={Routes.TOKEN}>Get $NUCLEO</Link>
-                </Button>
-              </motion.div>
+              <div className="flex items-center gap-4">
+                <motion.div custom={0.3} variants={buttonVariants} initial="hidden" animate={controls}>
+                  <Button
+                    className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
+                    style={{ 
+                      height: "56px", 
+                      width: "166px",
+                      lineHeight: "24px",
+                      padding: "8px 16px"
+                    }}
+                  >
+                    <Link href={Routes.TOKEN}>Get $NUCLEO</Link>
+                  </Button>
+                </motion.div>
 
-              <motion.div custom={0.4} variants={buttonVariants} initial="hidden" animate={controls}>
-                <motion.button
-                  whileTap="tap"
-                  variants={buttonVariants}
-                  onClick={scrollToProjects}
-                  className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
-                  style={{ 
-                    height: "56px", 
-                    width: "166px",
-                    lineHeight: "24px",
-                    padding: "8px 16px"
-                  }}
-                >
-                  Get Started
-                </motion.button>
-              </motion.div>
+                <motion.div custom={0.4} variants={buttonVariants} initial="hidden" animate={controls}>
+                  <motion.button
+                    whileTap="tap"
+                    variants={buttonVariants}
+                    onClick={scrollToProjects}
+                    className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
+                    style={{ 
+                      height: "56px", 
+                      width: "166px",
+                      lineHeight: "24px",
+                      padding: "8px 16px"
+                    }}
+                  >
+                    Get Started
+                  </motion.button>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
