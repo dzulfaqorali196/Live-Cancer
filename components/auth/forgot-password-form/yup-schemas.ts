@@ -4,11 +4,11 @@ export const emailSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
 });
 
-export const otpSchema = yup.object({
+export const otpSchema = yup.object().shape({
   otp: yup
     .string()
-    .length(6, "OTP must be 6 digits")
-    .required("OTP is required"),
+    .required("OTP harus diisi")
+    .matches(/^[0-9]{6}$/, "OTP harus berupa 6 digit angka"),
 });
 
 export const newPasswordSchema = yup.object({
