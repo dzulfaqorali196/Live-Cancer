@@ -1,8 +1,20 @@
-import ForgotPasswordForm from "@/components/auth/forgot-password-form";
+import dynamic from "next/dynamic";
 import Logo from "@/components/logo";
 import { Routes } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+
+const ForgotPasswordForm = dynamic(
+  () => import("@/components/auth/forgot-password-form"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[400px] w-full items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+      </div>
+    ),
+  }
+);
 
 export default function ForgotPassword() {
   return (
@@ -25,15 +37,17 @@ export default function ForgotPassword() {
             <div className="relative z-20 mt-auto">
               <blockquote className="space-y-2">
                 <p className="text-lg">
-                  “This library has saved me countless hours of work and helped
+                  "This library has saved me countless hours of work and helped
                   me deliver stunning designs to my clients faster than ever
-                  before.”
+                  before."
                 </p>
                 <footer className="text-sm">Sofia Davis</footer>
               </blockquote>
             </div>
           </div>
-          <ForgotPasswordForm />
+          <div className="p-4">
+            <ForgotPasswordForm />
+          </div>
         </div>
       </section>
     </>

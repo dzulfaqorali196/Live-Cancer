@@ -36,7 +36,7 @@ export default function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { step, updateStep, resetStep } = useForgotPasswordStep();
+  const { step, updateStep, resetStep, isClient } = useForgotPasswordStep();
 
   const emailForm = useForm<EmailFormData>({
     resolver: yupResolver(emailSchema),
@@ -56,6 +56,8 @@ export default function ForgotPasswordForm() {
   const onSubmit = async (
     data: EmailFormData | OtpFormData | NewPasswordFormData
   ) => {
+    if (!isClient) return;
+    
     setIsLoading(true);
     setError(null);
 
@@ -77,11 +79,12 @@ export default function ForgotPasswordForm() {
         updateStep(2);
       } else if (step === 2) {
         const otpData = data as OtpFormData;
+        const email = Cookies.get("forgotPasswordEmail") || "";
         const response = await fetch("/api/auth/validate-otp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: Cookies.get("forgotPasswordEmail"),
+            email,
             otp: otpData.otp,
           }),
         });
@@ -94,11 +97,12 @@ export default function ForgotPasswordForm() {
         updateStep(3);
       } else if (step === 3) {
         const passwordData = data as NewPasswordFormData;
+        const email = Cookies.get("forgotPasswordEmail") || "";
         const response = await fetch("/api/auth/reset-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: Cookies.get("forgotPasswordEmail"),
+            email,
             newPassword: passwordData.newPassword,
           }),
         });
@@ -122,6 +126,14 @@ export default function ForgotPasswordForm() {
       setIsLoading(false);
     }
   };
+
+  if (!isClient) {
+    return (
+      <div className="flex h-[400px] w-full items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="lg:p-8">
