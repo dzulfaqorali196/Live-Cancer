@@ -1,24 +1,8 @@
-import dynamic from "next/dynamic";
 import Logo from "@/components/logo";
 import { Routes } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
-
-function LoadingSpinner() {
-  return (
-    <div className="flex h-[400px] w-full items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-    </div>
-  );
-}
-
-const ForgotPasswordForm = dynamic(
-  () => import("@/components/auth/forgot-password-form"),
-  { 
-    loading: LoadingSpinner,
-    ssr: false 
-  }
-);
+import ForgotPasswordWrapper from "@/components/auth/forgot-password-wrapper";
 
 export default function ForgotPassword() {
   return (
@@ -49,7 +33,7 @@ export default function ForgotPassword() {
           </div>
         </div>
         <div className="p-4">
-          <ForgotPasswordForm />
+          <ForgotPasswordWrapper />
         </div>
       </div>
     </section>
