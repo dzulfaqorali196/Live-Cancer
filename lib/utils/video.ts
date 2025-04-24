@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
+import { VideoSources } from '@/constants/settings';
 
 export function useVideoSource() {
-  const [videoSrc, setVideoSrc] = useState('/HeroSection/spline.webm');
+  // Mulai dengan default video untuk desktop
+  const [videoSrc, setVideoSrc] = useState<string>(VideoSources.desktop);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // Hanya jalankan di client-side
-    if (typeof window !== 'undefined') {
-      function handleResize() {
-        setVideoSrc(window.innerWidth < 768 ? '/HeroSection/spline-mobile.webm' : '/HeroSection/spline.webm');
-      }
-
-      // Set initial value
-      handleResize();
-
-      // Add event listener
-      window.addEventListener('resize', handleResize);
-
-      // Cleanup
-      return () => window.removeEventListener('resize', handleResize);
-    }
+    setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const handleResize = () => {
+      const isMobile = window.matchMedia(`(max-width: ${VideoSources.breakpoint - 1}px)`).matches;
+      setVideoSrc(isMobile ? VideoSources.mobile : VideoSources.desktop);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMounted]);
 
   return videoSrc;
 } 

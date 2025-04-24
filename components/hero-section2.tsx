@@ -53,23 +53,83 @@ export function HeroSection2() {
   const shouldReduceMotion = useReducedMotion();
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [posterPath, setPosterPath] = useState('/HeroSection/poster.jpg');
+  const [isMounted, setIsMounted] = useState(false);
   const videoSrc = useVideoSource();
 
-  // Handle poster path based on window size
+  // Check if component is mounted
   useEffect(() => {
-    const updatePosterPath = () => {
-      setPosterPath(window.innerWidth < 768 ? '/HeroSection/poster-mobile.jpg' : '/HeroSection/poster.jpg');
-    };
-    
-    // Set initial value
-    updatePosterPath();
-    
-    // Add resize listener
-    window.addEventListener('resize', updatePosterPath);
-    
-    return () => window.removeEventListener('resize', updatePosterPath);
+    setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    if (videoRef.current) {
+      const video = videoRef.current;
+      video.playbackRate = 0.75;
+
+      const handleProgress = () => {
+        if (video.buffered.length > 0) {
+          const duration = video.duration;
+          const buffered = video.buffered.end(0);
+          const progress = Math.round((buffered / duration) * 100);
+          setLoadingProgress(progress);
+        }
+      };
+      
+      const handleCanPlay = () => {
+        setIsVideoReady(true);
+        video.play().catch(() => {
+          // Handle autoplay error silently
+        });
+      };
+
+      video.addEventListener('progress', handleProgress);
+      video.addEventListener('canplay', handleCanPlay);
+      video.addEventListener('playing', () => setIsVideoReady(true));
+      
+      return () => {
+        video.removeEventListener('progress', handleProgress);
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('playing', () => setIsVideoReady(true));
+      };
+    }
+  }, [videoSrc, isMounted]);
+
+  // Smooth looping effect
+  useEffect(() => {
+    if (!isMounted) return;
+
+    if (videoRef.current) {
+      const video = videoRef.current;
+      
+      const handleTimeUpdate = () => {
+        const duration = video.duration;
+        const timeLeft = duration - video.currentTime;
+        
+        if (timeLeft < 0.5) {
+          video.style.opacity = `${timeLeft * 2}`;
+        } else if (video.currentTime < 0.5) {
+          video.style.opacity = `${video.currentTime * 2}`;
+        } else {
+          video.style.opacity = '1';
+        }
+      };
+
+      const handleEnded = () => {
+        video.currentTime = 0;
+        video.play();
+      };
+
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      video.addEventListener('ended', handleEnded);
+
+      return () => {
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+        video.removeEventListener('ended', handleEnded);
+      };
+    }
+  }, [isMounted]);
 
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -105,39 +165,6 @@ export function HeroSection2() {
     }
   }, [controls, inView, shouldReduceMotion]);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      const video = videoRef.current;
-      video.playbackRate = 0.75;
-
-      const handleProgress = () => {
-        if (video.buffered.length > 0) {
-          const duration = video.duration;
-          const buffered = video.buffered.end(0);
-          const progress = Math.round((buffered / duration) * 100);
-          setLoadingProgress(progress);
-        }
-      };
-      
-      const handleCanPlay = () => {
-        setIsVideoReady(true);
-        video.play().catch(() => {
-          // Handle autoplay error silently
-        });
-      };
-
-      video.addEventListener('progress', handleProgress);
-      video.addEventListener('canplay', handleCanPlay);
-      video.addEventListener('playing', () => setIsVideoReady(true));
-      
-      return () => {
-        video.removeEventListener('progress', handleProgress);
-        video.removeEventListener('canplay', handleCanPlay);
-        video.removeEventListener('playing', () => setIsVideoReady(true));
-      };
-    }
-  }, [videoSrc]);
-
   // Add preload hint
   useEffect(() => {
     const link = document.createElement('link');
@@ -150,51 +177,6 @@ export function HeroSection2() {
       document.head.removeChild(link);
     };
   }, [videoSrc]); // Update preload when source changes
-
-  // Fungsi untuk menghandle smooth looping
-  useEffect(() => {
-    if (videoRef.current) {
-      const video = videoRef.current;
-      
-      // Set playback quality
-      video.playbackRate = 0.75; // Sedikit lebih lambat untuk transisi lebih halus
-      
-      // Preload video untuk smooth playback
-      video.preload = "auto";
-      
-      // Handle looping dengan crossfade
-      const handleTimeUpdate = () => {
-        const duration = video.duration;
-        const timeLeft = duration - video.currentTime;
-        
-        // Mulai fade out 0.5 detik sebelum video berakhir
-        if (timeLeft < 0.5) {
-          video.style.opacity = `${timeLeft * 2}`; // Linear fade out
-        } else if (video.currentTime < 0.5) {
-          // Fade in di awal video
-          video.style.opacity = `${video.currentTime * 2}`;
-        } else {
-          video.style.opacity = '1';
-        }
-      };
-
-      // Handle ketika video selesai
-      const handleEnded = () => {
-        // Reset posisi video dengan smooth
-        video.currentTime = 0;
-        video.play();
-      };
-
-      video.addEventListener('timeupdate', handleTimeUpdate);
-      video.addEventListener('ended', handleEnded);
-
-      // Cleanup
-      return () => {
-        video.removeEventListener('timeupdate', handleTimeUpdate);
-        video.removeEventListener('ended', handleEnded);
-      };
-    }
-  }, []);
 
   return (
     <section
@@ -229,7 +211,9 @@ export function HeroSection2() {
           muted
           loop
           preload="auto"
-          poster={posterPath}
+          poster={isMounted && window.matchMedia('(max-width: 767px)').matches 
+            ? '/HeroSection/poster-mobile.jpg' 
+            : '/HeroSection/poster.jpg'}
         >
           <source src={videoSrc} type="video/webm" />
         </video>

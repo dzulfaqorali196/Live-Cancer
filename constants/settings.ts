@@ -25,4 +25,8 @@ export const SiteSettings = {
   ],
 };
 
-const videoSrc = window.innerWidth < 768 ? '/HeroSection/spline-mobile.webm' : '/HeroSection/spline.webm';
+export const VideoSources = {
+  desktop: '/HeroSection/spline.webm',
+  mobile: '/HeroSection/spline-mobile.webm',
+  breakpoint: 768
+};
