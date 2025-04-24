@@ -1,0 +1,107 @@
+"use client";
+
+import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { SiSolana } from "react-icons/si";
+import { useCallback, useState } from "react";
+import { Connection, PublicKey, Transaction } from "@solana/web3.js";
+import {
+  createTransferInstruction,
+  getAssociatedTokenAddress,
+} from "@solana/spl-token";
+
+export function ConnectWalletButton() {
+  const { connection } = useConnection();
+  const { publicKey, wallet, connected } = useWallet();
+  const [transactionStatus, setTransactionStatus] = useState<
+    "idle" | "pending" | "success" | "error"
+  >("idle");
+
+  // Sample BIO token transfer (replace with real token mint and recipient)
+  const handleBioTokenTransfer = useCallback(async () => {
+    if (!publicKey || !wallet) {
+      alert("Please connect a wallet first.");
+      return;
+    }
+    setTransactionStatus("pending");
+    try {
+      const tokenMint = new PublicKey("BIO_TOKEN_MINT_ADDRESS"); // Replace with BIO token mint
+      const recipient = new PublicKey("PROJECT_TOKEN_ACCOUNT"); // Replace with project token account
+      const senderTokenAccount = await getAssociatedTokenAddress(
+        tokenMint,
+        publicKey
+      );
+      const recipientTokenAccount = await getAssociatedTokenAddress(
+        tokenMint,
+        recipient
+      );
+
+      const transaction = new Transaction().add(
+        createTransferInstruction(
+          senderTokenAccount,
+          recipientTokenAccount,
+          publicKey,
+          1000000 // 1 BIO token (adjust decimals as needed)
+        )
+      );
+
+      const { blockhash } = await connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+      transaction.feePayer = publicKey;
+
+      const signature = await wallet.adapter.sendTransaction(
+        transaction,
+        connection
+      );
+      await connection.confirmTransaction(signature, "confirmed");
+
+      setTransactionStatus("success");
+      alert("BIO token transfer successful!");
+    } catch (error) {
+      console.error("Transaction failed:", error);
+      setTransactionStatus("error");
+      alert("Transaction failed. Please try again.");
+    }
+  }, [publicKey, wallet, connection]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col items-center gap-4"
+    >
+      <WalletMultiButton
+        className={`flex items-center space-x-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-md ${
+          connected ? "bg-gray-600 hover:bg-gray-500" : ""
+        }`}
+      >
+        <SiSolana className="w-5 h-5" aria-label="Solana wallet icon" />
+        <span>{connected ? "Connected" : "Connect Wallet"}</span>
+      </WalletMultiButton>
+      {connected && (
+        <Button
+          onClick={handleBioTokenTransfer}
+          className="bg-blue-600 hover:bg-blue-500 text-white"
+          disabled={transactionStatus === "pending"}
+        >
+          {transactionStatus === "pending"
+            ? "Processing..."
+            : "Fund Project (1 BIO)"}
+        </Button>
+      )}
+      {transactionStatus === "success" && (
+        <p className="text-green-400 text-center">
+          Transaction sent successfully!
+        </p>
+      )}
+      {transactionStatus === "error" && (
+        <p className="text-red-400 text-center">
+          Transaction failed. Please try again.
+        </p>
+      )}
+    </motion.div>
+  );
+}
