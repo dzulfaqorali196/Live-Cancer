@@ -51,35 +51,41 @@ export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isLogoHovered, setIsLogoHovered] = React.useState(false);
-  const scrollTimeout = React.useRef<NodeJS.Timeout>();
 
   React.useEffect(() => {
-    const handleScroll = () => {
+    function onScroll() {
       setIsScrolled(window.scrollY > 10);
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    onScroll(); // Check initial scroll position
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Efek untuk menangani scroll ke section setelah navigasi
   React.useEffect(() => {
-    if (pathname === '/home' && window.location.hash) {
-      const targetId = window.location.hash.substring(1);
-      const element = document.getElementById(targetId);
-      
-      if (element) {
-        // Pertama scroll ke atas halaman
-        window.scrollTo({ top: 0, behavior: 'auto' });
+    function scrollToSection() {
+      if (pathname === '/home' && window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const element = document.getElementById(targetId);
+        
+        if (element) {
+          // Pertama scroll ke atas halaman
+          window.scrollTo({ top: 0, behavior: 'auto' });
 
-        // Scroll ke target section setelah delay
-        setTimeout(() => {
-          const yOffset = -100; // Offset untuk navbar
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }, 800);
+          // Scroll ke target section setelah delay
+          const timeoutId = window.setTimeout(() => {
+            const yOffset = -100; // Offset untuk navbar
+            const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }, 800);
+
+          return () => window.clearTimeout(timeoutId);
+        }
       }
     }
+
+    scrollToSection();
   }, [pathname]);
 
   const handleSmoothScroll = async (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
