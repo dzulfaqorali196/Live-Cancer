@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
@@ -20,15 +20,34 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useForgotPasswordStep } from "@/hooks/use-forgot-password-step";
-import Cookies from "js-cookie";
 import HeaderForm from "@/components/auth/header";
-
 import { emailSchema, otpSchema, newPasswordSchema } from "./yup-schemas";
 import { EmailFormData, OtpFormData, NewPasswordFormData } from "./types";
 import FormFooter from "@/components/auth/footer";
 import { FaClock } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
 import { Routes } from "@/constants/routes";
+
+// Cookies helper functions
+const getCookie = (name: string): string | undefined => {
+  if (typeof window === 'undefined') return undefined;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
+  return undefined;
+};
+
+const setCookie = (name: string, value: string) => {
+  if (typeof window !== 'undefined') {
+    document.cookie = `${name}=${value};path=/`;
+  }
+};
+
+const removeCookie = (name: string) => {
+  if (typeof window !== 'undefined') {
+    document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+  }
+};
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
@@ -73,7 +92,7 @@ export default function ForgotPasswordForm() {
           throw new Error(errorData.message || "An error occurred");
         }
 
-        Cookies.set("forgotPasswordEmail", emailData.email);
+        setCookie("forgotPasswordEmail", emailData.email);
         updateStep(2);
       } else if (step === 2) {
         const otpData = data as OtpFormData;
@@ -81,7 +100,7 @@ export default function ForgotPasswordForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: Cookies.get("forgotPasswordEmail"),
+            email: getCookie("forgotPasswordEmail"),
             otp: otpData.otp,
           }),
         });
@@ -98,7 +117,7 @@ export default function ForgotPasswordForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: Cookies.get("forgotPasswordEmail"),
+            email: getCookie("forgotPasswordEmail"),
             newPassword: passwordData.newPassword,
           }),
         });
@@ -108,7 +127,7 @@ export default function ForgotPasswordForm() {
           throw new Error(errorData.message || "Failed to update password");
         }
 
-        Cookies.remove("forgotPasswordEmail");
+        removeCookie("forgotPasswordEmail");
         resetStep();
         router.push(Routes.SIGNIN);
       }
