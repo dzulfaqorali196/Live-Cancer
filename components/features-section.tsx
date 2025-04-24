@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { whyCancerCoin } from "@/data/features";
+import { motion } from "framer-motion";
 import { useAnimation, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,8 @@ import SectionHeader from "@/components/section-header";
 import { ArticleDoc } from "@/types";
 import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
+
+const MotionCard = motion(Card);
 
 export function FeaturesSection({ articles }: { articles: ArticleDoc[] }) {
   const controls = useAnimation();
@@ -41,7 +44,7 @@ export function FeaturesSection({ articles }: { articles: ArticleDoc[] }) {
             const article = articles.find((a) => a.id === feature.slug);
 
             return (
-              <Card
+              <MotionCard
                 key={index}
                 className={cn(
                   "h-full bg-web3-darker bg-border-spin border border-transparent animate-border",
@@ -92,7 +95,7 @@ export function FeaturesSection({ articles }: { articles: ArticleDoc[] }) {
                     {feature.description}
                   </CardDescription>
                 </CardContent>
-              </Card>
+              </MotionCard>
             );
           })}
         </div>

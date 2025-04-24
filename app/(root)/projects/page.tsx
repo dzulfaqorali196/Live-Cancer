@@ -1,4 +1,4 @@
-import { Projects } from "@/components/project/projects";
+import Projects from "@/components/project/projects";
 import SectionHeader from "@/components/section-header";
 
 export default function ProjectsPage() {
