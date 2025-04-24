@@ -157,7 +157,7 @@ export default function Intro() {
       {/* Interactive Spline scene */}
       <canvas
         id="spline-scene"
-        className="absolute top-0 left-0 w-full h-full z-10"
+        className="absolute top-0 left-0 w-full h-full z-10 [&>div]:hidden"
       ></canvas>
 
       {/* Loading overlay with progress */}

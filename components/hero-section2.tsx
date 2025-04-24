@@ -130,7 +130,7 @@ export function HeroSection2() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black z-10" />
         <canvas
           id="hero-spline-scene"
-          className="w-full h-full relative z-0"
+          className="w-full h-full relative z-0 [&>div]:hidden"
         />
       </div>
 
