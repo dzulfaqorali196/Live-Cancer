@@ -53,25 +53,7 @@ export function HeroSection2() {
   const shouldReduceMotion = useReducedMotion();
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [posterImage, setPosterImage] = useState('/HeroSection/poster.jpg');
   const videoSrc = useVideoSource();
-
-  // Handle poster image based on window width
-  useEffect(() => {
-    const updatePosterImage = () => {
-      setPosterImage(window.innerWidth < 768 
-        ? '/HeroSection/poster-mobile.jpg' 
-        : '/HeroSection/poster.jpg'
-      );
-    };
-
-    // Set initial value
-    updatePosterImage();
-
-    // Add resize listener
-    window.addEventListener('resize', updatePosterImage);
-    return () => window.removeEventListener('resize', updatePosterImage);
-  }, []);
 
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -231,7 +213,7 @@ export function HeroSection2() {
           muted
           loop
           preload="auto"
-          poster={posterImage}
+          poster={window.innerWidth < 768 ? '/HeroSection/poster-mobile.jpg' : '/HeroSection/poster.jpg'}
         >
           <source src={videoSrc} type="video/webm" />
         </video>
