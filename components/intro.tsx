@@ -129,12 +129,23 @@ export default function Intro() {
           if (backgroundMusicRef.current) {
             backgroundMusicRef.current.pause();
             backgroundMusicRef.current.currentTime = 0;
+            backgroundMusicRef.current = null;
           }
           clearInterval(fadeOutInterval);
         }
       }, 100);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause();
+        backgroundMusicRef.current.currentTime = 0;
+        backgroundMusicRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <div className="relative w-full h-screen">
