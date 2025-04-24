@@ -14,13 +14,42 @@ import { Loader2 } from "lucide-react";
 import { useVideoSource } from "@/lib/utils/video";
 
 // Animation variants
+const sectionVariants = {
+  hidden: { 
+    opacity: 0,
+  },
+  visible: { 
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      when: "beforeChildren",
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const videoContainerVariants = {
+  hidden: { 
+    opacity: 0,
+    y: 20
+  },
+  visible: { 
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
+
 const headerVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" },
-  },
+    transition: { duration: 0.8, ease: "easeOut" }
+  }
 };
 
 const paragraphVariants = {
@@ -28,8 +57,8 @@ const paragraphVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut", delay: 0.2 },
-  },
+    transition: { duration: 0.8, ease: "easeOut" }
+  }
 };
 
 const buttonVariants = {
@@ -37,7 +66,7 @@ const buttonVariants = {
   visible: (delay = 0) => ({
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.8, ease: "easeOut", delay },
+    transition: { duration: 0.5, ease: "easeOut", delay }
   }),
   tap: {
     scale: 0.95,
@@ -179,15 +208,25 @@ export function HeroSection2() {
   }, [videoSrc]); // Update preload when source changes
 
   return (
-    <section
+    <motion.section
+      variants={sectionVariants}
+      initial="hidden"
+      animate="visible"
       className="relative overflow-hidden w-full bg-black flex flex-col"
       style={{ minHeight: "100vh" }}
     >
       {/* Background gradient overlay - subtle */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-[#1a0b33]/30 opacity-60" />
+      <motion.div 
+        variants={videoContainerVariants}
+        className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-[#1a0b33]/30 opacity-60" 
+      />
 
       {/* Video Container - Seamless */}
-      <div className="relative w-full h-screen overflow-hidden" style={{ marginTop: "-5vh" }}>
+      <motion.div 
+        variants={videoContainerVariants}
+        className="relative w-full h-screen overflow-hidden" 
+        style={{ marginTop: "-5vh" }}
+      >
         {/* Gradient untuk transisi yang lebih halus */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
              style={{
@@ -217,11 +256,16 @@ export function HeroSection2() {
         >
           <source src={videoSrc} type="video/webm" />
         </video>
-      </div>
+      </motion.div>
 
       {/* Loading Overlay - Simplified */}
       {!isVideoReady && (
-        <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 transition-opacity duration-300">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 transition-opacity duration-300"
+        >
           <Loader2 className="h-8 w-8 text-purple-400 animate-spin" />
           <div className="flex flex-col items-center">
             <div className="text-white text-sm mb-2">Loading visualization...</div>
@@ -233,44 +277,49 @@ export function HeroSection2() {
             </div>
             <div className="text-gray-400 text-xs mt-1">{loadingProgress}%</div>
           </div>
-        </div>
+        </motion.div>
       )}
 
-      {/* Content Container - Absolute positioning untuk overlay yang lebih baik */}
-      <div className="absolute inset-x-0 bottom-0 z-10 pb-20">
+      {/* Content Container */}
+      <motion.div 
+        variants={videoContainerVariants}
+        className="absolute inset-x-0 bottom-0 z-10 pb-20"
+      >
         <div className="w-full max-w-[1400px] mx-auto px-8">
           {/* Subtle dark overlay untuk text area */}
           <div className="relative">
-            <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px] rounded-xl -m-4 p-4" />
+            <motion.div 
+              variants={videoContainerVariants}
+              className="absolute inset-0 bg-black/10 backdrop-blur-[2px] rounded-xl -m-4 p-4" 
+            />
             
             {/* Main Header */}
             <div ref={ref} className="mb-8 relative">
               <motion.h1
                 className="font-normal text-white leading-tight md:text-[60px] text-4xl"
                 variants={headerVariants}
-                initial="hidden"
-                animate={controls}
               >
                 We are the catalyst driving{" "}
-                <span className="block text-[#a857ff] md:text-[60px] text-4xl">
+                <motion.span 
+                  variants={headerVariants}
+                  className="block text-[#a857ff] md:text-[60px] text-4xl"
+                >
                   decentralized in cancer research
-                </span>
+                </motion.span>
               </motion.h1>
             </div>
 
             {/* Subheader with CTAs */}
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative">
               <motion.p
-                className="text-[#94A3B8] max-w-[600px] md:text-[20px] text-base"
                 variants={paragraphVariants}
-                initial="hidden"
-                animate={controls}
+                className="text-[#94A3B8] max-w-[600px] md:text-[20px] text-base"
               >
                 Nucleo is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
               </motion.p>
 
               <div className="flex items-center gap-4">
-                <motion.div custom={0.3} variants={buttonVariants} initial="hidden" animate={controls}>
+                <motion.div custom={0.3} variants={buttonVariants}>
                   <Button
                     className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
                     style={{ 
@@ -284,10 +333,9 @@ export function HeroSection2() {
                   </Button>
                 </motion.div>
 
-                <motion.div custom={0.4} variants={buttonVariants} initial="hidden" animate={controls}>
+                <motion.div custom={0.4} variants={buttonVariants}>
                   <motion.button
                     whileTap="tap"
-                    variants={buttonVariants}
                     onClick={scrollToProjects}
                     className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
                     style={{ 
@@ -304,7 +352,7 @@ export function HeroSection2() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

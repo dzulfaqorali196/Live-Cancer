@@ -5,6 +5,30 @@ import { useEffect, useRef } from "react";
 import SectionHeader from "@/components/section-header";
 import { ArticleDoc } from "@/types";
 import BlogPosts from "@/components/blog/posts";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const contentVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
 
 export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
   const controls = useAnimation();
@@ -19,15 +43,29 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
   }, [controls, inView, shouldReduceMotion]);
 
   return (
-    <section id="features" className="py-20 md:py-32 bg-web3-dark">
+    <motion.section 
+      id="features" 
+      className="py-20 md:py-32 bg-web3-dark"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={containerVariants}
+    >
       <div className="container">
-        <SectionHeader
-          title1="Latest"
-          title2="Posts"
-          description="Stay updated on CancerFun’s mission to fund decentralized cancer research with BIO tokens on Solana’s blockchain."
-        />
-        <BlogPosts posts={posts} />
+        <motion.div variants={contentVariants}>
+          <SectionHeader
+            title1="Latest"
+            title2="Posts"
+            description="Stay updated on CancerFun's mission to fund decentralized cancer research with BIO tokens on Solana's blockchain."
+          />
+        </motion.div>
+        <motion.div 
+          variants={contentVariants}
+          ref={ref}
+        >
+          <BlogPosts posts={posts} />
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

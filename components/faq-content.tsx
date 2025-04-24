@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { motion } from "framer-motion";
 
 // FAQ data organized by categories
 const faqData = {
@@ -79,6 +80,43 @@ const faqData = {
   ]
 };
 
+const searchVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  }
+};
+
+const tabsVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      delay: 0.2,
+      ease: "easeOut"
+    }
+  }
+};
+
+const accordionVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  }
+};
+
 export function FaqContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
@@ -105,8 +143,16 @@ export function FaqContent() {
   const displayFaqs = getFaqsForTab();
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-8 relative">
+    <motion.div 
+      className="max-w-4xl mx-auto"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+    >
+      <motion.div 
+        className="mb-8 relative"
+        variants={searchVariants}
+      >
         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-muted-foreground" />
         </div>
@@ -117,46 +163,59 @@ export function FaqContent() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-      </div>
+      </motion.div>
 
       <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="w-full mb-8 bg-web3-dark border border-web3-gray rounded-lg p-1 overflow-x-auto flex flex-nowrap">
-          <TabsTrigger value="all" className="flex-1">
-            All
-          </TabsTrigger>
-          <TabsTrigger value="general" className="flex-1">
-            General
-          </TabsTrigger>
-          <TabsTrigger value="research" className="flex-1">
-            Research
-          </TabsTrigger>
-          <TabsTrigger value="token" className="flex-1">
-            Token
-          </TabsTrigger>
-          <TabsTrigger value="committee" className="flex-1">
-            Committee
-          </TabsTrigger>
-        </TabsList>
-        <div className="space-y-6">
+        <motion.div variants={tabsVariants}>
+          <TabsList className="w-full mb-8 bg-web3-dark border border-web3-gray rounded-lg p-1 overflow-x-auto flex flex-nowrap">
+            <TabsTrigger value="all" className="flex-1">
+              All
+            </TabsTrigger>
+            <TabsTrigger value="general" className="flex-1">
+              General
+            </TabsTrigger>
+            <TabsTrigger value="research" className="flex-1">
+              Research
+            </TabsTrigger>
+            <TabsTrigger value="token" className="flex-1">
+              Token
+            </TabsTrigger>
+            <TabsTrigger value="committee" className="flex-1">
+              Committee
+            </TabsTrigger>
+          </TabsList>
+        </motion.div>
+        <motion.div 
+          className="space-y-6"
+          variants={accordionVariants}
+        >
           {displayFaqs.length > 0 ? (
             <Accordion type="single" collapsible className="w-full">
               {displayFaqs.map((faq, index) => (
-                <AccordionItem
+                <motion.div
                   key={index}
-                  value={`item-${index}`}
-                  className="border-web3-gray"
+                  variants={accordionVariants}
+                  custom={index}
                 >
-                  <AccordionTrigger className="text-left hover:text-web3-primary">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                  <AccordionItem
+                    value={`item-${index}`}
+                    className="border-web3-gray"
+                  >
+                    <AccordionTrigger className="text-left hover:text-web3-primary">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                </motion.div>
               ))}
             </Accordion>
           ) : (
-            <div className="text-center py-12">
+            <motion.div 
+              className="text-center py-12"
+              variants={accordionVariants}
+            >
               <p className="text-muted-foreground mb-4">
                 No results found for {searchQuery}
               </p>
@@ -170,10 +229,10 @@ export function FaqContent() {
                 </a>{" "}
                 for assistance.
               </p>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </Tabs>
-    </div>
+    </motion.div>
   );
 }
