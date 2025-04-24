@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 export const VideoSection = () => {
   return (
     <motion.section 

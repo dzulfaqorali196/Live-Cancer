@@ -72,15 +72,12 @@ export function Navbar() {
         // Pertama scroll ke atas halaman
         window.scrollTo({ top: 0, behavior: 'auto' });
 
-        // Kemudian scroll ke target section setelah delay
-        const scrollToElement = () => {
+        // Scroll ke target section setelah delay
+        setTimeout(() => {
           const yOffset = -100; // Offset untuk navbar
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: y, behavior: 'smooth' });
-        };
-
-        // Tunggu konten dimuat dan animasi scroll ke atas selesai
-        setTimeout(scrollToElement, 800);
+        }, 800);
       }
     }
   }, [pathname]);
@@ -109,6 +106,19 @@ export function Navbar() {
     }
   };
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    if (pathname === '/home') {
+      // Jika sudah di home, smooth scroll ke atas
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Jika di halaman lain, navigasi ke home dulu
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      router.push('/home');
+    }
+  };
+
   return (
     <motion.header
       variants={navVariants}
@@ -127,6 +137,7 @@ export function Navbar() {
           className="flex items-center gap-2"
           onMouseEnter={() => setIsLogoHovered(true)}
           onMouseLeave={() => setIsLogoHovered(false)}
+          onClick={handleLogoClick}
         >
           <div className="relative w-8 h-8 flex items-center justify-center">
             <Image
