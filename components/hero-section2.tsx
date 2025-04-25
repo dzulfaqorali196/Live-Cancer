@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Routes } from "@/constants/routes";
 import { Loader2 } from "lucide-react";
-import { useVideoSource } from "@/lib/utils/video";
+import { Application } from "@splinetool/runtime";
 
 // Animation variants
 const sectionVariants = {
@@ -28,7 +28,7 @@ const sectionVariants = {
   }
 };
 
-const videoContainerVariants = {
+const splineContainerVariants = {
   hidden: { 
     opacity: 0,
     y: 20
@@ -77,88 +77,66 @@ const buttonVariants = {
 export function HeroSection2() {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const splineRef = useRef<Application | null>(null);
   const inView = useInView(ref, { amount: 0.1, once: true });
   const shouldReduceMotion = useReducedMotion();
-  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isSplineReady, setIsSplineReady] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isMounted, setIsMounted] = useState(false);
-  const videoSrc = useVideoSource();
-
-  // Check if component is mounted
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const [loadingError, setLoadingError] = useState<string | null>(null);
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
   useEffect(() => {
-    if (!isMounted) return;
-
-    if (videoRef.current) {
-      const video = videoRef.current;
-      video.playbackRate = 0.75;
-
-      const handleProgress = () => {
-        if (video.buffered.length > 0) {
-          const duration = video.duration;
-          const buffered = video.buffered.end(0);
-          const progress = Math.round((buffered / duration) * 100);
-          setLoadingProgress(progress);
-        }
-      };
-      
-      const handleCanPlay = () => {
-        setIsVideoReady(true);
-        video.play().catch(() => {
-          // Handle autoplay error silently
-        });
-      };
-
-      video.addEventListener('progress', handleProgress);
-      video.addEventListener('canplay', handleCanPlay);
-      video.addEventListener('playing', () => setIsVideoReady(true));
-      
-      return () => {
-        video.removeEventListener('progress', handleProgress);
-        video.removeEventListener('canplay', handleCanPlay);
-        video.removeEventListener('playing', () => setIsVideoReady(true));
-      };
+    // Skip Spline initialization in development mode
+    if (isDevelopment) {
+      setIsSplineReady(true);
+      return;
     }
-  }, [videoSrc, isMounted]);
 
-  // Smooth looping effect
-  useEffect(() => {
-    if (!isMounted) return;
+    let progressInterval: NodeJS.Timeout;
 
-    if (videoRef.current) {
-      const video = videoRef.current;
-      
-      const handleTimeUpdate = () => {
-        const duration = video.duration;
-        const timeLeft = duration - video.currentTime;
+    const initializeSpline = async () => {
+      try {
+        const canvas = document.getElementById("hero-spline-scene") as HTMLCanvasElement;
+        if (!canvas) throw new Error("Canvas not found");
+
+        progressInterval = setInterval(() => {
+          setLoadingProgress(prev => {
+            if (prev >= 90) return prev;
+            return prev + Math.random() * 10;
+          });
+        }, 300);
+
+        const app = new Application(canvas);
+        splineRef.current = app;
+
+        await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
         
-        if (timeLeft < 0.5) {
-          video.style.opacity = `${timeLeft * 2}`;
-        } else if (video.currentTime < 0.5) {
-          video.style.opacity = `${video.currentTime * 2}`;
-        } else {
-          video.style.opacity = '1';
-        }
-      };
+        canvas.style.cursor = 'pointer';
+        
+        setLoadingProgress(100);
+        clearInterval(progressInterval);
+        
+        setTimeout(() => {
+          setIsSplineReady(true);
+        }, 500);
 
-      const handleEnded = () => {
-        video.currentTime = 0;
-        video.play();
-      };
+      } catch (error) {
+        console.error("Spline load error:", error);
+        setLoadingError("Failed to load 3D scene. Please refresh the page.");
+        clearInterval(progressInterval);
+        setLoadingProgress(0);
+      }
+    };
 
-      video.addEventListener('timeupdate', handleTimeUpdate);
-      video.addEventListener('ended', handleEnded);
+    initializeSpline();
 
-      return () => {
-        video.removeEventListener('timeupdate', handleTimeUpdate);
-        video.removeEventListener('ended', handleEnded);
-      };
-    }
-  }, [isMounted]);
+    return () => {
+      clearInterval(progressInterval);
+      if (splineRef.current) {
+        splineRef.current.dispose();
+      }
+    };
+  }, [isDevelopment]);
 
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -194,19 +172,6 @@ export function HeroSection2() {
     }
   }, [controls, inView, shouldReduceMotion]);
 
-  // Add preload hint
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'video';
-    link.href = videoSrc;
-    document.head.appendChild(link);
-
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [videoSrc]); // Update preload when source changes
-
   return (
     <motion.section
       variants={sectionVariants}
@@ -217,79 +182,71 @@ export function HeroSection2() {
     >
       {/* Background gradient overlay - subtle */}
       <motion.div 
-        variants={videoContainerVariants}
+        variants={splineContainerVariants}
         className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-[#1a0b33]/30 opacity-60" 
       />
 
-      {/* Video Container - Seamless */}
-      <motion.div 
-        variants={videoContainerVariants}
-        className="relative w-full h-screen overflow-hidden" 
-        style={{ marginTop: "-5vh" }}
-      >
-        {/* Gradient untuk transisi yang lebih halus */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
-             style={{
-               background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.95) 100%)'
-             }}
-        />
-        
-        <video
-          ref={videoRef}
-          className={`w-full h-full object-cover transition-all duration-700 ${
-            isVideoReady ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{ 
-            filter: 'brightness(1.2)',
-            transform: 'scale(1.02)',
-            objectPosition: 'center 15%',
-            transition: 'opacity 500ms ease-in-out'
-          }}
-          playsInline
-          autoPlay
-          muted
-          loop
-          preload="auto"
-          poster={isMounted && window.matchMedia('(max-width: 767px)').matches 
-            ? '/HeroSection/poster-mobile.jpg' 
-            : '/HeroSection/poster.jpg'}
+      {/* Spline Container */}
+      {!isDevelopment && (
+        <motion.div 
+          variants={splineContainerVariants}
+          className="relative w-full h-screen overflow-hidden" 
+          style={{ marginTop: "-5vh" }}
         >
-          <source src={videoSrc} type="video/webm" />
-        </video>
-      </motion.div>
+          {/* Gradient untuk transisi yang lebih halus */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
+               style={{
+                 background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.95) 100%)'
+               }}
+          />
+          
+          <canvas
+            id="hero-spline-scene"
+            className={`w-full h-full object-cover transition-all duration-700 ${
+              isSplineReady ? 'opacity-100' : 'opacity-0'
+            }`}
+          ></canvas>
+        </motion.div>
+      )}
 
-      {/* Loading Overlay - Simplified */}
-      {!isVideoReady && (
+      {/* Loading Overlay - hanya ditampilkan di production */}
+      {!isDevelopment && !isSplineReady && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 transition-opacity duration-300"
         >
-          <Loader2 className="h-8 w-8 text-purple-400 animate-spin" />
-          <div className="flex flex-col items-center">
-            <div className="text-white text-sm mb-2">Loading visualization...</div>
-            <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-purple-400 transition-all duration-300 rounded-full"
-                style={{ width: `${loadingProgress}%` }}
-              />
-            </div>
-            <div className="text-gray-400 text-xs mt-1">{loadingProgress}%</div>
-          </div>
+          {loadingError ? (
+            <div className="text-red-500 text-sm">{loadingError}</div>
+          ) : (
+            <>
+              <Loader2 className="h-8 w-8 text-purple-400 animate-spin" />
+              <div className="flex flex-col items-center">
+                <div className="text-white text-sm mb-2">Loading visualization...</div>
+                <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-purple-400 transition-all duration-300 rounded-full"
+                    style={{ width: `${loadingProgress}%` }}
+                  />
+                </div>
+                <div className="text-gray-400 text-xs mt-1">{loadingProgress}%</div>
+              </div>
+            </>
+          )}
         </motion.div>
       )}
 
       {/* Content Container */}
       <motion.div 
-        variants={videoContainerVariants}
+        variants={splineContainerVariants}
         className="absolute inset-x-0 bottom-0 z-10 pb-20"
       >
         <div className="w-full max-w-[1400px] mx-auto px-8">
           {/* Subtle dark overlay untuk text area */}
           <div className="relative">
             <motion.div 
-              variants={videoContainerVariants}
+              variants={splineContainerVariants}
               className="absolute inset-0 bg-black/10 backdrop-blur-[2px] rounded-xl -m-4 p-4" 
             />
             
