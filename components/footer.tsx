@@ -37,53 +37,19 @@ export function Footer() {
     >
       <div className="max-w-[1300px] mx-auto px-4 py-6 md:py-8">
         <motion.div 
-          className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8"
+          className="flex justify-between items-center"
           variants={itemVariants}
         >
-          <motion.div 
-            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8"
-            variants={itemVariants}
-          >
-            <p className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 text-center sm:text-left">
-              © {new Date().getFullYear()} CancerFun. All rights reserved.
-            </p>
-            <div className="flex items-center gap-4 sm:gap-8">
-              <Link
-                href="/terms"
-                className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                Terms of Service
-              </Link>
-              <Link
-                href="/privacy"
-                className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                Privacy Policy
-              </Link>
-            </div>
-          </motion.div>
+          <p className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400">
+            © {new Date().getFullYear()} CancerFun. All rights reserved.
+          </p>
           
-          <motion.div 
-            className="flex items-center gap-4"
-            variants={itemVariants}
+          <Link
+            href="/terms-of-service"
+            className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 hover:text-white transition-colors duration-200"
           >
-            <a
-              href="https://twitter.com/cancerfun"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors duration-200"
-            >
-              Twitter
-            </a>
-            <a
-              href="https://discord.gg/cancerfun"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors duration-200"
-            >
-              Discord
-            </a>
-          </motion.div>
+            Terms of Service
+          </Link>
         </motion.div>
       </div>
     </motion.footer>

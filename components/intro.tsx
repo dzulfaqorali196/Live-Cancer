@@ -11,50 +11,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaArrowRightLong, FaXTwitter } from "react-icons/fa6";
 
-// Deteksi iOS
-const isIOS = () => {
-  if (typeof window === 'undefined') return false;
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-};
-
-// Komponen Button khusus
-const ExploreButton = ({ onClick }: { onClick: () => void }) => {
-  const iOS = isIOS();
-
-  if (iOS) {
-    return (
-      <div 
-        onClick={onClick}
-        className="bg-web3-primary hover:bg-web3-primary/90 w-full rounded-md cursor-pointer"
-        style={{
-          padding: '1.5rem',
-          position: 'relative',
-          zIndex: 999,
-          transform: 'translateZ(0)',
-          WebkitTransform: 'translateZ(0)',
-          touchAction: 'manipulation'
-        }}
-      >
-        <div className="flex items-center justify-center gap-2 text-base md:text-lg font-medium text-white">
-          Start Explore <FaArrowRightLong />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <Button 
-      className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
-      onClick={onClick}
-    >
-      <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
-        Start Explore <FaArrowRightLong />
-      </span>
-    </Button>
-  );
-};
-
 export default function Intro() {
   const router = useRouter();
   const dingSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -73,25 +29,33 @@ export default function Intro() {
 
     const initializeSpline = async () => {
       try {
-        const canvas = document.getElementById('spline-scene') as HTMLCanvasElement;
-        if (!canvas) throw new Error('Canvas not found');
+        const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+        if (!canvas) throw new Error("Canvas not found");
 
         // Set canvas dimensions
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
-        // Disable all touch interactions on canvas
-        canvas.style.pointerEvents = 'none';
+
+        // Prevent unwanted zoom and touch behaviors
         canvas.style.touchAction = 'none';
         
-        // Prevent all default touch behaviors
-        const preventTouchDefault = (e: TouchEvent) => {
-          e.preventDefault();
-        };
-        
-        canvas.addEventListener('touchstart', preventTouchDefault, { passive: false });
-        canvas.addEventListener('touchmove', preventTouchDefault, { passive: false });
-        canvas.addEventListener('touchend', preventTouchDefault, { passive: false });
+        // Prevent default touch events
+        canvas.addEventListener('touchstart', (e) => {
+          if (e.touches.length > 1) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+
+        // Prevent zoom on double tap
+        let lastTap = 0;
+        canvas.addEventListener('touchend', (e) => {
+          const currentTime = new Date().getTime();
+          const tapLength = currentTime - lastTap;
+          if (tapLength < 500 && tapLength > 0) {
+            e.preventDefault();
+          }
+          lastTap = currentTime;
+        }, { passive: false });
 
         progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
@@ -104,6 +68,16 @@ export default function Intro() {
         splineRef.current = app;
 
         await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
+        
+        // Set pointer-events untuk memastikan interaksi cursor
+        canvas.style.pointerEvents = 'auto';
+        canvas.style.cursor = 'pointer';
+        
+        // Tambahkan meta viewport untuk mengontrol scaling
+        const viewportMeta = document.createElement('meta');
+        viewportMeta.name = 'viewport';
+        viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+        document.head.appendChild(viewportMeta);
         
         setLoadingProgress(100);
         clearInterval(progressInterval);
@@ -247,12 +221,6 @@ export default function Intro() {
     };
   }, []);
 
-  // Add touch event handler for the button
-  const handleTouchStart = (e: React.TouchEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   return (
     <div className="relative w-full h-screen">
       <audio ref={dingSoundRef} preload="auto">
@@ -266,9 +234,9 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ zIndex: 999 }}>
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]">
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative" style={{ zIndex: 999 }}>
+          <div className="relative z-[2]">
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -277,7 +245,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative" style={{ zIndex: 999 }}>
+          <div className="relative z-[2]">
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -288,12 +256,18 @@ export default function Intro() {
           </div>
           <div className="my-32" />
           <div 
-            className="relative w-full max-w-[300px] mx-auto"
-            style={{ zIndex: 999 }}
+            className="relative z-[10] w-full max-w-[300px] mx-auto" 
           >
-            <ExploreButton onClick={handleStartExplore} />
+            <Button 
+              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
+              onClick={handleStartExplore}
+            >
+              <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
+                Start Explore <FaArrowRightLong />
+              </span>
+            </Button>
           </div>
-          <div className="flex gap-4 relative" style={{ zIndex: 999 }}>
+          <div className="flex gap-4 relative z-[10] mt-4">
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -323,11 +297,10 @@ export default function Intro() {
 
       {/* Spline Scene */}
       <div 
-        className="absolute inset-0 w-full h-screen overflow-hidden"
+        className="absolute inset-0 w-full h-screen overflow-hidden" 
         style={{ 
           zIndex: 1,
-          pointerEvents: 'none',
-          touchAction: 'none'
+          pointerEvents: 'none'
         }}
       >
         <canvas
@@ -342,6 +315,7 @@ export default function Intro() {
             width: '100%',
             height: '100%',
             touchAction: 'none',
+            userSelect: 'none',
             pointerEvents: 'none'
           }}
         />
