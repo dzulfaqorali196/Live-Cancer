@@ -155,7 +155,7 @@ export function Navbar() {
 
   // Handle click outside
   const menuRef = React.useRef<HTMLDivElement>(null);
-  
+
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -231,16 +231,20 @@ export function Navbar() {
     }
   };
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleLogoClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     
-    if (pathname === '/home') {
-      // Jika sudah di home, smooth scroll ke atas
+    if (pathname === Routes.HOME) {
+      // Jika sudah di home, hapus hash dan smooth scroll ke atas
+      window.history.pushState({}, '', Routes.HOME);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Jika di halaman lain, navigasi ke home dulu
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      router.push('/home');
+      // Jika di halaman lain, navigasi ke home tanpa hash
+      await router.push(Routes.HOME);
+      // Pastikan hash dihapus
+      window.history.pushState({}, '', Routes.HOME);
+      // Setelah navigasi selesai, smooth scroll ke atas
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -251,29 +255,29 @@ export function Navbar() {
         initial="hidden"
         animate="visible"
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-          isScrolled
+        isScrolled
             ? "bg-web3-darker/80 backdrop-blur-md py-2 md:py-3"
             : "bg-transparent py-3 md:py-5"
-        }`}
-      >
+      }`}
+    >
         <div className="container flex items-center justify-between px-4 md:px-6">
           <motion.div variants={itemVariants}>
-            <Link
-              href={Routes.HOME}
-              className="flex items-center gap-2"
-              onMouseEnter={() => setIsLogoHovered(true)}
-              onMouseLeave={() => setIsLogoHovered(false)}
+        <Link
+          href={Routes.HOME}
+          className="flex items-center gap-2"
+          onMouseEnter={() => setIsLogoHovered(true)}
+          onMouseLeave={() => setIsLogoHovered(false)}
               onClick={handleLogoClick}
-            >
+        >
               <div className="relative w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
-                <Image
-                  src="/images/cancercoin-logo.png"
-                  alt={SiteSettings.title.full}
+            <Image
+              src="/images/cancercoin-logo.png"
+              alt={SiteSettings.title.full}
                   className="w-full h-full object-contain"
-                  width={32}
-                  height={32}
-                />
-              </div>
+              width={32}
+              height={32}
+            />
+          </div>
               <div className="relative w-20 h-5 md:w-24 md:h-6 block md:hidden lg:block overflow-hidden">
                 <motion.div
                   initial={{ opacity: 1, y: 0 }}
@@ -305,43 +309,43 @@ export function Navbar() {
                   <span className="mx-1"> </span>
                   <span className="text-green-500">Home</span>
                 </motion.div>
-              </div>
-              <span className="sr-only">{SiteSettings.title.short}</span>
-            </Link>
+          </div>
+          <span className="sr-only">{SiteSettings.title.short}</span>
+        </Link>
           </motion.div>
 
           <motion.div 
             variants={itemVariants}
             className="hidden md:flex items-center gap-6 lg:gap-8"
           >
-            {navMenuItems.map((item, index) => (
+          {navMenuItems.map((item, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
                 custom={index}
               >
-                <Link
-                  href={item.href ?? "#"}
+            <Link
+              href={item.href ?? "#"}
                   onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
-                </Link>
+              className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
+            >
+              {item.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
+            </Link>
               </motion.div>
-            ))}
+          ))}
           </motion.div>
 
           <div className="hidden md:flex items-center gap-3 lg:gap-4">
-            <Button
-              variant="outline"
+          <Button
+            variant="outline"
               size="sm"
               className="border-web3-primary text-web3-primary hover:bg-web3-primary/10 text-sm"
-            >
-              Connect Wallet
-            </Button>
-            <AuthMenu />
-          </div>
+          >
+            Connect Wallet
+          </Button>
+          <AuthMenu />
+        </div>
 
           <div className="md:hidden">
             <Button 
@@ -421,7 +425,7 @@ export function Navbar() {
                       }
                     }}
                   >
-                    {navMenuItems.map((item, index) => (
+              {navMenuItems.map((item, index) => (
                       <motion.div
                         key={index}
                         variants={{
@@ -444,19 +448,19 @@ export function Navbar() {
                           }
                         }}
                       >
-                        <Link
-                          href={item.href}
+                  <Link
+                    href={item.href}
                           onClick={(e) => {
                             handleSmoothScroll(e, item.href);
                             setIsOpen(false);
                           }}
                           className="text-base hover:text-[#a857ff] transition-all duration-300 relative group inline-block transform hover:scale-105"
-                        >
-                          {item.label}
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
-                        </Link>
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
+                  </Link>
                       </motion.div>
-                    ))}
+              ))}
                     <motion.div 
                       variants={{
                         hidden: { y: 20, opacity: 0 },
@@ -479,13 +483,13 @@ export function Navbar() {
                       }}
                       className="flex flex-col gap-4 mt-6"
                     >
-                      <Button
-                        variant="outline"
+                <Button
+                  variant="outline"
                         size="lg"
                         className="w-full h-12 border-web3-primary text-web3-primary hover:bg-web3-primary/10 text-base font-normal"
-                      >
-                        Connect Wallet
-                      </Button>
+                >
+                  Connect Wallet
+                </Button>
                       <Button
                         size="lg"
                         className="w-full h-12 bg-[#a857ff] hover:bg-[#a857ff]/90 text-base font-normal"
@@ -494,7 +498,7 @@ export function Navbar() {
                       </Button>
                     </motion.div>
                   </motion.div>
-                </div>
+              </div>
               </motion.div>
             </motion.div>
           </>

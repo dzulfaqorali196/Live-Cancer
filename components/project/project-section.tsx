@@ -184,75 +184,75 @@ export const ProjectSection = () => {
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-[1920px]">
-            {projects.map((project) => (
+                {projects.map((project) => (
               <motion.div
-                key={project.id}
+                    key={project.id}
                 variants={cardVariants}
                 whileHover="hover"
                 className="w-full"
-              >
+                  >
                 <Card className={`flex flex-col h-[280px] md:h-[351.8px] w-full overflow-hidden rounded-[12px] md:rounded-[17.38px] border-[1px] md:border-[2.17px] transition-colors duration-300 ${
-                  project.isActive
+                        project.isActive
                     ? "bg-[#4d139d26] border-[#b37feb] hover:bg-[#4d139d40]"
                     : "bg-[#f5f5f508] border-[#212121] hover:border-[#b37feb] hover:bg-[#4d139d26]"
                 }`}>
                   <motion.div
                     className="relative flex flex-col items-center justify-center h-[180px] md:h-[241.75px] w-full overflow-hidden"
-                  >
-                    {project.isActive && project.image ? (
+                    >
+                      {project.isActive && project.image ? (
                       <motion.div 
                         className="relative w-full h-full"
                         variants={imageVariants}
                       >
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          style={{ objectFit: 'cover' }}
-                        />
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            style={{ objectFit: 'cover' }}
+                          />
                         <motion.div 
                           className="absolute inset-0 bg-[#4d139d] opacity-20"
                           whileHover={{ opacity: 0.1 }}
                         />
                       </motion.div>
-                    ) : (
+                      ) : (
                       <motion.div 
                         variants={plusIconVariants}
                         className="transition-transform duration-300 hover:rotate-90"
                       >
                         <PlusIcon className="w-10 h-10 md:w-[61px] md:h-[61px] text-white" />
                       </motion.div>
-                    )}
+                      )}
                   </motion.div>
 
                   <motion.div
                     variants={contentVariants}
                     className={`flex flex-col items-start gap-2 md:gap-[9.41px] p-4 md:p-6 ${
-                      project.isActive
+                        project.isActive
                         ? "bg-[#4d139d10]"
                         : "bg-[#ffffff0f] hover:bg-[#4d139d10]"
-                    }`}
-                  >
+                      }`}
+                    >
                     <div className="flex items-center justify-around gap-2 md:gap-[9.41px] w-full">
                       <div className="flex flex-col items-start gap-2 md:gap-[9.41px] flex-1">
                         <motion.h3 
                           className="mt-[-1px] md:mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-xl md:text-[26.1px] tracking-[0] leading-normal"
                           whileHover={{ x: 5 }}
                         >
-                          {project.title}
+                            {project.title}
                         </motion.h3>
                         <motion.p 
                           className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-sm md:text-base tracking-[0] leading-normal"
                           whileHover={{ x: 5 }}
                         >
-                          {project.description}
+                            {project.description}
                         </motion.p>
                       </div>
                     </div>
                   </motion.div>
-                </Card>
+                  </Card>
               </motion.div>
-            ))}
+                ))}
           </div>
         </div>
       </div>

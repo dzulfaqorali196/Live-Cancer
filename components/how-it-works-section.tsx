@@ -120,13 +120,16 @@ export function HowItWorksSection() {
       />
 
       <div className="container relative z-10">
-        <div className="text-center">
-          <SectionHeader
-            title1="How CancerFun"
-            title2="Works?"
-            description="Explore how the $CANCER token fuels decentralized cancer research on Solana."
-          />
+        <div className="text-center max-w-5xl mx-auto">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 text-center">
+            <span className="text-white">How CancerFun </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A855F7] to-[#E9D5FF]">Works?</span>
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center">
+            Explore how the $CANCER token fuels decentralized cancer research on Solana.
+          </p>
         </div>
+
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mt-8 md:mt-12"
           variants={containerVariants}

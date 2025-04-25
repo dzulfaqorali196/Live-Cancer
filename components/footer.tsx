@@ -46,12 +46,12 @@ export function Footer() {
           >
             © {new Date().getFullYear()} CancerFun. All rights reserved.
           </motion.p>
-          <Link
+              <Link
             href="/terms"
-            className="text-sm text-muted-foreground hover:text-white transition-colors"
-          >
+                className="text-sm text-muted-foreground hover:text-white transition-colors"
+              >
             Terms of Service
-          </Link>
+              </Link>
         </motion.div>
       </div>
     </motion.footer>

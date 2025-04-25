@@ -72,17 +72,18 @@ export function FaqSection() {
 
       <div className="container relative z-10 mb-16 md:mb-24">
         <motion.div 
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-5xl mx-auto mb-16"
           variants={containerVariants}
         >
           <motion.h2 
-            className="text-3xl md:text-4xl font-normal mb-4"
+            className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 text-center"
             variants={headingVariants}
           >
-            Frequently Asked <span className="text-[#a857ff]">Questions</span>
+            <span className="text-white">Frequently Asked </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A855F7] to-[#E9D5FF]">Questions</span>
           </motion.h2>
           <motion.p 
-            className="text-muted-foreground"
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center"
             variants={descriptionVariants}
           >
             Explore answers to common questions about CancerCoin, BIO tokens,

@@ -67,7 +67,7 @@ export default function SectionHeader({
           animate={controls}
         >
           <span className="text-center w-full flex flex-wrap justify-center items-center gap-2">
-            {title1} <span className="text-[#a857ff]">{title2}</span>
+          {title1} <span className="text-[#a857ff]">{title2}</span>
           </span>
         </motion.h2>
         {subtitle && (
@@ -78,7 +78,7 @@ export default function SectionHeader({
             animate={controls}
           >
             <span className="text-center w-full flex flex-wrap justify-center items-center gap-2">
-              {title1} <span className="text-[#a857ff]">{title2}</span>
+            {title1} <span className="text-[#a857ff]">{title2}</span>
             </span>
           </motion.h3>
         )}

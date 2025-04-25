@@ -4,10 +4,35 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { auth } from "@/auth";
 import SessionWrapper from "@/components/auth/session-wrapper";
-import { metadataLayoutRoot } from "@/lib/metadata/layout-root";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { SiteSettings } from "@/constants/settings";
 // import { AppWalletProvider } from "@/components/wallet/provider";
 
-export const metadata = metadataLayoutRoot;
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://cancerfun.fun"),
+  title: {
+    absolute: "CancerFun",
+    default: "CancerFun"
+  },
+  description: SiteSettings.description,
+  icons: {
+    icon: [
+      {
+        url: "/images/cancercoin-logo.png",
+        href: "/images/cancercoin-logo.png"
+      }
+    ]
+  },
+  openGraph: {
+    title: "CancerFun",
+    description: SiteSettings.description,
+    url: "https://cancerfun.fun",
+    siteName: "CancerFun"
+  }
+};
 
 export default async function RootLayout({
   children,
@@ -17,6 +42,10 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <title>CancerFun</title>
+        <link rel="icon" href="/images/cancercoin-logo.png" />
+      </head>
       <body
         className="min-h-screen bg-background antialiased"
         style={{ fontFamily: "var(--font-sans)" }}

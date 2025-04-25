@@ -2,7 +2,6 @@
 
 import { useAnimation, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import SectionHeader from "@/components/section-header";
 import { ArticleDoc } from "@/types";
 import BlogPosts from "@/components/blog/posts";
 import { motion } from "framer-motion";
@@ -54,12 +53,14 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
       <div className="absolute top-0 left-0 right-0 h-16 md:h-24 bg-gradient-to-b from-black via-black to-transparent pointer-events-none opacity-80"></div>
 
       <div className="container relative z-10">
-        <motion.div variants={contentVariants} className="relative z-10">
-          <SectionHeader
-            title1="Latest"
-            title2="Posts"
-            description="Stay updated on CancerFun's mission to fund decentralized cancer research with BIO tokens on Solana's blockchain."
-          />
+        <motion.div variants={contentVariants} className="text-center max-w-5xl mx-auto mb-16 md:mb-24">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 text-center">
+            <span className="text-white">Latest </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A855F7] to-[#E9D5FF]">Posts</span>
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center">
+            Stay updated on CancerFun's mission to fund decentralized cancer research with BIO tokens on Solana's blockchain.
+          </p>
         </motion.div>
         <motion.div 
           variants={contentVariants}

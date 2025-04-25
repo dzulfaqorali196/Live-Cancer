@@ -17,6 +17,7 @@ import { FC } from "react";
 import InfoSection from "@/components/info-section";
 import { StatsSection } from "@/components/stats-section";
 import { VideoSection } from "@/components/video/video-section";
+import { SiteSettings } from "@/constants/settings";
 
 const DynamicProjectSection = dynamic(
   () =>
@@ -41,30 +42,28 @@ const DynamicLatestBlogPostSection = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "CancerCoin - Decentralized Cancer Research Funding",
-  description:
-    "CancerCoin: Fund life-saving cancer research through a decentralized Solana-based platform.",
+  title: "CancerFun",
+  description: SiteSettings.description,
   keywords: [
-    "CancerCoin",
+    "CancerFun",
     "decentralized cancer research",
     "Solana biotech funding",
     "BIO token",
     "Web3",
     "cancer research funding",
   ],
-  metadataBase: new URL("https://cancercoin.fun"),
+  metadataBase: new URL("https://cancerfun.fun"),
   openGraph: {
-    title: "CancerCoin - Decentralized Cancer Research Funding",
-    description:
-      "CancerCoin: Fund life-saving cancer research through a decentralized Solana-based platform.",
-    url: "https://cancercoin.fun",
-    siteName: "CancerCoin",
+    title: "CancerFun",
+    description: SiteSettings.description,
+    url: "https://cancerfun.fun",
+    siteName: "CancerFun",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CancerCoin - Decentralized Cancer Research Funding",
+        alt: "CancerFun",
       },
     ],
     locale: "en_US",
@@ -72,11 +71,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CancerCoin - Decentralized Cancer Research Funding",
-    description:
-      "CancerCoin: Fund life-saving cancer research through a decentralized Solana-based platform.",
+    title: "CancerFun",
+    description: SiteSettings.description,
     images: ["/images/og-image.png"],
-    site: "@cancercoin",
+    site: "@cancerfun",
   },
 };
 

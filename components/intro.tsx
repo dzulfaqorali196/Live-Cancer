@@ -140,30 +140,53 @@ export default function Intro() {
     }
   };
 
-  const handleStartExplore = () => {
-    router.push('/home');
-    // Audio akan di-handle oleh cleanup effect
-  };
-
-  // Effect untuk menangani cleanup saat komponen unmount
-  useEffect(() => {
-    return () => {
-      if (backgroundMusicRef.current) {
-        const fadeOutInterval = setInterval(() => {
-          if (backgroundMusicRef.current && backgroundMusicRef.current.volume > 0) {
-            backgroundMusicRef.current.volume -= 0.05;
-          } else {
-            clearInterval(fadeOutInterval);
-            if (backgroundMusicRef.current) {
-              backgroundMusicRef.current.pause();
-              backgroundMusicRef.current.currentTime = 0;
+  const handleStartExplore = async () => {
+    // Fade out audio dengan smooth
+    const audioElements = document.querySelectorAll('audio');
+    
+    return new Promise<void>((resolve) => {
+      const fadeOutInterval = setInterval(() => {
+        let allStopped = true;
+        
+        audioElements.forEach(audio => {
+          if (audio instanceof HTMLAudioElement) {
+            if (audio.volume > 0) {
+              audio.volume = Math.max(0, audio.volume - 0.02); // Lebih halus dengan pengurangan yang lebih kecil
+              allStopped = false;
             }
           }
-        }, 100);
+        });
 
-        // Cleanup interval jika komponen unmount sebelum fade out selesai
-        setTimeout(() => clearInterval(fadeOutInterval), 2000);
+        if (allStopped) {
+          clearInterval(fadeOutInterval);
+          // Hentikan semua audio setelah fade out selesai
+          audioElements.forEach(audio => {
+            if (audio instanceof HTMLAudioElement) {
+              audio.pause();
+              audio.currentTime = 0;
+            }
+          });
+          resolve();
+        }
+      }, 30); // Interval lebih cepat untuk transisi yang lebih halus
+    }).then(() => {
+      // Navigasi ke home setelah fade out selesai
+      window.location.href = '/home';
+    });
+  };
+
+  // Effect untuk menangani navigasi halaman
+  useEffect(() => {
+    const handleNavigation = () => {
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause();
+        backgroundMusicRef.current.currentTime = 0;
       }
+    };
+    
+    // Cleanup pada unmount
+    return () => {
+      handleNavigation();
     };
   }, []);
 

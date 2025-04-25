@@ -151,13 +151,18 @@ export function RoadmapSection() {
       <div className="absolute bottom-0 left-0 right-0 h-[200px] md:h-[400px] bg-gradient-to-t from-black via-black to-black pointer-events-none"></div>
       
       <div className="container relative z-10">
-        <div className="text-center md:text-left">
-          <SectionHeader
-            title1="CancerFun's"
-            title2="Roadmap to a Cure"
-            description="Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain."
-          />
+        <div className="text-center">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 text-center">
+              <span className="text-white">CancerFun's </span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A855F7] to-[#E9D5FF]">Roadmap to a Cure</span>
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center">
+              Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain.
+            </p>
+          </div>
         </div>
+
         <div ref={scrollRef} className="relative mt-8 md:mt-12">
           {/* Mobile Timeline Line */}
           <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-700 md:hidden">

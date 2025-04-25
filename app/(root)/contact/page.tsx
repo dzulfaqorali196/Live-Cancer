@@ -3,7 +3,7 @@ import { ContactForm } from "@/components/contact/form";
 import SectionHeader from "@/components/section-header";
 
 export const metadata = {
-  title: "Connect with CancerFun | CancerFun",
+  title: "CancerFun",
   description:
     "Reach out to the CancerFun team to join our mission of funding decentralized cancer research with BIO tokens on Solana's blockchain.",
   keywords: [

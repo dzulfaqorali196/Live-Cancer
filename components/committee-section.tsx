@@ -73,7 +73,7 @@ export function CommitteeSection() {
       name: "Hsun Hung",
       position: "Founder",
       image: "/OurComitte/Founder.jpg",
-      quote: '"From market awareness with real-time sentiment analysis and technical indicators to automated portfolio"',
+      quote: '"From decoding disease-driving proteins to building a decentralized engine for scientific breakthroughs, one enzyme at a time"',
       style: { width: 331, height: 379 }
     }
   ];
@@ -200,7 +200,7 @@ export function CommitteeSection() {
               variants={buttonVariants}
             >
               <Button className="h-[67px] w-[372px] rounded-[50px] border-[1.4px] border-solid border-[#b49fee] [background:linear-gradient(319deg,rgba(217,213,222,1)_0%,rgba(210,174,245,0)_51%,rgba(239,219,255,1)_100%),linear-gradient(0deg,rgba(168,88,255,1)_0%,rgba(168,88,255,1)_100%)] font-['Neue_Montreal'] font-bold text-white text-xl">
-                Apply to be Cancer Comitte
+                Apply to be CancerFun Comitte
               </Button>
             </motion.div>
           </motion.div>

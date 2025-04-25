@@ -2,13 +2,13 @@ import { Metadata } from "next";
 
 export const metadataLayoutRoot: Metadata = {
   title: {
-    template: "%s | CancerCoin",
-    default: "CancerCoin - Fund Decentralized Cancer Research",
+    template: "%s | CancerFun",
+    default: "CancerFun",
   },
   description:
-    "CancerCoin empowers a global community to fund decentralized cancer research using BIO tokens on Solana’s blockchain, driving innovation in immunotherapy and AI diagnostics.",
+    "CancerFun empowers a global community to fund decentralized cancer research using BIO tokens on Solana's blockchain, driving innovation in immunotherapy and AI diagnostics.",
   keywords: [
-    "CancerCoin",
+    "CancerFun",
     "BIO token",
     "Solana blockchain",
     "decentralized cancer research",
@@ -17,19 +17,19 @@ export const metadataLayoutRoot: Metadata = {
     "immunotherapy",
     "AI diagnostics",
   ],
-  metadataBase: new URL("https://cancercoin.fun"),
+  metadataBase: new URL("https://cancerfun.fun"),
   openGraph: {
-    title: "CancerCoin - Fund Decentralized Cancer Research",
+    title: "CancerFun - Fund Decentralized Cancer Research",
     description:
-      "CancerCoin empowers a global community to fund decentralized cancer research using BIO tokens on Solana’s blockchain.",
-    url: "https://cancercoin.fun",
-    siteName: "CancerCoin",
+      "CancerFun empowers a global community to fund decentralized cancer research using BIO tokens on Solana's blockchain.",
+    url: "https://cancerfun.fun",
+    siteName: "CancerFun",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CancerCoin - Fund Decentralized Cancer Research",
+        alt: "CancerFun - Fund Decentralized Cancer Research",
       },
     ],
     locale: "en_US",
@@ -37,11 +37,11 @@ export const metadataLayoutRoot: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CancerCoin - Fund Decentralized Cancer Research",
+    title: "CancerFun - Fund Decentralized Cancer Research",
     description:
-      "CancerCoin empowers a global community to fund decentralized cancer research using BIO tokens on Solana.",
+      "CancerFun empowers a global community to fund decentralized cancer research using BIO tokens on Solana.",
     images: ["/images/og-image.png"],
-    site: "@cancercoin",
+    site: "@cancerfun",
   },
   icons: {
     icon: "/favicon.ico",
@@ -53,6 +53,6 @@ export const metadataLayoutRoot: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://cancercoin.fun",
+    canonical: "https://cancerfun.fun",
   },
 };
