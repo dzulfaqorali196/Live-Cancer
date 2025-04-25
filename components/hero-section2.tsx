@@ -257,7 +257,7 @@ export function HeroSection2() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
                style={{
                  background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.95) 100%)',
-                 pointerEvents: 'none' // Memastikan gradient tidak mengganggu interaksi
+                 pointerEvents: 'none'
                }}
           />
           
@@ -272,13 +272,13 @@ export function HeroSection2() {
               left: 0,
               width: '100%',
               height: '100%',
-              zIndex: 2 // Memastikan canvas di atas gradient
+              zIndex: 2
             }}
           ></canvas>
         </motion.div>
       )}
 
-      {/* Loading Overlay - hanya ditampilkan di production */}
+      {/* Loading Overlay */}
       {!isDevelopment && !isSplineReady && (
         <motion.div 
           initial={{ opacity: 0 }}
@@ -290,10 +290,10 @@ export function HeroSection2() {
             <div className="text-red-500 text-sm">{loadingError}</div>
           ) : (
             <>
-              <Loader2 className="h-8 w-8 text-purple-400 animate-spin" />
+              <Loader2 className="h-6 w-6 md:h-8 md:w-8 text-purple-400 animate-spin" />
               <div className="flex flex-col items-center">
-                <div className="text-white text-sm mb-2">Loading visualization...</div>
-                <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div className="text-white text-xs md:text-sm mb-2">Loading visualization...</div>
+                <div className="w-32 md:w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
                   <div 
                     className="h-full bg-purple-400 transition-all duration-300 rounded-full"
                     style={{ width: `${loadingProgress}%` }}
@@ -309,26 +309,26 @@ export function HeroSection2() {
       {/* Content Container */}
       <motion.div 
         variants={splineContainerVariants}
-        className="absolute inset-x-0 bottom-0 z-10 pb-20"
+        className="absolute inset-x-0 bottom-0 z-10 pb-12 md:pb-20"
       >
-        <div className="w-full max-w-[1400px] mx-auto px-8">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8">
           {/* Subtle dark overlay untuk text area */}
           <div className="relative">
             <motion.div 
               variants={splineContainerVariants}
-              className="absolute inset-0 bg-black/10 backdrop-blur-[2px] rounded-xl -m-4 p-4" 
+              className="absolute inset-0 bg-black/10 backdrop-blur-[2px] rounded-xl -m-2 md:-m-4 p-2 md:p-4" 
             />
             
             {/* Main Header */}
-            <div ref={ref} className="mb-8 relative">
+            <div ref={ref} className="mb-4 md:mb-8 relative">
               <motion.h1
-                className="font-normal text-white leading-tight md:text-[60px] text-4xl"
+                className="font-normal text-white leading-tight text-3xl md:text-[60px]"
                 variants={headerVariants}
               >
                 We are the catalyst driving{" "}
                 <motion.span 
                   variants={headerVariants}
-                  className="block text-[#a857ff] md:text-[60px] text-4xl"
+                  className="block text-[#a857ff] text-3xl md:text-[60px]"
                 >
                   decentralized in cancer research
                 </motion.span>
@@ -336,22 +336,22 @@ export function HeroSection2() {
             </div>
 
             {/* Subheader with CTAs */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8 relative">
               <motion.p
                 variants={paragraphVariants}
-                className="text-[#94A3B8] max-w-[600px] md:text-[20px] text-base"
+                className="text-[#94A3B8] max-w-[600px] text-sm md:text-[20px]"
               >
                 Nucleo is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
               </motion.p>
 
-              <div className="flex items-center gap-4">
-                <motion.div custom={0.3} variants={buttonVariants}>
+              <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 w-full md:w-auto">
+                <motion.div custom={0.3} variants={buttonVariants} className="w-full sm:w-auto">
                   <Button
-                    className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
+                    className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] text-sm md:text-[20px] font-medium w-full sm:w-auto"
                     style={{ 
-                      height: "56px", 
-                      width: "166px",
-                      lineHeight: "24px",
+                      height: "40px", 
+                      width: "100%",
+                      lineHeight: "20px",
                       padding: "8px 16px"
                     }}
                   >
@@ -359,15 +359,15 @@ export function HeroSection2() {
                   </Button>
                 </motion.div>
 
-                <motion.div custom={0.4} variants={buttonVariants}>
+                <motion.div custom={0.4} variants={buttonVariants} className="w-full sm:w-auto">
                   <motion.button
                     whileTap="tap"
                     onClick={scrollToProjects}
-                    className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] md:text-[20px] text-base font-medium"
+                    className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] text-sm md:text-[20px] font-medium w-full sm:w-auto"
                     style={{ 
-                      height: "56px", 
-                      width: "166px",
-                      lineHeight: "24px",
+                      height: "40px", 
+                      width: "100%",
+                      lineHeight: "20px",
                       padding: "8px 16px"
                     }}
                   >

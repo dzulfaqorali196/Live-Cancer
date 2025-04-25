@@ -97,7 +97,7 @@ const playButtonVariants = {
 export const VideoSection = () => {
   return (
     <motion.section 
-      className="w-full bg-black py-28"
+      className="w-full bg-black py-12 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -106,22 +106,22 @@ export const VideoSection = () => {
         <div className="relative">
           {/* Decorative elements */}
           <motion.img
-            className="absolute top-[-50px] right-0 w-auto h-[393px] select-none pointer-events-none z-0"
+            className="absolute top-[-25px] md:top-[-50px] right-0 w-auto h-[200px] md:h-[393px] select-none pointer-events-none z-0"
             alt="Decorative elements"
             src="/Video Section/light-right.svg"
             variants={lightVariants}
           />
           <motion.img
-            className="absolute top-[-50px] left-0 w-auto h-[393px] select-none pointer-events-none z-0"
+            className="absolute top-[-25px] md:top-[-50px] left-0 w-auto h-[200px] md:h-[393px] select-none pointer-events-none z-0"
             alt="Decorative elements"
             src="/Video Section/light-left.png"
             variants={lightVariants}
           />
 
           {/* Main content */}
-          <div className="flex flex-col items-center gap-10 pt-24">
+          <div className="flex flex-col items-center gap-6 md:gap-10 pt-12 md:pt-24">
             <motion.h2 
-              className="text-center text-[64px] leading-[64px] font-['Neue_Montreal'] max-w-[1350px] mx-auto px-4"
+              className="text-center text-3xl md:text-[64px] leading-[1.2] md:leading-[64px] font-['Neue_Montreal'] max-w-[1350px] mx-auto px-4"
               variants={headingVariants}
             >
               <span className="text-white tracking-[0]">De</span>
@@ -135,21 +135,21 @@ export const VideoSection = () => {
             {/* Video card container */}
             <div className="w-full px-4 md:px-8 lg:px-16">
               <motion.div variants={cardVariants}>
-                <Card className="w-full max-w-[1350px] mx-auto mt-6 bg-[#a6a6a61c] border-0 rounded-3xl overflow-hidden">
-                  <CardContent className="flex items-center justify-center p-0 h-[586px] relative">
+                <Card className="w-full max-w-[1350px] mx-auto mt-4 md:mt-6 bg-[#a6a6a61c] border-0 rounded-xl md:rounded-3xl overflow-hidden">
+                  <CardContent className="flex items-center justify-center p-0 h-[200px] sm:h-[350px] md:h-[586px] relative">
                     <motion.div 
                       className="absolute inset-0 bg-gradient-to-br from-[#a6a6a61c] to-[#a6a6a61c]"
                       variants={videoPlaceholderVariants}
                     />
                     <motion.button 
-                      className="w-0 h-0 border-t-[30px] border-t-transparent border-l-[52px] border-l-[#a857ff] border-b-[30px] border-b-transparent hover:border-l-[#8a3dd9] transition-colors z-10"
-                    title="Play Video"
-                    aria-label="Play Video"
+                      className="w-0 h-0 border-t-[20px] md:border-t-[30px] border-t-transparent border-l-[35px] md:border-l-[52px] border-l-[#a857ff] border-b-[20px] md:border-b-[30px] border-b-transparent hover:border-l-[#8a3dd9] transition-colors z-10"
+                      title="Play Video"
+                      aria-label="Play Video"
                       variants={playButtonVariants}
                       whileHover="hover"
-                  />
-                </CardContent>
-              </Card>
+                    />
+                  </CardContent>
+                </Card>
               </motion.div>
             </div>
           </div>

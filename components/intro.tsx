@@ -30,6 +30,10 @@ export default function Intro() {
         const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
         if (!canvas) throw new Error("Canvas not found");
 
+        // Set canvas dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
         progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
             if (prev >= 90) return prev;
@@ -42,6 +46,8 @@ export default function Intro() {
 
         await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
         
+        // Set pointer-events untuk memastikan interaksi cursor
+        canvas.style.pointerEvents = 'auto';
         canvas.style.cursor = 'pointer';
         
         setLoadingProgress(100);
@@ -59,6 +65,17 @@ export default function Intro() {
       }
     };
 
+    // Handle window resize
+    const handleResize = () => {
+      const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
     // Initialize audio
     dingSoundRef.current = new Audio('/sound/ding.aac');
     backgroundMusicRef.current = new Audio('/sound/backsound.aac');
@@ -74,6 +91,7 @@ export default function Intro() {
     return () => {
       clearTimeout(loadTimeout);
       clearInterval(progressInterval);
+      window.removeEventListener('resize', handleResize);
       if (splineRef.current) {
         splineRef.current.dispose();
       }
@@ -159,57 +177,29 @@ export default function Intro() {
         Your browser does not support the audio element.
       </audio>
 
-      {/* Dark overlay with transition */}
-      <div 
-        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out z-30 
-          ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
-      />
-
-      {/* Interactive Spline scene */}
-      <canvas
-        id="spline-scene"
-        className="absolute top-0 left-0 w-full h-full z-10 [&>div]:hidden"
-      ></canvas>
-
-      {/* Loading overlay with progress */}
-      {isLoadingSpline && (
-        <div className="absolute inset-0 z-40 bg-black/80 flex flex-col items-center justify-center">
-          {loadingError ? (
-            <div className="text-red-500 text-sm">{loadingError}</div>
-          ) : (
-            <>
-              <div className="w-48 h-1 bg-gray-700 rounded-full mb-3">
-                <div 
-                  className="h-full bg-web3-primary rounded-full transition-all duration-300"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
-              <div className="text-white text-sm">
-                Loading scene... {Math.round(loadingProgress)}%
-              </div>
-            </>
-          )}
-        </div>
-      )}
-
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-20 pointer-events-none">
+      {/* Base Content */}
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4">
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <Image
-            src="/images/cancercoin-logo.png"
-            alt={SiteSettings.title.full}
-            className="w-32 h-32 object-contain"
-            width={200}
-            height={200}
-          />
-          <Image
-            src="/images/cancercoin-text.png"
-            alt={SiteSettings.title.full}
-            className="w-250 h-15 object-contain"
-            width={1000}
-            height={180}
-          />
+          <div className="relative z-[2]">
+            <Image
+              src="/images/cancercoin-logo.png"
+              alt={SiteSettings.title.full}
+              className="w-32 h-32 object-contain"
+              width={200}
+              height={200}
+            />
+          </div>
+          <div className="relative z-[2]">
+            <Image
+              src="/images/cancercoin-text.png"
+              alt={SiteSettings.title.full}
+              className="w-250 h-15 object-contain"
+              width={1000}
+              height={180}
+            />
+          </div>
           <div className="my-32" />
-          <div className="pointer-events-auto">
+          <div className="relative z-[2]">
             <Button 
               className="bg-web3-primary hover:bg-web3-primary/90"
               onClick={fadeOutAudio}
@@ -219,7 +209,7 @@ export default function Intro() {
               </Link>
             </Button>
           </div>
-          <div className="flex gap-4 pointer-events-auto">
+          <div className="flex gap-4 relative z-[2]">
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -246,7 +236,61 @@ export default function Intro() {
         </div>
       </div>
 
-      {isModalOpen && <ModalTerms handleAgreeAndPlay={handleAgreeAndPlay} />}
+      {/* Spline Scene */}
+      <div className="absolute inset-0 w-full h-screen" style={{ zIndex: 1 }}>
+        <canvas
+          id="spline-scene"
+          className={`w-full h-full transition-opacity duration-700 ${
+            !isLoadingSpline ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'auto'
+          }}
+        />
+      </div>
+
+      {/* Dark overlay with transition */}
+      <div 
+        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
+          ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
+        style={{ zIndex: 3 }}
+      />
+
+      {/* Loading overlay */}
+      {isLoadingSpline && (
+        <div 
+          className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center"
+          style={{ zIndex: 4 }}
+        >
+          {loadingError ? (
+            <div className="text-red-500 text-sm">{loadingError}</div>
+          ) : (
+            <>
+              <div className="w-48 h-1 bg-gray-700 rounded-full mb-3">
+                <div 
+                  className="h-full bg-web3-primary rounded-full transition-all duration-300"
+                  style={{ width: `${loadingProgress}%` }}
+                />
+              </div>
+              <div className="text-white text-sm">
+                Loading scene... {Math.round(loadingProgress)}%
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Modal Terms */}
+      {isModalOpen && (
+        <div style={{ zIndex: 5 }}>
+          <ModalTerms handleAgreeAndPlay={handleAgreeAndPlay} />
+        </div>
+      )}
     </div>
   );
 }

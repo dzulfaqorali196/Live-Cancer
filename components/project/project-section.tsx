@@ -138,7 +138,7 @@ export const ProjectSection = () => {
   return (
     <motion.section 
       id="projects" 
-      className="w-full bg-black pt-[200px] pb-28 relative overflow-hidden"
+      className="w-full bg-black pt-24 md:pt-[200px] pb-16 md:pb-28 relative overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -146,7 +146,7 @@ export const ProjectSection = () => {
       <div className="relative w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-16">
         {/* Background elements */}
         <motion.img
-          className="absolute w-full max-w-[1920px] h-[785px] top-[-200px] left-1/2 transform -translate-x-1/2 select-none pointer-events-none z-0"
+          className="absolute w-full max-w-[1920px] h-[400px] md:h-[785px] top-[-100px] md:top-[-200px] left-1/2 transform -translate-x-1/2 select-none pointer-events-none z-0"
           alt="Elements"
           src="/project/light.svg"
           style={{ mixBlendMode: 'screen' }}
@@ -156,9 +156,9 @@ export const ProjectSection = () => {
           transition={{ duration: 1 }}
         />
         
-        <div className="relative flex flex-col items-center gap-24 z-10">
+        <div className="relative flex flex-col items-center gap-12 md:gap-24 z-10">
           <motion.h2 
-            className="text-[64px] leading-[64px] text-center font-normal [font-family:'Neue_Montreal-Regular',Helvetica] max-w-[1350px] mx-auto"
+            className="text-4xl md:text-[64px] leading-[1.2] md:leading-[64px] text-center font-normal [font-family:'Neue_Montreal-Regular',Helvetica] max-w-[1350px] mx-auto px-4"
             variants={headingVariants}
           >
             <span className="text-white tracking-[0]">Explore </span>
@@ -168,72 +168,72 @@ export const ProjectSection = () => {
           <div className="flex flex-col gap-4 w-full max-w-[1920px]">
             {/* First row of projects */}
             <div className="flex flex-col items-start w-full">
-              <div className="flex items-start gap-4 w-full justify-center">
+              <div className="flex flex-col md:flex-row items-start gap-4 w-full justify-center">
                 {projects.map((project) => (
                   <motion.div
                     key={project.id}
                     variants={cardVariants}
                     whileHover="hover"
-                    className="w-full max-w-[600px]"
+                    className="w-full md:max-w-[600px]"
                   >
-                    <Card className="flex flex-col h-[351.8px] w-full border-0 rounded-none bg-transparent overflow-hidden">
+                    <Card className="flex flex-col h-[280px] md:h-[351.8px] w-full border-0 rounded-[12px] md:rounded-none bg-transparent overflow-hidden">
                       <motion.div
-                      className={`relative flex flex-col items-center justify-center h-[241.75px] w-full rounded-[17.38px_17.38px_0px_0px] border-t-[2.17px] border-r-[2.17px] border-l-[2.17px] overflow-hidden ${
-                        project.isActive
-                          ? "bg-[#4d139d26] border-[#b37feb]"
-                          : "bg-[#f5f5f508] border-[#212121]"
-                      }`}
-                    >
-                      {project.isActive && project.image ? (
+                        className={`relative flex flex-col items-center justify-center h-[180px] md:h-[241.75px] w-full rounded-t-[12px] md:rounded-[17.38px_17.38px_0px_0px] border-t-[1px] md:border-t-[2.17px] border-r-[1px] md:border-r-[2.17px] border-l-[1px] md:border-l-[2.17px] overflow-hidden ${
+                          project.isActive
+                            ? "bg-[#4d139d26] border-[#b37feb]"
+                            : "bg-[#f5f5f508] border-[#212121]"
+                        }`}
+                      >
+                        {project.isActive && project.image ? (
                           <motion.div 
                             className="relative w-full h-full"
                             variants={imageVariants}
                           >
-                          <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            style={{ objectFit: 'cover' }}
-                            className="rounded-t-[17.38px]"
-                          />
+                            <Image
+                              src={project.image}
+                              alt={project.title}
+                              fill
+                              style={{ objectFit: 'cover' }}
+                              className="rounded-t-[12px] md:rounded-t-[17.38px]"
+                            />
                             <motion.div 
                               className="absolute inset-0 bg-[#4d139d] opacity-20"
                               whileHover={{ opacity: 0.1 }}
                             />
                           </motion.div>
-                      ) : (
+                        ) : (
                           <motion.div variants={plusIconVariants}>
-                        <PlusIcon className="w-[61px] h-[61px] text-white" />
+                            <PlusIcon className="w-10 h-10 md:w-[61px] md:h-[61px] text-white" />
                           </motion.div>
-                      )}
+                        )}
                       </motion.div>
 
                       <motion.div
                         variants={contentVariants}
-                      className={`flex flex-col items-start gap-[9.41px] p-6 rounded-[0px_0px_17.38px_17.38px] border-r-[1.57px] border-b-[1.57px] border-l-[1.57px] ${
-                        project.isActive
-                          ? "border-[#b37feb]"
-                          : "bg-[#ffffff0f] border-[#212121]"
-                      }`}
-                    >
-                      <div className="flex items-center justify-around gap-[9.41px] w-full">
-                        <div className="flex flex-col items-start gap-[9.41px] flex-1">
+                        className={`flex flex-col items-start gap-2 md:gap-[9.41px] p-4 md:p-6 rounded-b-[12px] md:rounded-[0px_0px_17.38px_17.38px] border-r-[1px] md:border-r-[1.57px] border-b-[1px] md:border-b-[1.57px] border-l-[1px] md:border-l-[1.57px] ${
+                          project.isActive
+                            ? "border-[#b37feb]"
+                            : "bg-[#ffffff0f] border-[#212121]"
+                        }`}
+                      >
+                        <div className="flex items-center justify-around gap-2 md:gap-[9.41px] w-full">
+                          <div className="flex flex-col items-start gap-2 md:gap-[9.41px] flex-1">
                             <motion.h3 
-                              className="mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-[26.1px] tracking-[0] leading-normal"
+                              className="mt-[-1px] md:mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-xl md:text-[26.1px] tracking-[0] leading-normal"
                               whileHover={{ x: 5 }}
                             >
-                            {project.title}
+                              {project.title}
                             </motion.h3>
                             <motion.p 
-                              className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-base tracking-[0] leading-normal whitespace-nowrap"
+                              className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-sm md:text-base tracking-[0] leading-normal"
                               whileHover={{ x: 5 }}
                             >
-                            {project.description}
+                              {project.description}
                             </motion.p>
                           </div>
                         </div>
                       </motion.div>
-                  </Card>
+                    </Card>
                   </motion.div>
                 ))}
               </div>
@@ -241,48 +241,48 @@ export const ProjectSection = () => {
 
             {/* Second row of projects */}
             <div className="flex flex-col items-start w-full">
-              <div className="flex items-start gap-4 w-full justify-center">
+              <div className="flex flex-col md:flex-row items-start gap-4 w-full justify-center">
                 {projects.map((project) => (
                   <motion.div
                     key={`row2-${project.id}`}
                     variants={cardVariants}
                     whileHover="hover"
-                    className="w-full max-w-[600px]"
+                    className="w-full md:max-w-[600px]"
                   >
-                    <Card className="flex flex-col h-[351.8px] w-full border-0 rounded-none bg-transparent overflow-hidden">
+                    <Card className="flex flex-col h-[280px] md:h-[351.8px] w-full border-0 rounded-[12px] md:rounded-none bg-transparent overflow-hidden">
                       <motion.div
-                        className="flex flex-col items-center justify-center h-[241.75px] w-full rounded-[17.38px_17.38px_0px_0px] border-t-[2.17px] border-r-[2.17px] border-l-[2.17px] bg-[#f5f5f508] border-[#212121]"
+                        className="flex flex-col items-center justify-center h-[180px] md:h-[241.75px] w-full rounded-t-[12px] md:rounded-[17.38px_17.38px_0px_0px] border-t-[1px] md:border-t-[2.17px] border-r-[1px] md:border-r-[2.17px] border-l-[1px] md:border-l-[2.17px] bg-[#f5f5f508] border-[#212121]"
                       >
                         <motion.div 
                           variants={plusIconVariants}
                           whileHover={{ scale: 1.2, rotate: 90 }}
                         >
-                      <PlusIcon className="w-[61px] h-[61px] text-white" />
+                          <PlusIcon className="w-10 h-10 md:w-[61px] md:h-[61px] text-white" />
                         </motion.div>
                       </motion.div>
 
                       <motion.div
                         variants={contentVariants}
-                        className="flex flex-col items-start gap-[9.41px] p-6 rounded-[0px_0px_17.38px_17.38px] border-r-[1.57px] border-b-[1.57px] border-l-[1.57px] bg-[#ffffff0f] border-[#212121]"
+                        className="flex flex-col items-start gap-2 md:gap-[9.41px] p-4 md:p-6 rounded-b-[12px] md:rounded-[0px_0px_17.38px_17.38px] border-r-[1px] md:border-r-[1.57px] border-b-[1px] md:border-b-[1.57px] border-l-[1px] md:border-l-[1.57px] bg-[#ffffff0f] border-[#212121]"
                       >
-                      <div className="flex items-center justify-around gap-[9.41px] w-full">
-                        <div className="flex flex-col items-start gap-[9.41px] flex-1">
+                        <div className="flex items-center justify-around gap-2 md:gap-[9.41px] w-full">
+                          <div className="flex flex-col items-start gap-2 md:gap-[9.41px] flex-1">
                             <motion.h3 
-                              className="mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-[26.1px] tracking-[0] leading-normal"
+                              className="mt-[-1px] md:mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-xl md:text-[26.1px] tracking-[0] leading-normal"
                               whileHover={{ x: 5 }}
                             >
-                            Propose Your Project
+                              Propose Your Project
                             </motion.h3>
                             <motion.p 
-                              className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-base tracking-[0] leading-normal whitespace-nowrap"
+                              className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-sm md:text-base tracking-[0] leading-normal"
                               whileHover={{ x: 5 }}
                             >
-                            {project.description}
+                              {project.description}
                             </motion.p>
                           </div>
                         </div>
                       </motion.div>
-                  </Card>
+                    </Card>
                   </motion.div>
                 ))}
               </div>

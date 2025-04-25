@@ -52,7 +52,7 @@ const buttonVariants = {
 export function CtaSection() {
   return (
     <motion.section 
-      className="py-20 md:py-32 relative overflow-hidden"
+      className="py-12 md:py-20 lg:py-32 relative overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -64,14 +64,14 @@ export function CtaSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-web3-dark via-web3-primary/20 to-web3-dark"></div>
       
       {/* Efek glow ungu tambahan */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[400px] bg-web3-primary/10 blur-[100px]"></div>
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[200px] md:h-[400px] bg-web3-primary/10 blur-[50px] md:blur-[100px]"></div>
       
       {/* Gradient atas dan bawah */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-web3-dark via-web3-dark to-transparent pointer-events-none z-10"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-web3-darker via-web3-darker to-transparent pointer-events-none z-10"></div>
+      <div className="absolute top-0 left-0 right-0 h-16 md:h-24 bg-gradient-to-b from-web3-dark via-web3-dark to-transparent pointer-events-none z-10"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-12 md:h-16 bg-gradient-to-t from-web3-darker via-web3-darker to-transparent pointer-events-none z-10"></div>
       
       <motion.div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-web3-primary/10 blur-3xl pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[800px] rounded-full bg-web3-primary/10 blur-2xl md:blur-3xl pointer-events-none"
         variants={glowVariants}
         animate={{
           scale: [1, 1.1, 1],
@@ -84,18 +84,20 @@ export function CtaSection() {
         }}
       ></motion.div>
       <motion.div 
-        className="container relative z-10"
+        className="container relative z-10 px-4 md:px-6"
         variants={containerVariants}
       >
-        <motion.div variants={containerVariants}>
-        <SectionHeader
-          title1="Ready to Join"
-          title2="Our Community?"
-            description="Be part of CancerFun's global mission to fund innovative cancer research with BIO tokens on Solana's blockchain."
-        />
+        <motion.div variants={containerVariants} className="flex flex-col items-center md:items-start">
+          <div className="w-full text-center md:text-left">
+            <SectionHeader
+              title1="Ready to Join"
+              title2="Our Community?"
+              description="Be part of CancerFun's global mission to fund innovative cancer research with BIO tokens on Solana's blockchain."
+            />
+          </div>
         </motion.div>
         <motion.div 
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-4xl mx-auto text-center mt-6 md:mt-8"
           variants={containerVariants}
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -106,7 +108,7 @@ export function CtaSection() {
             <Button
               size="lg"
               variant="outline"
-              className="bg-web3-primary hover:bg-web3-primary/90 text-white"
+              className="w-full sm:w-auto bg-web3-primary hover:bg-web3-primary/90 text-white text-sm md:text-base px-6 py-3 md:px-8 md:py-4"
             >
               <Link href={Routes.CONTACT} className="flex items-center gap-2">
                   <motion.div
@@ -120,7 +122,7 @@ export function CtaSection() {
                       repeat: Infinity
                     }}
                   >
-                <SiRocket />
+                <SiRocket className="w-4 h-4 md:w-5 md:h-5" />
                   </motion.div>
                 <span>Join CancerFun Now</span>
               </Link>

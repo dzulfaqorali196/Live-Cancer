@@ -55,31 +55,35 @@ export default function SectionHeader({
   }, [date]);
 
   return (
-    <header className="max-w-5xl mx-auto text-center mb-12">
+    <header className="w-full max-w-5xl mx-auto text-center mb-12">
       <div
         ref={ref}
-        className="flex flex-col text-center items-center gap-6 max-w-3xl mx-auto mb-16"
+        className="flex flex-col items-center justify-center w-full gap-6 max-w-3xl mx-auto mb-16"
       >
         <motion.h2
-          className="text-3xl md:text-4xl font-normal inline-flex flex-wrap gap-2"
+          className="text-3xl md:text-4xl font-normal inline-flex flex-wrap justify-center items-center gap-2 w-full"
           initial="hidden"
           variants={headerVariants}
           animate={controls}
         >
-          {title1} <span className="text-[#a857ff]">{title2}</span>
+          <span className="text-center w-full flex flex-wrap justify-center items-center gap-2">
+            {title1} <span className="text-[#a857ff]">{title2}</span>
+          </span>
         </motion.h2>
         {subtitle && (
           <motion.h3
-            className="text-2xl md:text-3xl font-normal inline-flex flex-wrap gap-2"
+            className="text-2xl md:text-3xl font-normal inline-flex flex-wrap justify-center items-center gap-2 w-full"
             initial="hidden"
             variants={headerVariants}
             animate={controls}
           >
-            {title1} <span className="text-[#a857ff]">{title2}</span>
+            <span className="text-center w-full flex flex-wrap justify-center items-center gap-2">
+              {title1} <span className="text-[#a857ff]">{title2}</span>
+            </span>
           </motion.h3>
         )}
         <motion.p
-          className="text-lg sm:text-xl text-muted-foreground"
+          className="text-lg sm:text-xl text-muted-foreground text-center w-full"
           variants={paragraphVariants}
           initial="hidden"
           animate={controls}

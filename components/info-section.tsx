@@ -37,7 +37,7 @@ const textVariants = {
 export default function InfoSection() {
   return (
     <motion.div 
-      className="relative h-[90px]"
+      className="relative h-[70px] md:h-[90px]"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -48,11 +48,11 @@ export default function InfoSection() {
     >
       {/* Top info bar */}
       <motion.div 
-        className="flex w-full h-[90px] items-center justify-center gap-2.5 px-8 py-5 bg-[#1717179e] backdrop-blur-sm"
+        className="flex w-full h-[70px] md:h-[90px] items-center justify-center gap-2 px-4 md:px-8 py-3 md:py-5 bg-[#1717179e] backdrop-blur-sm"
         variants={containerVariants}
       >
         <motion.div 
-          className="relative w-fit [font-family:'Neue_Montreal-Regular',Helvetica] font-normal text-xl tracking-[0] leading-[normal] whitespace-nowrap"
+          className="relative w-fit [font-family:'Neue_Montreal-Regular',Helvetica] font-normal text-sm md:text-xl tracking-[0] leading-[1.4] md:leading-[normal] text-center md:text-left md:whitespace-nowrap"
           variants={textVariants}
         >
           <motion.span 
