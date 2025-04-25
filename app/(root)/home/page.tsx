@@ -14,7 +14,6 @@ import { ArticleDoc, ArticleType } from "@/types";
 import { CommitteeSection } from "@/components/committee-section";
 // import { LatestBlogPostSection } from "@/components/latest-blog-post-section";
 import { FC } from "react";
-import InfoSection from "@/components/info-section";
 import { StatsSection } from "@/components/stats-section";
 import { VideoSection } from "@/components/video/video-section";
 import { SiteSettings } from "@/constants/settings";
@@ -85,7 +84,6 @@ export default async function Home() {
     <>
       {/* <HeroSection /> */}
       <HeroSection2 />
-      <InfoSection />
       {/* <FeaturesSection articles={articles} /> */}
       <StatsSection />
       <DynamicProjectSection />

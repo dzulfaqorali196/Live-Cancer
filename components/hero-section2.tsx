@@ -165,13 +165,15 @@ export function HeroSection2() {
           {/* Video Container */}
           <motion.div 
             variants={variants.videoContainer}
-            className="relative w-full h-screen overflow-hidden" 
+            className="relative w-full h-[100vh] overflow-hidden" 
             style={{ 
-              marginTop: "-5vh",
               zIndex: 1,
               transform: 'translateZ(0)'
             }}
           >
+            {/* Overlay gradien */}
+            <div className="absolute inset-0 bg-black/20 z-[2] pointer-events-none" />
+            
             {!isVideoLoaded && (
               <div className="absolute inset-0 bg-black flex items-center justify-center">
                 <div className="w-8 h-8 border-2 border-[#a857ff] border-t-transparent rounded-full animate-spin"></div>
@@ -239,12 +241,12 @@ export function HeroSection2() {
                     </motion.div>
 
                     <motion.div custom={0.4} variants={variants.button} className="w-full sm:w-auto">
-                      <button
+                      <Button
                         onClick={scrollToProjects}
-                        className="w-full sm:w-auto px-6 py-2 rounded-[100px] border border-white/10 font-['Neue_Montreal'] text-sm md:text-[20px] font-medium text-white hover:bg-white/5 transition-colors"
+                        className="bg-white hover:bg-white/90 text-black rounded-[100px] font-['Neue_Montreal'] text-sm md:text-[20px] font-medium w-full sm:w-auto px-6 py-2"
                       >
                         Get Started
-                      </button>
+                      </Button>
                     </motion.div>
                   </div>
                 </div>

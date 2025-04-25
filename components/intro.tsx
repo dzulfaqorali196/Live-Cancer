@@ -36,6 +36,27 @@ export default function Intro() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        // Prevent unwanted zoom and touch behaviors
+        canvas.style.touchAction = 'none';
+        
+        // Prevent default touch events
+        canvas.addEventListener('touchstart', (e) => {
+          if (e.touches.length > 1) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+
+        // Prevent zoom on double tap
+        let lastTap = 0;
+        canvas.addEventListener('touchend', (e) => {
+          const currentTime = new Date().getTime();
+          const tapLength = currentTime - lastTap;
+          if (tapLength < 500 && tapLength > 0) {
+            e.preventDefault();
+          }
+          lastTap = currentTime;
+        }, { passive: false });
+
         progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
             if (prev >= 90) return prev;
@@ -52,6 +73,12 @@ export default function Intro() {
         canvas.style.pointerEvents = 'auto';
         canvas.style.cursor = 'pointer';
         
+        // Tambahkan meta viewport untuk mengontrol scaling
+        const viewportMeta = document.createElement('meta');
+        viewportMeta.name = 'viewport';
+        viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+        document.head.appendChild(viewportMeta);
+        
         setLoadingProgress(100);
         clearInterval(progressInterval);
         
@@ -67,13 +94,17 @@ export default function Intro() {
       }
     };
 
-    // Handle window resize
+    // Handle window resize with debounce
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
-      if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+        if (canvas) {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+      }, 250);
     };
 
     window.addEventListener('resize', handleResize);
@@ -224,17 +255,20 @@ export default function Intro() {
             />
           </div>
           <div className="my-32" />
-          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div 
+            className="relative z-[2] w-full max-w-[300px] mx-auto" 
+            style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
+          >
             <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90"
+              className="bg-web3-primary hover:bg-web3-primary/90 w-full touch-manipulation"
               onClick={handleStartExplore}
             >
-              <span className="flex items-center gap-2 px-8 py-6">
+              <span className="flex items-center justify-center gap-2 px-4 py-3 w-full">
                 Start Explore <FaArrowRightLong />
               </span>
             </Button>
           </div>
-          <div className="flex gap-4 relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="flex gap-4 relative z-[2] mt-4" style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}>
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -262,7 +296,14 @@ export default function Intro() {
       </div>
 
       {/* Spline Scene */}
-      <div className="absolute inset-0 w-full h-screen" style={{ zIndex: 1 }}>
+      <div 
+        className="absolute inset-0 w-full h-screen overflow-hidden" 
+        style={{ 
+          zIndex: 1,
+          touchAction: 'none',
+          WebkitOverflowScrolling: 'touch'
+        }}
+      >
         <canvas
           id="spline-scene"
           className={`w-full h-full transition-opacity duration-700 ${
@@ -274,7 +315,10 @@ export default function Intro() {
             left: 0,
             width: '100%',
             height: '100%',
-            pointerEvents: 'auto'
+            pointerEvents: 'auto',
+            touchAction: 'none',
+            userSelect: 'none',
+            WebkitTouchCallout: 'none'
           }}
         />
       </div>

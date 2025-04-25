@@ -28,6 +28,21 @@ const headingVariants = {
   }
 };
 
+const textVariants = {
+  hidden: { 
+    opacity: 0,
+    y: 10
+  },
+  visible: { 
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  }
+};
+
 const hexagonVariants = {
   hidden: {
     opacity: 0,
@@ -72,15 +87,73 @@ const statCards = [
   },
 ];
 
+// Info Section Component
+function InfoBar() {
+  return (
+    <motion.div 
+      className="relative h-[70px] md:h-[90px]"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ 
+        once: true,
+        amount: 0.3
+      }}
+    >
+      <motion.div 
+        className="flex w-full h-[70px] md:h-[90px] items-center justify-center gap-2 px-4 md:px-8 py-3 md:py-5 bg-[#1717179e] backdrop-blur-sm"
+        variants={containerVariants}
+      >
+        <motion.div 
+          className="relative w-fit [font-family:'Neue_Montreal-Regular',Helvetica] font-normal text-sm md:text-xl tracking-[0] leading-[1.4] md:leading-[normal] text-center md:text-left md:whitespace-nowrap"
+          variants={textVariants}
+        >
+          <motion.span 
+            className="text-[#8e8888]"
+            variants={textVariants}
+          >
+            We are committed to advancing cancer research by harnessing
+          </motion.span>
+          <motion.span 
+            className="text-[#303030]"
+            variants={textVariants}
+          >&nbsp;</motion.span>
+          <motion.span 
+            className="text-[#a857ff]"
+            variants={textVariants}
+            whileHover={{ 
+              scale: 1.05,
+              color: "#a857ff",
+              transition: { duration: 0.2 }
+            }}
+          >
+            decentralized science
+          </motion.span>
+          <motion.span 
+            className="text-[#8e8888]"
+            variants={textVariants}
+          >
+            {" "}
+            to accelerate breakthroughs and enhance patient outcomes.
+          </motion.span>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function StatsSection() {
   return (
     <motion.section 
-      className="relative w-full bg-black pb-20 pt-20 overflow-hidden"
+      className="relative w-full bg-black pb-20 overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
     >
+      {/* Info Section at the top */}
+      <InfoBar />
+
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(168,87,255,0.1),transparent_50%)]" />
@@ -90,7 +163,7 @@ export function StatsSection() {
         }} />
       </div>
 
-      <div className="relative max-w-[1300px] mx-auto px-4">
+      <div className="relative max-w-[1300px] mx-auto px-4 pt-20">
         {/* Main heading without glow effect */}
         <motion.div 
           className="text-center mb-20"
