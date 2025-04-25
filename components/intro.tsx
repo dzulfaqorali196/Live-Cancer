@@ -234,7 +234,7 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[5]">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]">
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
           <div className="relative z-[2]">
             <Image
@@ -256,11 +256,15 @@ export default function Intro() {
           </div>
           <div className="my-32" />
           <div 
-            className="relative z-[10] w-full max-w-[300px] mx-auto" 
+            className="relative z-[20] w-full max-w-[300px] mx-auto" 
           >
             <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
+              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8 relative"
               onClick={handleStartExplore}
+              style={{
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent'
+              }}
             >
               <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
                 Start Explore <FaArrowRightLong />
@@ -297,14 +301,14 @@ export default function Intro() {
 
       {/* Spline Scene */}
       <div 
-        className="absolute inset-0 w-full h-screen overflow-hidden" 
+        className="absolute inset-0 w-full h-screen overflow-hidden pointer-events-none" 
         style={{ 
           zIndex: 1
         }}
       >
         <canvas
           id="spline-scene"
-          className={`w-full h-full transition-opacity duration-700 ${
+          className={`w-full h-full transition-opacity duration-700 pointer-events-none ${
             !isLoadingSpline ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
