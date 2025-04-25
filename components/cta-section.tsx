@@ -88,11 +88,11 @@ export function CtaSection() {
         variants={containerVariants}
       >
         <motion.div variants={containerVariants}>
-          <SectionHeader
-            title1="Ready to Join"
-            title2="Our Community?"
+        <SectionHeader
+          title1="Ready to Join"
+          title2="Our Community?"
             description="Be part of CancerFun's global mission to fund innovative cancer research with BIO tokens on Solana's blockchain."
-          />
+        />
         </motion.div>
         <motion.div 
           className="max-w-4xl mx-auto text-center"
@@ -103,12 +103,12 @@ export function CtaSection() {
               variants={buttonVariants}
               whileHover="hover"
             >
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-web3-primary hover:bg-web3-primary/90 text-white"
-              >
-                <Link href={Routes.CONTACT} className="flex items-center gap-2">
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-web3-primary hover:bg-web3-primary/90 text-white"
+            >
+              <Link href={Routes.CONTACT} className="flex items-center gap-2">
                   <motion.div
                     animate={{
                       x: [0, 5, 0],
@@ -120,11 +120,11 @@ export function CtaSection() {
                       repeat: Infinity
                     }}
                   >
-                    <SiRocket />
+                <SiRocket />
                   </motion.div>
-                  <span>Join CancerFun Now</span>
-                </Link>
-              </Button>
+                <span>Join CancerFun Now</span>
+              </Link>
+            </Button>
             </motion.div>
           </div>
         </motion.div>

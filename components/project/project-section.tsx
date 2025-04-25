@@ -178,62 +178,62 @@ export const ProjectSection = () => {
                   >
                     <Card className="flex flex-col h-[351.8px] w-full border-0 rounded-none bg-transparent overflow-hidden">
                       <motion.div
-                        className={`relative flex flex-col items-center justify-center h-[241.75px] w-full rounded-[17.38px_17.38px_0px_0px] border-t-[2.17px] border-r-[2.17px] border-l-[2.17px] overflow-hidden ${
-                          project.isActive
-                            ? "bg-[#4d139d26] border-[#b37feb]"
-                            : "bg-[#f5f5f508] border-[#212121]"
-                        }`}
-                      >
-                        {project.isActive && project.image ? (
+                      className={`relative flex flex-col items-center justify-center h-[241.75px] w-full rounded-[17.38px_17.38px_0px_0px] border-t-[2.17px] border-r-[2.17px] border-l-[2.17px] overflow-hidden ${
+                        project.isActive
+                          ? "bg-[#4d139d26] border-[#b37feb]"
+                          : "bg-[#f5f5f508] border-[#212121]"
+                      }`}
+                    >
+                      {project.isActive && project.image ? (
                           <motion.div 
                             className="relative w-full h-full"
                             variants={imageVariants}
                           >
-                            <Image
-                              src={project.image}
-                              alt={project.title}
-                              fill
-                              style={{ objectFit: 'cover' }}
-                              className="rounded-t-[17.38px]"
-                            />
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            style={{ objectFit: 'cover' }}
+                            className="rounded-t-[17.38px]"
+                          />
                             <motion.div 
                               className="absolute inset-0 bg-[#4d139d] opacity-20"
                               whileHover={{ opacity: 0.1 }}
                             />
                           </motion.div>
-                        ) : (
+                      ) : (
                           <motion.div variants={plusIconVariants}>
-                            <PlusIcon className="w-[61px] h-[61px] text-white" />
+                        <PlusIcon className="w-[61px] h-[61px] text-white" />
                           </motion.div>
-                        )}
+                      )}
                       </motion.div>
 
                       <motion.div
                         variants={contentVariants}
-                        className={`flex flex-col items-start gap-[9.41px] p-6 rounded-[0px_0px_17.38px_17.38px] border-r-[1.57px] border-b-[1.57px] border-l-[1.57px] ${
-                          project.isActive
-                            ? "border-[#b37feb]"
-                            : "bg-[#ffffff0f] border-[#212121]"
-                        }`}
-                      >
-                        <div className="flex items-center justify-around gap-[9.41px] w-full">
-                          <div className="flex flex-col items-start gap-[9.41px] flex-1">
+                      className={`flex flex-col items-start gap-[9.41px] p-6 rounded-[0px_0px_17.38px_17.38px] border-r-[1.57px] border-b-[1.57px] border-l-[1.57px] ${
+                        project.isActive
+                          ? "border-[#b37feb]"
+                          : "bg-[#ffffff0f] border-[#212121]"
+                      }`}
+                    >
+                      <div className="flex items-center justify-around gap-[9.41px] w-full">
+                        <div className="flex flex-col items-start gap-[9.41px] flex-1">
                             <motion.h3 
                               className="mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-[26.1px] tracking-[0] leading-normal"
                               whileHover={{ x: 5 }}
                             >
-                              {project.title}
+                            {project.title}
                             </motion.h3>
                             <motion.p 
                               className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-base tracking-[0] leading-normal whitespace-nowrap"
                               whileHover={{ x: 5 }}
                             >
-                              {project.description}
+                            {project.description}
                             </motion.p>
                           </div>
                         </div>
                       </motion.div>
-                    </Card>
+                  </Card>
                   </motion.div>
                 ))}
               </div>
@@ -257,7 +257,7 @@ export const ProjectSection = () => {
                           variants={plusIconVariants}
                           whileHover={{ scale: 1.2, rotate: 90 }}
                         >
-                          <PlusIcon className="w-[61px] h-[61px] text-white" />
+                      <PlusIcon className="w-[61px] h-[61px] text-white" />
                         </motion.div>
                       </motion.div>
 
@@ -265,24 +265,24 @@ export const ProjectSection = () => {
                         variants={contentVariants}
                         className="flex flex-col items-start gap-[9.41px] p-6 rounded-[0px_0px_17.38px_17.38px] border-r-[1.57px] border-b-[1.57px] border-l-[1.57px] bg-[#ffffff0f] border-[#212121]"
                       >
-                        <div className="flex items-center justify-around gap-[9.41px] w-full">
-                          <div className="flex flex-col items-start gap-[9.41px] flex-1">
+                      <div className="flex items-center justify-around gap-[9.41px] w-full">
+                        <div className="flex flex-col items-start gap-[9.41px] flex-1">
                             <motion.h3 
                               className="mt-[-1.57px] font-['Neue_Montreal'] font-bold text-white text-[26.1px] tracking-[0] leading-normal"
                               whileHover={{ x: 5 }}
                             >
-                              Propose Your Project
+                            Propose Your Project
                             </motion.h3>
                             <motion.p 
                               className="font-['Neue_Montreal'] font-normal text-[#b7afaf] text-base tracking-[0] leading-normal whitespace-nowrap"
                               whileHover={{ x: 5 }}
                             >
-                              {project.description}
+                            {project.description}
                             </motion.p>
                           </div>
                         </div>
                       </motion.div>
-                    </Card>
+                  </Card>
                   </motion.div>
                 ))}
               </div>

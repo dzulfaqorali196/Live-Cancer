@@ -167,23 +167,23 @@ export function FaqContent() {
 
       <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
         <motion.div variants={tabsVariants}>
-          <TabsList className="w-full mb-8 bg-web3-dark border border-web3-gray rounded-lg p-1 overflow-x-auto flex flex-nowrap">
-            <TabsTrigger value="all" className="flex-1">
-              All
-            </TabsTrigger>
-            <TabsTrigger value="general" className="flex-1">
-              General
-            </TabsTrigger>
-            <TabsTrigger value="research" className="flex-1">
-              Research
-            </TabsTrigger>
-            <TabsTrigger value="token" className="flex-1">
-              Token
-            </TabsTrigger>
-            <TabsTrigger value="committee" className="flex-1">
-              Committee
-            </TabsTrigger>
-          </TabsList>
+        <TabsList className="w-full mb-8 bg-web3-dark border border-web3-gray rounded-lg p-1 overflow-x-auto flex flex-nowrap">
+          <TabsTrigger value="all" className="flex-1">
+            All
+          </TabsTrigger>
+          <TabsTrigger value="general" className="flex-1">
+            General
+          </TabsTrigger>
+          <TabsTrigger value="research" className="flex-1">
+            Research
+          </TabsTrigger>
+          <TabsTrigger value="token" className="flex-1">
+            Token
+          </TabsTrigger>
+          <TabsTrigger value="committee" className="flex-1">
+            Committee
+          </TabsTrigger>
+        </TabsList>
         </motion.div>
         <motion.div 
           className="space-y-6"
@@ -198,16 +198,16 @@ export function FaqContent() {
                   custom={index}
                 >
                   <AccordionItem
-                    value={`item-${index}`}
-                    className="border-web3-gray"
-                  >
-                    <AccordionTrigger className="text-left hover:text-web3-primary">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
+                  value={`item-${index}`}
+                  className="border-web3-gray"
+                >
+                  <AccordionTrigger className="text-left hover:text-web3-primary">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
                 </motion.div>
               ))}
             </Accordion>

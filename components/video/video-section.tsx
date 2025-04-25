@@ -143,13 +143,13 @@ export const VideoSection = () => {
                     />
                     <motion.button 
                       className="w-0 h-0 border-t-[30px] border-t-transparent border-l-[52px] border-l-[#a857ff] border-b-[30px] border-b-transparent hover:border-l-[#8a3dd9] transition-colors z-10"
-                      title="Play Video"
-                      aria-label="Play Video"
+                    title="Play Video"
+                    aria-label="Play Video"
                       variants={playButtonVariants}
                       whileHover="hover"
-                    />
-                  </CardContent>
-                </Card>
+                  />
+                </CardContent>
+              </Card>
               </motion.div>
             </div>
           </div>

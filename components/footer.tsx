@@ -81,18 +81,18 @@ export function Footer() {
             variants={itemVariants}
           >
             <motion.div variants={logoVariants}>
-              <Link href={Routes.HOME} className="flex items-center gap-2 mb-6">
+            <Link href={Routes.HOME} className="flex items-center gap-2 mb-6">
                 <motion.div 
                   className="relative w-8 h-8 flex items-center justify-center"
                   whileHover={{ scale: 1.1 }}
                 >
-                  <div className="absolute inset-0 bg-web3-primary rounded-full hover:animate-pulse"></div>
-                  <span className="text-xl font-bold text-white p-2 z-10">
-                    <FaRibbon />
-                  </span>
+                <div className="absolute inset-0 bg-web3-primary rounded-full hover:animate-pulse"></div>
+                <span className="text-xl font-bold text-white p-2 z-10">
+                  <FaRibbon />
+                </span>
                 </motion.div>
-                <span className="text-xl font-bold">CancerFun</span>
-              </Link>
+              <span className="text-xl font-bold">CancerFun</span>
+            </Link>
             </motion.div>
             <motion.p 
               className="text-muted-foreground mb-6 max-w-md"
@@ -197,11 +197,11 @@ export function Footer() {
                 custom={index}
               >
                 <Link
-                  href={item.href}
-                  className="text-sm text-muted-foreground hover:text-white transition-colors"
-                >
-                  {item.label}
-                </Link>
+                href={item.href}
+                className="text-sm text-muted-foreground hover:text-white transition-colors"
+              >
+                {item.label}
+              </Link>
               </motion.div>
             ))}
           </motion.div>

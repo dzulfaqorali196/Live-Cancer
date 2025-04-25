@@ -86,7 +86,6 @@ export function HeroSection2() {
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   useEffect(() => {
-    // Skip Spline initialization in development mode
     if (isDevelopment) {
       setIsSplineReady(true);
       return;
@@ -96,8 +95,16 @@ export function HeroSection2() {
 
     const initializeSpline = async () => {
       try {
+        console.log('Starting Spline initialization...');
         const canvas = document.getElementById("hero-spline-scene") as HTMLCanvasElement;
-        if (!canvas) throw new Error("Canvas not found");
+        if (!canvas) {
+          console.error('Canvas element not found');
+          throw new Error("Canvas not found");
+        }
+
+        // Set canvas size explicitly
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
@@ -106,11 +113,14 @@ export function HeroSection2() {
           });
         }, 300);
 
+        console.log('Creating Spline application...');
         const app = new Application(canvas);
         splineRef.current = app;
 
+        console.log('Loading Spline scene...');
         await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
         
+        console.log('Spline scene loaded successfully');
         canvas.style.cursor = 'pointer';
         
         setLoadingProgress(100);
@@ -128,11 +138,23 @@ export function HeroSection2() {
       }
     };
 
+    // Add resize handler
+    const handleResize = () => {
+      const canvas = document.getElementById("hero-spline-scene") as HTMLCanvasElement;
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
     initializeSpline();
 
     return () => {
       clearInterval(progressInterval);
+      window.removeEventListener('resize', handleResize);
       if (splineRef.current) {
+        console.log('Disposing Spline application...');
         splineRef.current.dispose();
       }
     };
@@ -191,7 +213,10 @@ export function HeroSection2() {
         <motion.div 
           variants={splineContainerVariants}
           className="relative w-full h-screen overflow-hidden" 
-          style={{ marginTop: "-5vh" }}
+          style={{ 
+            marginTop: "-5vh",
+            zIndex: 1 // Ensure Spline is above background
+          }}
         >
           {/* Gradient untuk transisi yang lebih halus */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
@@ -205,6 +230,13 @@ export function HeroSection2() {
             className={`w-full h-full object-cover transition-all duration-700 ${
               isSplineReady ? 'opacity-100' : 'opacity-0'
             }`}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%'
+            }}
           ></canvas>
         </motion.div>
       )}

@@ -104,16 +104,16 @@ export function FaqSection() {
                   custom={index}
                 >
                   <AccordionItem
-                    value={`item-${index}`}
-                    className="border-web3-gray"
-                  >
-                    <AccordionTrigger className="text-left hover:text-web3-primary">
+                  value={`item-${index}`}
+                  className="border-web3-gray"
+                >
+                  <AccordionTrigger className="text-left hover:text-web3-primary">
                       {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
                 </motion.div>
               );
             })}

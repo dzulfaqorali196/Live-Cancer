@@ -55,17 +55,17 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
 
       <div className="container">
         <motion.div variants={contentVariants}>
-          <SectionHeader
-            title1="Latest"
-            title2="Posts"
+        <SectionHeader
+          title1="Latest"
+          title2="Posts"
             description="Stay updated on CancerFun's mission to fund decentralized cancer research with BIO tokens on Solana's blockchain."
-          />
+        />
         </motion.div>
         <motion.div 
           variants={contentVariants}
           ref={ref}
         >
-          <BlogPosts posts={posts} />
+        <BlogPosts posts={posts} />
         </motion.div>
       </div>
     </motion.section>

@@ -155,24 +155,24 @@ export function Navbar() {
             />
           </div>
           <div className="relative w-24 h-6 block md:hidden lg:block overflow-hidden">
-            <motion.div
+                <motion.div
               initial={{ opacity: 1, y: 0 }}
               animate={{ 
                 opacity: isLogoHovered ? 0 : 1,
                 y: isLogoHovered ? -20 : 0
               }}
               transition={{ duration: 0.2 }}
-              className="absolute left-0 top-0 w-full h-full"
-            >
-              <Image
-                src="/images/cancercoin-text.png"
-                alt={SiteSettings.title.full}
-                className="w-full h-full object-contain"
-                width={96}
-                height={24}
-              />
-            </motion.div>
-            <motion.div
+                  className="absolute left-0 top-0 w-full h-full"
+                >
+                  <Image
+                    src="/images/cancercoin-text.png"
+                    alt={SiteSettings.title.full}
+                    className="w-full h-full object-contain"
+                    width={96}
+                    height={24}
+                  />
+                </motion.div>
+                <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ 
                 opacity: isLogoHovered ? 1 : 0,
@@ -184,7 +184,7 @@ export function Navbar() {
               <span className="text-[#a857ff]">Go</span>
               <span className="mx-1"> </span>
               <span className="text-green-500">Home</span>
-            </motion.div>
+                </motion.div>
           </div>
           <span className="sr-only">{SiteSettings.title.short}</span>
         </Link>
@@ -201,13 +201,13 @@ export function Navbar() {
               custom={index}
             >
               <Link
-                href={item.href ?? "#"}
+              href={item.href ?? "#"}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
-              </Link>
+              className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
+            >
+              {item.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
+            </Link>
             </motion.div>
           ))}
         </motion.div>
