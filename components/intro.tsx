@@ -172,38 +172,102 @@ export default function Intro() {
   };
 
   const handleStartExplore = async () => {
-    // Fade out audio dengan smooth
-    const audioElements = document.querySelectorAll('audio');
-    
-    return new Promise<void>((resolve) => {
-      const fadeOutInterval = setInterval(() => {
-        let allStopped = true;
-        
-        audioElements.forEach(audio => {
-          if (audio instanceof HTMLAudioElement) {
-            if (audio.volume > 0) {
-              audio.volume = Math.max(0, audio.volume - 0.02); // Lebih halus dengan pengurangan yang lebih kecil
-              allStopped = false;
-            }
-          }
-        });
+    // Set immediate navigation timeout
+    const navigationTimeout = setTimeout(() => {
+      // Pastikan audio berhenti sebelum navigasi fallback
+      const audioElements = document.querySelectorAll('audio');
+      audioElements.forEach(audio => {
+        if (audio instanceof HTMLAudioElement) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+      window.location.href = '/home';
+    }, 1000);
 
-        if (allStopped) {
-          clearInterval(fadeOutInterval);
-          // Hentikan semua audio setelah fade out selesai
+    try {
+      const audioElements = document.querySelectorAll('audio');
+      let isAnyPlaying = false;
+      
+      // Force stop background music immediately
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause();
+        backgroundMusicRef.current.currentTime = 0;
+      }
+
+      audioElements.forEach(audio => {
+        if (audio instanceof HTMLAudioElement && !audio.paused) {
+          isAnyPlaying = true;
+        }
+      });
+
+      // If no audio is playing, navigate immediately
+      if (!isAnyPlaying) {
+        clearTimeout(navigationTimeout);
+        window.location.href = '/home';
+        return;
+      }
+
+      // Try to fade out audio
+      const fadeOutPromise = new Promise<void>((resolve) => {
+        const fadeOutInterval = setInterval(() => {
+          let allStopped = true;
+          
           audioElements.forEach(audio => {
-            if (audio instanceof HTMLAudioElement) {
-              audio.pause();
-              audio.currentTime = 0;
+            if (audio instanceof HTMLAudioElement && !audio.paused) {
+              if (audio.volume > 0) {
+                audio.volume = Math.max(0, audio.volume - 0.02);
+                allStopped = false;
+              } else {
+                // Jika volume sudah 0, langsung pause
+                audio.pause();
+                audio.currentTime = 0;
+              }
             }
           });
-          resolve();
+
+          if (allStopped) {
+            clearInterval(fadeOutInterval);
+            // Pastikan semua audio benar-benar berhenti
+            audioElements.forEach(audio => {
+              if (audio instanceof HTMLAudioElement) {
+                audio.pause();
+                audio.currentTime = 0;
+              }
+            });
+            resolve();
+          }
+        }, 30);
+      });
+
+      // Wait for fadeout with timeout
+      await Promise.race([
+        fadeOutPromise,
+        new Promise(resolve => setTimeout(resolve, 800))
+      ]);
+
+      // Final cleanup sebelum navigasi
+      audioElements.forEach(audio => {
+        if (audio instanceof HTMLAudioElement) {
+          audio.pause();
+          audio.currentTime = 0;
         }
-      }, 30); // Interval lebih cepat untuk transisi yang lebih halus
-    }).then(() => {
-      // Navigasi ke home setelah fade out selesai
+      });
+
+      clearTimeout(navigationTimeout);
       window.location.href = '/home';
-    });
+    } catch (error) {
+      console.error("Error during transition:", error);
+      // Pastikan audio berhenti meskipun ada error
+      const audioElements = document.querySelectorAll('audio');
+      audioElements.forEach(audio => {
+        if (audio instanceof HTMLAudioElement) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+      // Fallback navigation will still happen due to timeout
+    }
   };
 
   // Effect untuk menangani navigasi halaman
