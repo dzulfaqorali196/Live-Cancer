@@ -84,6 +84,46 @@ export function HeroSection2() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingError, setLoadingError] = useState<string | null>(null);
   const isDevelopment = process.env.NODE_ENV === 'development';
+  const [isSplineVisible, setIsSplineVisible] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  // Setup IntersectionObserver untuk mengontrol visibilitas Spline
+  useEffect(() => {
+    const heroSection = document.getElementById('hero-section');
+    if (!heroSection || isDevelopment) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsSplineVisible(entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    observerRef.current.observe(heroSection);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [isDevelopment]);
+
+  // Kontrol Spline berdasarkan visibilitas
+  useEffect(() => {
+    if (!splineRef.current || isDevelopment) return;
+
+    if (isSplineVisible) {
+      // Resume animasi
+      splineRef.current.setVariable('isPlaying', true);
+    } else {
+      // Pause animasi
+      splineRef.current.setVariable('isPlaying', false);
+    }
+  }, [isSplineVisible, isDevelopment]);
 
   useEffect(() => {
     if (isDevelopment) {
@@ -95,14 +135,12 @@ export function HeroSection2() {
 
     const initializeSpline = async () => {
       try {
-        console.log('Starting Spline initialization...');
         const canvas = document.getElementById("hero-spline-scene") as HTMLCanvasElement;
         if (!canvas) {
           console.error('Canvas element not found');
           throw new Error("Canvas not found");
         }
 
-        // Set canvas size explicitly
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
@@ -113,15 +151,13 @@ export function HeroSection2() {
           });
         }, 300);
 
-        console.log('Creating Spline application...');
         const app = new Application(canvas);
         splineRef.current = app;
 
-        console.log('Loading Spline scene...');
         await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
         
-        console.log('Spline scene loaded successfully');
-        canvas.style.cursor = 'pointer';
+        // Set pointer-events untuk memastikan interaksi cursor
+        canvas.style.pointerEvents = 'auto';
         
         setLoadingProgress(100);
         clearInterval(progressInterval);
@@ -138,7 +174,6 @@ export function HeroSection2() {
       }
     };
 
-    // Add resize handler
     const handleResize = () => {
       const canvas = document.getElementById("hero-spline-scene") as HTMLCanvasElement;
       if (canvas) {
@@ -154,7 +189,6 @@ export function HeroSection2() {
       clearInterval(progressInterval);
       window.removeEventListener('resize', handleResize);
       if (splineRef.current) {
-        console.log('Disposing Spline application...');
         splineRef.current.dispose();
       }
     };
@@ -196,6 +230,7 @@ export function HeroSection2() {
 
   return (
     <motion.section
+      id="hero-section"
       variants={sectionVariants}
       initial="hidden"
       animate="visible"
@@ -215,13 +250,14 @@ export function HeroSection2() {
           className="relative w-full h-screen overflow-hidden" 
           style={{ 
             marginTop: "-5vh",
-            zIndex: 1 // Ensure Spline is above background
+            zIndex: 1
           }}
         >
           {/* Gradient untuk transisi yang lebih halus */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10" 
                style={{
-                 background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.95) 100%)'
+                 background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.95) 100%)',
+                 pointerEvents: 'none' // Memastikan gradient tidak mengganggu interaksi
                }}
           />
           
@@ -235,7 +271,8 @@ export function HeroSection2() {
               top: 0,
               left: 0,
               width: '100%',
-              height: '100%'
+              height: '100%',
+              zIndex: 2 // Memastikan canvas di atas gradient
             }}
           ></canvas>
         </motion.div>
