@@ -144,24 +144,29 @@ export default function Intro() {
         if (backgroundMusicRef.current && backgroundMusicRef.current.volume > 0) {
           backgroundMusicRef.current.volume -= 0.05;
         } else {
+          clearInterval(fadeOutInterval);
+          // Pastikan audio benar-benar berhenti setelah interval dibersihkan
           if (backgroundMusicRef.current) {
             backgroundMusicRef.current.pause();
             backgroundMusicRef.current.currentTime = 0;
-            backgroundMusicRef.current = null;
           }
-          clearInterval(fadeOutInterval);
         }
       }, 100);
     }
   };
 
+  // Effect untuk menangani navigasi halaman
   useEffect(() => {
-    return () => {
+    const handleNavigation = () => {
       if (backgroundMusicRef.current) {
         backgroundMusicRef.current.pause();
         backgroundMusicRef.current.currentTime = 0;
-        backgroundMusicRef.current = null;
       }
+    };
+    
+    // Cleanup pada unmount
+    return () => {
+      handleNavigation();
     };
   }, []);
 
