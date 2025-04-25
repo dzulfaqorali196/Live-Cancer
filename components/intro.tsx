@@ -11,6 +11,50 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaArrowRightLong, FaXTwitter } from "react-icons/fa6";
 
+// Deteksi iOS
+const isIOS = () => {
+  if (typeof window === 'undefined') return false;
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+};
+
+// Komponen Button khusus
+const ExploreButton = ({ onClick }: { onClick: () => void }) => {
+  const iOS = isIOS();
+
+  if (iOS) {
+    return (
+      <div 
+        onClick={onClick}
+        className="bg-web3-primary hover:bg-web3-primary/90 w-full rounded-md cursor-pointer"
+        style={{
+          padding: '1.5rem',
+          position: 'relative',
+          zIndex: 999,
+          transform: 'translateZ(0)',
+          WebkitTransform: 'translateZ(0)',
+          touchAction: 'manipulation'
+        }}
+      >
+        <div className="flex items-center justify-center gap-2 text-base md:text-lg font-medium text-white">
+          Start Explore <FaArrowRightLong />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <Button 
+      className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
+      onClick={onClick}
+    >
+      <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
+        Start Explore <FaArrowRightLong />
+      </span>
+    </Button>
+  );
+};
+
 export default function Intro() {
   const router = useRouter();
   const dingSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -222,9 +266,9 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[50]">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ zIndex: 999 }}>
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative z-[2]">
+          <div className="relative" style={{ zIndex: 999 }}>
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -233,7 +277,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative z-[2]">
+          <div className="relative" style={{ zIndex: 999 }}>
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -244,31 +288,12 @@ export default function Intro() {
           </div>
           <div className="my-32" />
           <div 
-            className="relative z-[60] w-full max-w-[300px] mx-auto"
-            style={{
-              transform: 'translateZ(0)',
-              WebkitTransform: 'translateZ(0)'
-            }}
+            className="relative w-full max-w-[300px] mx-auto"
+            style={{ zIndex: 999 }}
           >
-            <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
-              onClick={handleStartExplore}
-              onTouchStart={handleTouchStart}
-              style={{
-                touchAction: 'manipulation',
-                WebkitTapHighlightColor: 'transparent',
-                WebkitTransform: 'translateZ(0)',
-                transform: 'translateZ(0)',
-                position: 'relative',
-                zIndex: 60
-              }}
-            >
-              <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
-                Start Explore <FaArrowRightLong />
-              </span>
-            </Button>
+            <ExploreButton onClick={handleStartExplore} />
           </div>
-          <div className="flex gap-4 relative z-[10] mt-4">
+          <div className="flex gap-4 relative" style={{ zIndex: 999 }}>
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -298,13 +323,11 @@ export default function Intro() {
 
       {/* Spline Scene */}
       <div 
-        className="absolute inset-0 w-full h-screen overflow-hidden select-none touch-none"
+        className="absolute inset-0 w-full h-screen overflow-hidden"
         style={{ 
           zIndex: 1,
           pointerEvents: 'none',
-          touchAction: 'none',
-          userSelect: 'none',
-          WebkitUserSelect: 'none'
+          touchAction: 'none'
         }}
       >
         <canvas
@@ -319,9 +342,7 @@ export default function Intro() {
             width: '100%',
             height: '100%',
             touchAction: 'none',
-            pointerEvents: 'none',
-            userSelect: 'none',
-            WebkitUserSelect: 'none'
+            pointerEvents: 'none'
           }}
         />
       </div>
