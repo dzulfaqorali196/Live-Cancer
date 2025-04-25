@@ -234,9 +234,9 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ pointerEvents: 'none' }}>
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[5]">
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="relative z-[2]">
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -245,7 +245,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="relative z-[2]">
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -256,19 +256,18 @@ export default function Intro() {
           </div>
           <div className="my-32" />
           <div 
-            className="relative z-[2] w-full max-w-[300px] mx-auto" 
-            style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
+            className="relative z-[10] w-full max-w-[300px] mx-auto" 
           >
             <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90 w-full touch-manipulation"
+              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
               onClick={handleStartExplore}
             >
-              <span className="flex items-center justify-center gap-2 px-4 py-3 w-full">
+              <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
                 Start Explore <FaArrowRightLong />
               </span>
             </Button>
           </div>
-          <div className="flex gap-4 relative z-[2] mt-4" style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}>
+          <div className="flex gap-4 relative z-[10] mt-4">
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -280,6 +279,7 @@ export default function Intro() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="p-2"
                 >
                   {social.icon === "FaXTwitter" && (
                     <FaXTwitter className="h-5 w-5" />
@@ -299,9 +299,7 @@ export default function Intro() {
       <div 
         className="absolute inset-0 w-full h-screen overflow-hidden" 
         style={{ 
-          zIndex: 1,
-          touchAction: 'none',
-          WebkitOverflowScrolling: 'touch'
+          zIndex: 1
         }}
       >
         <canvas
@@ -315,26 +313,22 @@ export default function Intro() {
             left: 0,
             width: '100%',
             height: '100%',
-            pointerEvents: 'auto',
             touchAction: 'none',
-            userSelect: 'none',
-            WebkitTouchCallout: 'none'
+            userSelect: 'none'
           }}
         />
       </div>
 
       {/* Dark overlay with transition */}
       <div 
-        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
+        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out z-[2]
           ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
-        style={{ zIndex: 3, pointerEvents: isTransitioning ? 'none' : 'auto' }}
       />
 
       {/* Loading overlay */}
       {isLoadingSpline && (
         <div 
-          className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center"
-          style={{ zIndex: 4 }}
+          className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-[20]"
         >
           {loadingError ? (
             <div className="text-red-500 text-sm">{loadingError}</div>
@@ -356,7 +350,7 @@ export default function Intro() {
 
       {/* Modal Terms */}
       {isModalOpen && (
-        <div style={{ zIndex: 5 }}>
+        <div className="z-[30]">
           <ModalTerms handleAgreeAndPlay={handleAgreeAndPlay} />
         </div>
       )}
