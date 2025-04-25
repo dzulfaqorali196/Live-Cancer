@@ -32,34 +32,9 @@ export default function Intro() {
         const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
         if (!canvas) throw new Error("Canvas not found");
 
-        // Set canvas dimensions dengan mempertimbangkan viewport
-        const updateCanvasDimensions = () => {
-          const vh = window.innerHeight * 0.01;
-          document.documentElement.style.setProperty('--vh', `${vh}px`);
-          
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        };
-
-        updateCanvasDimensions();
-
-        // Prevent unwanted zoom and touch behaviors
-        canvas.style.touchAction = 'none';
-        
-        // Prevent default touch events
-        canvas.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-        }, { passive: false });
-
-        // Prevent zoom on double tap
-        canvas.addEventListener('touchend', (e) => {
-          e.preventDefault();
-        }, { passive: false });
-
-        // Prevent pinch zoom
-        document.addEventListener('gesturestart', (e) => {
-          e.preventDefault();
-        }, { passive: false });
+        // Set canvas dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
@@ -73,16 +48,9 @@ export default function Intro() {
 
         await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
         
-        // Tambahkan event listener untuk resize
-        const handleResize = () => {
-          updateCanvasDimensions();
-          if (splineRef.current) {
-            splineRef.current.setSize(window.innerWidth, window.innerHeight);
-          }
-        };
-
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('orientationchange', handleResize);
+        // Set pointer-events untuk memastikan interaksi cursor
+        canvas.style.pointerEvents = 'auto';
+        canvas.style.cursor = 'pointer';
         
         setLoadingProgress(100);
         clearInterval(progressInterval);
@@ -91,13 +59,6 @@ export default function Intro() {
           setIsLoadingSpline(false);
         }, 500);
 
-        // Cleanup
-        return () => {
-          window.removeEventListener('resize', handleResize);
-          window.removeEventListener('orientationchange', handleResize);
-          document.removeEventListener('gesturestart', (e) => e.preventDefault());
-        };
-
       } catch (error) {
         console.error("Spline load error:", error);
         setLoadingError("Failed to load 3D scene. Please refresh the page.");
@@ -105,6 +66,17 @@ export default function Intro() {
         setLoadingProgress(0);
       }
     };
+
+    // Handle window resize
+    const handleResize = () => {
+      const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
 
     // Initialize audio
     dingSoundRef.current = new Audio('/sound/ding.aac');
@@ -121,6 +93,7 @@ export default function Intro() {
     return () => {
       clearTimeout(loadTimeout);
       clearInterval(progressInterval);
+      window.removeEventListener('resize', handleResize);
       if (splineRef.current) {
         splineRef.current.dispose();
       }
@@ -282,7 +255,15 @@ export default function Intro() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen">
+      {/* Mobile Interaction Blocker */}
+      <div 
+        className="absolute inset-0 z-[2] md:hidden"
+        style={{
+          pointerEvents: 'auto'
+        }}
+      />
+
       <audio ref={dingSoundRef} preload="auto">
         <source src="/sound/ding.aac" type="audio/aac" />
         Your browser does not support the audio element.
@@ -294,9 +275,9 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ pointerEvents: 'none' }}>
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative z-[2]">
+          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -305,7 +286,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative z-[2]">
+          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -315,19 +296,17 @@ export default function Intro() {
             />
           </div>
           <div className="my-32" />
-          <div 
-            className="relative z-[10] w-full max-w-[300px] mx-auto" 
-          >
+          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
+              className="bg-web3-primary hover:bg-web3-primary/90"
               onClick={handleStartExplore}
             >
-              <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
+              <span className="flex items-center gap-2 px-8 py-6">
                 Start Explore <FaArrowRightLong />
               </span>
             </Button>
           </div>
-          <div className="flex gap-4 relative z-[10] mt-4">
+          <div className="flex gap-4 relative z-[2]" style={{ pointerEvents: 'auto' }}>
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -356,15 +335,7 @@ export default function Intro() {
       </div>
 
       {/* Spline Scene */}
-      <div 
-        className="absolute inset-0 w-full h-full overflow-hidden" 
-        style={{ 
-          zIndex: 1,
-          pointerEvents: 'none',
-          // Gunakan CSS custom property untuk height yang akurat di mobile
-          height: 'calc(var(--vh, 1vh) * 100)'
-        }}
-      >
+      <div className="absolute inset-0 w-full h-screen" style={{ zIndex: 1 }}>
         <canvas
           id="spline-scene"
           className={`w-full h-full transition-opacity duration-700 ${
@@ -376,25 +347,23 @@ export default function Intro() {
             left: 0,
             width: '100%',
             height: '100%',
-            touchAction: 'none',
-            userSelect: 'none',
-            pointerEvents: 'none',
-            objectFit: 'cover',
-            objectPosition: 'center'
+            pointerEvents: 'auto'
           }}
         />
       </div>
 
       {/* Dark overlay with transition */}
       <div 
-        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out z-[2]
+        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
           ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
+        style={{ zIndex: 3, pointerEvents: isTransitioning ? 'none' : 'auto' }}
       />
 
       {/* Loading overlay */}
       {isLoadingSpline && (
         <div 
-          className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-[20]"
+          className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center"
+          style={{ zIndex: 4 }}
         >
           {loadingError ? (
             <div className="text-red-500 text-sm">{loadingError}</div>
@@ -416,7 +385,7 @@ export default function Intro() {
 
       {/* Modal Terms */}
       {isModalOpen && (
-        <div className="z-[30]">
+        <div style={{ zIndex: 5 }}>
           <ModalTerms handleAgreeAndPlay={handleAgreeAndPlay} />
         </div>
       )}
