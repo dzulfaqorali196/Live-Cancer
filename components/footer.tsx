@@ -29,29 +29,61 @@ const itemVariants = {
 export function Footer() {
   return (
     <motion.footer 
-      className="bg-web3-darker border-web3-gray"
+      className="bg-black border-t border-white/10"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
-      <div className="container py-8">
+      <div className="max-w-[1300px] mx-auto px-4 py-6 md:py-8">
         <motion.div 
-          className="flex flex-col md:flex-row justify-between items-center"
+          className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8"
           variants={itemVariants}
         >
-          <motion.p 
-            className="text-sm text-muted-foreground mb-4 md:mb-0"
+          <motion.div 
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8"
             variants={itemVariants}
           >
-            © {new Date().getFullYear()} CancerFun. All rights reserved.
-          </motion.p>
+            <p className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 text-center sm:text-left">
+              © {new Date().getFullYear()} CancerFun. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4 sm:gap-8">
               <Link
-            href="/terms"
-                className="text-sm text-muted-foreground hover:text-white transition-colors"
+                href="/terms"
+                className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 hover:text-white transition-colors duration-200"
               >
-            Terms of Service
+                Terms of Service
               </Link>
+              <Link
+                href="/privacy"
+                className="[font-family:'Neue_Montreal-Regular',Helvetica] text-sm text-gray-400 hover:text-white transition-colors duration-200"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            className="flex items-center gap-4"
+            variants={itemVariants}
+          >
+            <a
+              href="https://twitter.com/cancerfun"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors duration-200"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://discord.gg/cancerfun"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors duration-200"
+            >
+              Discord
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </motion.footer>
