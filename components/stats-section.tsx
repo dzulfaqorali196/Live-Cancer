@@ -56,22 +56,19 @@ const statCards = [
     id: "01",
     value: "8BioDAOs",
     description: "Launched & Funded",
-    color: "#FF6B6B",
-    icon: "🧬"
+    color: "#FF6B6B"
   },
   {
     id: "02",
     value: "$30.3M",
     description: "Related For Research",
-    color: "#4ECDC4",
-    icon: "💰"
+    color: "#4ECDC4"
   },
   {
     id: "03",
     value: "$7.2M",
     description: "Deployed For Research",
-    color: "#a857ff",
-    icon: "🚀"
+    color: "#a857ff"
   },
 ];
 
@@ -117,7 +114,6 @@ export function StatsSection() {
               variants={hexagonVariants}
               whileHover="hover"
             >
-              {/* Card Shape */}
               <div className="group relative w-[300px] h-[340px]">
                 {/* Base Card */}
                 <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-black/20 backdrop-blur-xl rounded-[30px] border border-white/10 transform transition-all duration-300 group-hover:scale-105" />
@@ -142,15 +138,12 @@ export function StatsSection() {
 
                 {/* Content */}
                 <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
-                  {/* Icon */}
-                  <div className="text-5xl mb-4 transform transition-transform duration-300 group-hover:scale-110">{card.icon}</div>
-                  
                   {/* Stats */}
-                  <div className="space-y-2">
-                    <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-[#a857ff] to-white">
+                  <div className="space-y-6">
+                    <div className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-[#a857ff] to-white">
                       {card.value}
                     </div>
-                    <div className="text-gray-400 text-sm uppercase tracking-wider">
+                    <div className="text-gray-400 text-lg uppercase tracking-wider">
                       {card.description}
                     </div>
                   </div>
