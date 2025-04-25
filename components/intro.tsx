@@ -32,29 +32,33 @@ export default function Intro() {
         const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
         if (!canvas) throw new Error("Canvas not found");
 
-        // Set canvas dimensions
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Set canvas dimensions dengan mempertimbangkan viewport
+        const updateCanvasDimensions = () => {
+          const vh = window.innerHeight * 0.01;
+          document.documentElement.style.setProperty('--vh', `${vh}px`);
+          
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        };
+
+        updateCanvasDimensions();
 
         // Prevent unwanted zoom and touch behaviors
         canvas.style.touchAction = 'none';
         
         // Prevent default touch events
         canvas.addEventListener('touchstart', (e) => {
-          if (e.touches.length > 1) {
-            e.preventDefault();
-          }
+          e.preventDefault();
         }, { passive: false });
 
         // Prevent zoom on double tap
-        let lastTap = 0;
         canvas.addEventListener('touchend', (e) => {
-          const currentTime = new Date().getTime();
-          const tapLength = currentTime - lastTap;
-          if (tapLength < 500 && tapLength > 0) {
-            e.preventDefault();
-          }
-          lastTap = currentTime;
+          e.preventDefault();
+        }, { passive: false });
+
+        // Prevent pinch zoom
+        document.addEventListener('gesturestart', (e) => {
+          e.preventDefault();
         }, { passive: false });
 
         progressInterval = setInterval(() => {
@@ -69,15 +73,16 @@ export default function Intro() {
 
         await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
         
-        // Set pointer-events untuk memastikan interaksi cursor
-        canvas.style.pointerEvents = 'auto';
-        canvas.style.cursor = 'pointer';
-        
-        // Tambahkan meta viewport untuk mengontrol scaling
-        const viewportMeta = document.createElement('meta');
-        viewportMeta.name = 'viewport';
-        viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-        document.head.appendChild(viewportMeta);
+        // Tambahkan event listener untuk resize
+        const handleResize = () => {
+          updateCanvasDimensions();
+          if (splineRef.current) {
+            splineRef.current.setSize(window.innerWidth, window.innerHeight);
+          }
+        };
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
         
         setLoadingProgress(100);
         clearInterval(progressInterval);
@@ -86,6 +91,13 @@ export default function Intro() {
           setIsLoadingSpline(false);
         }, 500);
 
+        // Cleanup
+        return () => {
+          window.removeEventListener('resize', handleResize);
+          window.removeEventListener('orientationchange', handleResize);
+          document.removeEventListener('gesturestart', (e) => e.preventDefault());
+        };
+
       } catch (error) {
         console.error("Spline load error:", error);
         setLoadingError("Failed to load 3D scene. Please refresh the page.");
@@ -93,21 +105,6 @@ export default function Intro() {
         setLoadingProgress(0);
       }
     };
-
-    // Handle window resize with debounce
-    let resizeTimeout: NodeJS.Timeout;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
-        if (canvas) {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-      }, 250);
-    };
-
-    window.addEventListener('resize', handleResize);
 
     // Initialize audio
     dingSoundRef.current = new Audio('/sound/ding.aac');
@@ -124,7 +121,6 @@ export default function Intro() {
     return () => {
       clearTimeout(loadTimeout);
       clearInterval(progressInterval);
-      window.removeEventListener('resize', handleResize);
       if (splineRef.current) {
         splineRef.current.dispose();
       }
@@ -286,7 +282,7 @@ export default function Intro() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-screen overflow-hidden">
       <audio ref={dingSoundRef} preload="auto">
         <source src="/sound/ding.aac" type="audio/aac" />
         Your browser does not support the audio element.
@@ -361,10 +357,12 @@ export default function Intro() {
 
       {/* Spline Scene */}
       <div 
-        className="absolute inset-0 w-full h-screen overflow-hidden" 
+        className="absolute inset-0 w-full h-full overflow-hidden" 
         style={{ 
           zIndex: 1,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          // Gunakan CSS custom property untuk height yang akurat di mobile
+          height: 'calc(var(--vh, 1vh) * 100)'
         }}
       >
         <canvas
@@ -380,7 +378,9 @@ export default function Intro() {
             height: '100%',
             touchAction: 'none',
             userSelect: 'none',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            objectFit: 'cover',
+            objectPosition: 'center'
           }}
         />
       </div>
