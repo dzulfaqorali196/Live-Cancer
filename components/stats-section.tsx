@@ -137,13 +137,13 @@ export function StatsSection() {
                 </div>
 
                 {/* Content */}
-                <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
+                <div className="relative h-full flex flex-col items-center justify-center p-6 text-center [font-family:'Neue_Montreal-Regular',Helvetica]">
                   {/* Stats */}
                   <div className="space-y-6">
-                    <div className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-[#a857ff] to-white">
+                    <div className="[font-family:'Neue_Montreal-Regular',Helvetica] text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-[#a857ff] to-white">
                       {card.value}
                     </div>
-                    <div className="text-gray-400 text-lg uppercase tracking-wider">
+                    <div className="[font-family:'Neue_Montreal-Regular',Helvetica] text-gray-400 text-lg uppercase tracking-wider">
                       {card.description}
                     </div>
                   </div>
