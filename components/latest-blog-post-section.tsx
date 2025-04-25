@@ -43,7 +43,7 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
 
   return (
     <motion.section 
-      id="features" 
+      id="blog" 
       className="pt-16 pb-12 md:pt-32 md:pb-20 bg-black relative"
       initial="hidden"
       whileInView="visible"

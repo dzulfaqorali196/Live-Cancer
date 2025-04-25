@@ -210,41 +210,52 @@ export function Navbar() {
   const handleSmoothScroll = async (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     
+    // Jika href adalah anchor link (dimulai dengan #)
     if (href.startsWith('#')) {
       const targetId = href.substring(1);
       
-      if (pathname !== '/home') {
-        // Reset scroll position dan navigasi ke home dengan hash
-        window.scrollTo({ top: 0, behavior: 'auto' });
-        router.push(`/home#${targetId}`);
-      } else {
-        // Jika sudah di home, langsung scroll
+      // Jika sudah di halaman home, langsung scroll
+      if (pathname === Routes.HOME) {
         const element = document.getElementById(targetId);
         if (element) {
-          const yOffset = -100; // Offset untuk navbar
+          const yOffset = -100;
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: y, behavior: 'smooth' });
+          // Update URL hash tanpa scroll tambahan
+          window.history.pushState({}, '', href);
         }
+      } else {
+        // Jika bukan di halaman home, navigasi ke home dulu
+        await router.push(Routes.HOME + href);
       }
     } else {
+      // Untuk link external (contact, docs, dll)
       router.push(href);
     }
+    
+    setIsOpen(false);
   };
 
   const handleLogoClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    
-    if (pathname === Routes.HOME) {
-      // Jika sudah di home, hapus hash dan smooth scroll ke atas
-      window.history.pushState({}, '', Routes.HOME);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      // Jika di halaman lain, navigasi ke home tanpa hash
-      await router.push(Routes.HOME);
-      // Pastikan hash dihapus
-      window.history.pushState({}, '', Routes.HOME);
-      // Setelah navigasi selesai, smooth scroll ke atas
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      // Jika bukan di halaman home, navigasi dulu
+      if (pathname !== Routes.HOME) {
+        // Gunakan replace untuk menghindari masalah dengan history
+        await router.replace(Routes.HOME);
+        // Pastikan URL bersih dari hash
+        window.history.replaceState({}, '', Routes.HOME);
+        // Force reload halaman untuk memastikan perubahan tampilan
+        window.location.reload();
+      } else {
+        // Jika sudah di home, cukup scroll ke atas
+        window.history.pushState({}, '', Routes.HOME);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+      // Fallback: langsung navigasi dengan reload
+      window.location.href = Routes.HOME;
     }
   };
 
