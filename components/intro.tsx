@@ -5,11 +5,11 @@ import { Application } from "@splinetool/runtime";
 import { SiteSettings } from "@/constants/settings";
 import { ModalTerms } from "@/components/modal-terms";
 import { Button } from "@/components/ui/button";
-import { Twitter, Linkedin } from "lucide-react";
+import { Linkedin } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong, FaXTwitter } from "react-icons/fa6";
 
 export default function Intro() {
   const router = useRouter();
@@ -282,7 +282,7 @@ export default function Intro() {
                   rel="noopener noreferrer"
                 >
                   {social.icon === "FaXTwitter" && (
-                    <Twitter className="h-5 w-5" />
+                    <FaXTwitter className="h-5 w-5" />
                   )}
                   {social.icon === "FaLinkedin" && (
                     <Linkedin className="h-5 w-5" />
