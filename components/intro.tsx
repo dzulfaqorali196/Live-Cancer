@@ -274,14 +274,6 @@ export default function Intro() {
       className="fixed inset-0 w-full overflow-hidden" 
       style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
     >
-      {/* Mobile Interaction Blocker */}
-      <div 
-        className="fixed inset-0 z-[2] md:hidden"
-        style={{
-          pointerEvents: 'auto'
-        }}
-      />
-
       <audio ref={dingSoundRef} preload="auto">
         <source src="/sound/ding.aac" type="audio/aac" />
         Your browser does not support the audio element.
@@ -292,10 +284,43 @@ export default function Intro() {
         Your browser does not support the audio element.
       </audio>
 
-      {/* Base Content */}
-      <div className="fixed inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ pointerEvents: 'none' }}>
+      {/* Spline Scene - Layer Paling Bawah */}
+      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 1 }}>
+        <canvas
+          id="spline-scene"
+          className={`w-full h-full transition-opacity duration-700 ${
+            !isLoadingSpline ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'auto'
+          }}
+        />
+      </div>
+
+      {/* Mobile Interaction Blocker - Layer di atas Spline */}
+      <div 
+        className="fixed inset-0 z-[2] md:hidden"
+        style={{
+          pointerEvents: 'auto'
+        }}
+      />
+
+      {/* Dark Overlay - Layer di atas Mobile Blocker */}
+      <div 
+        className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out z-[3]
+          ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
+        style={{ pointerEvents: isTransitioning ? 'none' : 'auto' }}
+      />
+
+      {/* Base Content - Layer di atas Dark Overlay */}
+      <div className="fixed inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]">
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="relative" style={{ pointerEvents: 'auto' }}>
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -304,7 +329,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="relative" style={{ pointerEvents: 'auto' }}>
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -314,17 +339,17 @@ export default function Intro() {
             />
           </div>
           <div className="my-32" />
-          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="relative w-full max-w-[300px] mx-auto" style={{ pointerEvents: 'auto' }}>
             <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90"
+              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
               onClick={handleStartExplore}
             >
-              <span className="flex items-center gap-2 px-8 py-6">
+              <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
                 Start Explore <FaArrowRightLong />
               </span>
             </Button>
           </div>
-          <div className="flex gap-4 relative z-[2]" style={{ pointerEvents: 'auto' }}>
+          <div className="flex gap-4 mt-4" style={{ pointerEvents: 'auto' }}>
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -352,36 +377,10 @@ export default function Intro() {
         </div>
       </div>
 
-      {/* Spline Scene */}
-      <div className="fixed inset-0 w-full h-screen" style={{ zIndex: 1 }}>
-        <canvas
-          id="spline-scene"
-          className={`w-full h-full transition-opacity duration-700 ${
-            !isLoadingSpline ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'auto'
-          }}
-        />
-      </div>
-
-      {/* Dark overlay with transition */}
-      <div 
-        className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
-          ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
-        style={{ zIndex: 3, pointerEvents: isTransitioning ? 'none' : 'auto' }}
-      />
-
-      {/* Loading overlay */}
+      {/* Loading Overlay - Layer di atas Content */}
       {isLoadingSpline && (
         <div 
-          className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center"
-          style={{ zIndex: 4 }}
+          className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-[20]"
         >
           {loadingError ? (
             <div className="text-red-500 text-sm">{loadingError}</div>
@@ -401,9 +400,9 @@ export default function Intro() {
         </div>
       )}
 
-      {/* Modal Terms */}
+      {/* Modal Terms - Layer Paling Atas */}
       {isModalOpen && (
-        <div style={{ zIndex: 5 }} className="fixed inset-0">
+        <div className="fixed inset-0 z-[30]">
           <ModalTerms handleAgreeAndPlay={handleAgreeAndPlay} />
         </div>
       )}
