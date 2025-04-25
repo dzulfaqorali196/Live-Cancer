@@ -7,10 +7,12 @@ import { ModalTerms } from "@/components/modal-terms";
 import { Button } from "@/components/ui/button";
 import { Twitter, Linkedin } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function Intro() {
+  const router = useRouter();
   const dingSoundRef = useRef<HTMLAudioElement | null>(null);
   const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
   const splineRef = useRef<Application | null>(null);
@@ -138,35 +140,30 @@ export default function Intro() {
     }
   };
 
-  const fadeOutAudio = () => {
-    if (backgroundMusicRef.current) {
-      const fadeOutInterval = setInterval(() => {
-        if (backgroundMusicRef.current && backgroundMusicRef.current.volume > 0) {
-          backgroundMusicRef.current.volume -= 0.05;
-        } else {
-          clearInterval(fadeOutInterval);
-          // Pastikan audio benar-benar berhenti setelah interval dibersihkan
-          if (backgroundMusicRef.current) {
-            backgroundMusicRef.current.pause();
-            backgroundMusicRef.current.currentTime = 0;
-          }
-        }
-      }, 100);
-    }
+  const handleStartExplore = () => {
+    router.push('/home');
+    // Audio akan di-handle oleh cleanup effect
   };
 
-  // Effect untuk menangani navigasi halaman
+  // Effect untuk menangani cleanup saat komponen unmount
   useEffect(() => {
-    const handleNavigation = () => {
-      if (backgroundMusicRef.current) {
-        backgroundMusicRef.current.pause();
-        backgroundMusicRef.current.currentTime = 0;
-      }
-    };
-    
-    // Cleanup pada unmount
     return () => {
-      handleNavigation();
+      if (backgroundMusicRef.current) {
+        const fadeOutInterval = setInterval(() => {
+          if (backgroundMusicRef.current && backgroundMusicRef.current.volume > 0) {
+            backgroundMusicRef.current.volume -= 0.05;
+          } else {
+            clearInterval(fadeOutInterval);
+            if (backgroundMusicRef.current) {
+              backgroundMusicRef.current.pause();
+              backgroundMusicRef.current.currentTime = 0;
+            }
+          }
+        }, 100);
+
+        // Cleanup interval jika komponen unmount sebelum fade out selesai
+        setTimeout(() => clearInterval(fadeOutInterval), 2000);
+      }
     };
   }, []);
 
@@ -207,11 +204,11 @@ export default function Intro() {
           <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Button 
               className="bg-web3-primary hover:bg-web3-primary/90"
-              onClick={fadeOutAudio}
+              onClick={handleStartExplore}
             >
-              <Link href="/home" className="flex items-center gap-2 px-8 py-6">
+              <span className="flex items-center gap-2 px-8 py-6">
                 Start Explore <FaArrowRightLong />
-              </Link>
+              </span>
             </Button>
           </div>
           <div className="flex gap-4 relative z-[2]" style={{ pointerEvents: 'auto' }}>
