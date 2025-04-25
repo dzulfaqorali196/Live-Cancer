@@ -178,9 +178,9 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ pointerEvents: 'none' }}>
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative z-[2]">
+          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -189,7 +189,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative z-[2]">
+          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -199,7 +199,7 @@ export default function Intro() {
             />
           </div>
           <div className="my-32" />
-          <div className="relative z-[2]">
+          <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Button 
               className="bg-web3-primary hover:bg-web3-primary/90"
               onClick={fadeOutAudio}
@@ -209,7 +209,7 @@ export default function Intro() {
               </Link>
             </Button>
           </div>
-          <div className="flex gap-4 relative z-[2]">
+          <div className="flex gap-4 relative z-[2]" style={{ pointerEvents: 'auto' }}>
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -258,7 +258,7 @@ export default function Intro() {
       <div 
         className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
           ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
-        style={{ zIndex: 3 }}
+        style={{ zIndex: 3, pointerEvents: isTransitioning ? 'none' : 'auto' }}
       />
 
       {/* Loading overlay */}
