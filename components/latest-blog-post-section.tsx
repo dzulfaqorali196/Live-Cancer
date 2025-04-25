@@ -44,7 +44,7 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
   return (
     <motion.section 
       id="features" 
-      className="pt-32 pb-20 md:py-32 bg-web3-dark relative"
+      className="pt-16 pb-12 md:pt-32 md:pb-20 bg-black relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -52,19 +52,20 @@ export function LatestBlogPostSection({ posts }: { posts: ArticleDoc[] }) {
     >
       <div className="absolute top-0 left-0 right-0 h-16 md:h-24 bg-gradient-to-b from-black via-black to-transparent pointer-events-none opacity-80"></div>
 
-      <div className="container relative z-10">
-        <motion.div variants={contentVariants} className="text-center max-w-5xl mx-auto mb-16 md:mb-24">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 text-center">
+      <div className="max-w-[1300px] mx-auto px-4 relative z-10">
+        <motion.div variants={contentVariants} className="text-center max-w-5xl mx-auto mb-12 md:mb-24">
+          <h2 className="[font-family:'Neue_Montreal-Regular',Helvetica] text-3xl md:text-6xl font-normal mb-4 md:mb-6 text-center">
             <span className="text-white">Latest </span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A855F7] to-[#E9D5FF]">Posts</span>
+            <span className="text-[#a857ff]">Posts</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center">
+          <p className="[font-family:'Neue_Montreal-Regular',Helvetica] text-base md:text-xl text-gray-400 max-w-3xl mx-auto text-center">
             Stay updated on CancerFun's mission to fund decentralized cancer research with BIO tokens on Solana's blockchain.
           </p>
         </motion.div>
         <motion.div 
           variants={contentVariants}
           ref={ref}
+          className="w-full"
         >
           <BlogPosts posts={posts} />
         </motion.div>

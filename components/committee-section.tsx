@@ -73,23 +73,23 @@ export function CommitteeSection() {
       name: "Hsun Hung",
       position: "Founder",
       image: "/OurComitte/Founder.jpg",
-      quote: '"From decoding disease-driving proteins to building a decentralized engine for scientific breakthroughs, one enzyme at a time"',
+      quote: '"From decoding disease-driving proteins to building a decentralized engine for scientific breakthroughs, one enzyme at a time"',
       style: { width: 331, height: 379 }
     }
   ];
 
   return (
     <motion.section 
-      className="w-full bg-black py-28"
+      className="w-full bg-black py-16 md:py-28"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
       <div className="relative w-full">
         <div className="relative">
-          {/* Decorative elements */}
+          {/* Decorative elements - hidden on mobile */}
           <motion.img
-            className="absolute top-[-50px] right-0 w-auto h-[393px] select-none pointer-events-none z-0"
+            className="hidden md:block absolute top-[-50px] right-0 w-auto h-[393px] select-none pointer-events-none z-0"
             alt="Decorative elements"
             src="/OurComitte/light-right.svg"
             initial={{ opacity: 0, x: 50 }}
@@ -98,7 +98,7 @@ export function CommitteeSection() {
             viewport={{ once: true }}
           />
           <motion.img
-            className="absolute top-[-50px] left-0 w-auto h-[393px] select-none pointer-events-none z-0"
+            className="hidden md:block absolute top-[-50px] left-0 w-auto h-[393px] select-none pointer-events-none z-0"
             alt="Decorative elements"
             src="/OurComitte/light-left.png"
             initial={{ opacity: 0, x: -50 }}
@@ -109,11 +109,11 @@ export function CommitteeSection() {
 
           {/* Main content */}
           <motion.div 
-            className="flex flex-col items-center gap-10 pt-24"
+            className="flex flex-col items-center gap-8 md:gap-10 pt-12 md:pt-24 px-4"
             variants={containerVariants}
           >
             <motion.h2 
-              className="text-center text-[64px] leading-[64px] font-['Neue_Montreal']"
+              className="text-center text-4xl md:text-[64px] leading-tight md:leading-[64px] font-['Neue_Montreal']"
               variants={headingVariants}
             >
               <span className="text-white">Our </span>
@@ -121,21 +121,20 @@ export function CommitteeSection() {
             </motion.h2>
 
             <motion.div 
-              className="relative flex justify-center items-center min-h-[500px] w-full max-w-[1400px] mx-auto"
+              className="relative flex justify-center items-center w-full max-w-[1400px] mx-auto px-4"
               variants={containerVariants}
             >
               {committeeMembers.map((member) => (
                 <motion.div 
                   key={member.id} 
-                  className="relative"
+                  className="relative w-full max-w-[331px]"
                   variants={imageVariants}
                 >
                   {/* Frame wrapper with smooth border radius */}
                   <motion.div 
-                    className="relative overflow-hidden hover:scale-105 transition-transform duration-300"
+                    className="relative overflow-hidden hover:scale-105 transition-transform duration-300 w-full"
                     style={{ 
-                      width: `${member.style.width}px`,
-                      height: `${member.style.height}px`,
+                      aspectRatio: '331/379',
                       borderRadius: '32px',
                       overflow: 'hidden',
                     }}
@@ -143,13 +142,7 @@ export function CommitteeSection() {
                     transition={{ duration: 0.3 }}
                   >
                     <div 
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        position: 'relative',
-                        borderRadius: '32px',
-                        overflow: 'hidden'
-                      }}
+                      className="h-full w-full relative rounded-[32px] overflow-hidden"
                     >
                       <motion.img
                         src={member.image}
@@ -165,13 +158,13 @@ export function CommitteeSection() {
                       <div className="absolute inset-0 bg-[#7C3AED] mix-blend-color opacity-20"></div>
                       {/* Quote overlay */}
                       <motion.div 
-                        className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#7C3AED]/80 to-transparent p-6 flex items-end"
+                        className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#7C3AED]/80 to-transparent p-4 md:p-6 flex items-end"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
                         viewport={{ once: true }}
                       >
-                        <p className="text-white text-base leading-5 font-['Neue_Montreal'] text-center">
+                        <p className="text-white text-sm md:text-base leading-snug md:leading-5 font-['Neue_Montreal'] text-center">
                           {member.quote}
                         </p>
                       </motion.div>
@@ -183,10 +176,10 @@ export function CommitteeSection() {
                     className="mt-4 text-center"
                     variants={textVariants}
                   >
-                    <h3 className="text-white text-xl leading-[30px] font-['Neue_Montreal']">
+                    <h3 className="text-white text-lg md:text-xl leading-[30px] font-['Neue_Montreal']">
                       {member.name}
                     </h3>
-                    <p className="text-[#afafaf] text-base leading-6 font-['Neue_Montreal']">
+                    <p className="text-[#afafaf] text-sm md:text-base leading-6 font-['Neue_Montreal']">
                       {member.position}
                     </p>
                   </motion.div>
@@ -196,10 +189,10 @@ export function CommitteeSection() {
 
             {/* CTA Button */}
             <motion.div 
-              className="flex justify-center mt-12"
+              className="flex justify-center mt-8 md:mt-12 px-4"
               variants={buttonVariants}
             >
-              <Button className="h-[67px] w-[372px] rounded-[50px] border-[1.4px] border-solid border-[#b49fee] [background:linear-gradient(319deg,rgba(217,213,222,1)_0%,rgba(210,174,245,0)_51%,rgba(239,219,255,1)_100%),linear-gradient(0deg,rgba(168,88,255,1)_0%,rgba(168,88,255,1)_100%)] font-['Neue_Montreal'] font-bold text-white text-xl">
+              <Button className="h-[50px] md:h-[67px] w-full md:w-[372px] rounded-[50px] border-[1.4px] border-solid border-[#b49fee] [background:linear-gradient(319deg,rgba(217,213,222,1)_0%,rgba(210,174,245,0)_51%,rgba(239,219,255,1)_100%),linear-gradient(0deg,rgba(168,88,255,1)_0%,rgba(168,88,255,1)_100%)] font-['Neue_Montreal'] font-bold text-white text-base md:text-xl">
                 Apply to be CancerFun Comitte
               </Button>
             </motion.div>

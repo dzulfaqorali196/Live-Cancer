@@ -153,122 +153,106 @@ export function HeroSection2() {
   }, [controls, inView, shouldReduceMotion]);
 
   return (
-    <motion.section
-      id="hero-section"
-      variants={variants.section}
+    <motion.section 
+      className="relative w-full bg-black overflow-x-hidden"
       initial="hidden"
-      animate="visible"
-      className="relative overflow-hidden w-full bg-black flex flex-col will-change-transform"
-      style={{ minHeight: "100vh" }}
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={variants.section}
     >
-      {/* Video Container */}
-      <motion.div 
-        variants={variants.videoContainer}
-        className="relative w-full h-screen overflow-hidden will-change-transform" 
-        style={{ 
-          marginTop: "-5vh",
-          zIndex: 1,
-          transform: 'translateZ(0)'  // Hardware acceleration
-        }}
-      >
-        {/* Loading placeholder */}
-        {!isVideoLoaded && (
-          <div className="absolute inset-0 bg-black flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-[#a857ff] border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        )}
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className={`w-full h-full object-cover ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: 2,
-            transition: 'opacity 0.5s ease-in-out'
-          }}
-        >
-          <source 
-            src="/HeroSection/spline.webm" 
-            type="video/webm"
-          />
-        </video>
-      </motion.div>
+      <div className="relative w-full max-w-[100vw]">
+        <div className="relative">
+          {/* Video Container */}
+          <motion.div 
+            variants={variants.videoContainer}
+            className="relative w-full h-screen overflow-hidden" 
+            style={{ 
+              marginTop: "-5vh",
+              zIndex: 1,
+              transform: 'translateZ(0)'
+            }}
+          >
+            {!isVideoLoaded && (
+              <div className="absolute inset-0 bg-black flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-[#a857ff] border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className={`w-full h-full object-cover ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                transition: 'opacity 0.5s ease-in-out'
+              }}
+            >
+              <source src="/HeroSection/spline.webm" type="video/webm" />
+            </video>
+          </motion.div>
 
-      {/* Content Container */}
-      <motion.div 
-        variants={variants.videoContainer}
-        className="absolute inset-x-0 bottom-0 z-10 pb-12 md:pb-20 will-change-transform"
-        style={{ transform: 'translateZ(0)' }}
-      >
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8">
-          <div className="relative">
-            {/* Main Header */}
-            <div ref={ref} className="mb-4 md:mb-8 relative">
-              <motion.h1
-                className="font-normal text-white leading-tight text-3xl md:text-[60px] will-change-transform"
-                variants={variants.header}
-              >
-                We are the catalyst driving{" "}
-                <motion.span 
-                  variants={variants.header}
-                  className="block text-[#a857ff] text-3xl md:text-[60px]"
-                >
-                  decentralized in cancer research
-                </motion.span>
-              </motion.h1>
-            </div>
-
-            {/* Subheader with CTAs */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8 relative">
-              <motion.p
-                variants={variants.paragraph}
-                className="text-[#94A3B8] max-w-[600px] text-sm md:text-[20px] will-change-transform"
-              >
-                CancerFun is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
-              </motion.p>
-
-              <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 w-full md:w-auto">
-                <motion.div custom={0.3} variants={variants.button} className="w-full sm:w-auto">
-                  <Button
-                    className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] px-4 font-['Neue_Montreal'] text-sm md:text-[20px] font-medium w-full sm:w-auto"
-                    style={{ 
-                      height: "40px", 
-                      width: "100%",
-                      lineHeight: "20px",
-                      padding: "8px 16px"
-                    }}
+          {/* Content Container */}
+          <motion.div 
+            variants={variants.videoContainer}
+            className="absolute inset-x-0 bottom-0 z-10 pb-12 md:pb-20 overflow-x-hidden"
+          >
+            <div className="w-full max-w-[1300px] mx-auto px-4 md:px-8">
+              <div className="relative">
+                {/* Main Header */}
+                <div ref={ref} className="mb-4 md:mb-8">
+                  <motion.h1
+                    className="font-normal text-white leading-tight text-3xl md:text-[60px] max-w-full"
+                    variants={variants.header}
                   >
-                    <Link href={Routes.TOKEN}>Get $CANCER</Link>
-                  </Button>
-                </motion.div>
+                    We are the catalyst driving{" "}
+                    <motion.span 
+                      variants={variants.header}
+                      className="block text-[#a857ff] text-3xl md:text-[60px]"
+                    >
+                      decentralized in cancer research
+                    </motion.span>
+                  </motion.h1>
+                </div>
 
-                <motion.div custom={0.4} variants={variants.button} className="w-full sm:w-auto">
-                  <motion.button
-                    whileTap="tap"
-                    onClick={scrollToProjects}
-                    className="bg-white hover:bg-[#5A01B9] text-[#5A01B9] hover:text-white transition-colors duration-200 rounded-[100px] px-4 font-['Neue_Montreal'] text-sm md:text-[20px] font-medium w-full sm:w-auto"
-                    style={{ 
-                      height: "40px", 
-                      width: "100%",
-                      lineHeight: "20px",
-                      padding: "8px 16px"
-                    }}
+                {/* Subheader with CTAs */}
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8">
+                  <motion.p
+                    variants={variants.paragraph}
+                    className="text-[#94A8B8] max-w-[600px] text-sm md:text-[20px]"
                   >
-                    Get Started
-                  </motion.button>
-                </motion.div>
+                    CancerFun is a platform for cancer research and development, engineered by researchers to accelerate Cancer Focused Decentralized Science
+                  </motion.p>
+
+                  <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 w-full md:w-auto">
+                    <motion.div custom={0.3} variants={variants.button} className="w-full sm:w-auto">
+                      <Button
+                        className="bg-[#5A01B9] hover:bg-[#5A01B9]/90 text-white rounded-[100px] font-['Neue_Montreal'] text-sm md:text-[20px] font-medium w-full sm:w-auto px-6 py-2"
+                      >
+                        <Link href={Routes.TOKEN}>Get $CANCER</Link>
+                      </Button>
+                    </motion.div>
+
+                    <motion.div custom={0.4} variants={variants.button} className="w-full sm:w-auto">
+                      <button
+                        onClick={scrollToProjects}
+                        className="w-full sm:w-auto px-6 py-2 rounded-[100px] border border-white/10 font-['Neue_Montreal'] text-sm md:text-[20px] font-medium text-white hover:bg-white/5 transition-colors"
+                      >
+                        Get Started
+                      </button>
+                    </motion.div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </motion.section>
   );
 }

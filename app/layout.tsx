@@ -41,13 +41,13 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark">
       <head>
         <title>CancerFun</title>
         <link rel="icon" href="/images/cancercoin-logo.png" />
       </head>
       <body
-        className="min-h-screen bg-background antialiased"
+        className="min-h-screen bg-black font-sans antialiased overflow-x-hidden"
         style={{ fontFamily: "var(--font-sans)" }}
       >
         <SessionWrapper session={session}>
