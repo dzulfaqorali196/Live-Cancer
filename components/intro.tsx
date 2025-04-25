@@ -27,6 +27,19 @@ export default function Intro() {
     let loadTimeout: NodeJS.Timeout;
     let progressInterval: NodeJS.Timeout;
 
+    // Fungsi untuk mengatur viewport height
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Set viewport height saat pertama kali load
+    setViewportHeight();
+
+    // Update viewport height saat resize atau orientasi berubah
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+
     const initializeSpline = async () => {
       try {
         const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
@@ -94,6 +107,8 @@ export default function Intro() {
       clearTimeout(loadTimeout);
       clearInterval(progressInterval);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', setViewportHeight);
+      window.removeEventListener('orientationchange', setViewportHeight);
       if (splineRef.current) {
         splineRef.current.dispose();
       }
@@ -255,10 +270,13 @@ export default function Intro() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen">
+    <div 
+      className="fixed inset-0 w-full overflow-hidden" 
+      style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+    >
       {/* Mobile Interaction Blocker */}
       <div 
-        className="absolute inset-0 z-[2] md:hidden"
+        className="fixed inset-0 z-[2] md:hidden"
         style={{
           pointerEvents: 'auto'
         }}
@@ -275,7 +293,7 @@ export default function Intro() {
       </audio>
 
       {/* Base Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ pointerEvents: 'none' }}>
+      <div className="fixed inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4" style={{ pointerEvents: 'none' }}>
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
           <div className="relative z-[2]" style={{ pointerEvents: 'auto' }}>
             <Image
@@ -335,7 +353,7 @@ export default function Intro() {
       </div>
 
       {/* Spline Scene */}
-      <div className="absolute inset-0 w-full h-screen" style={{ zIndex: 1 }}>
+      <div className="fixed inset-0 w-full h-screen" style={{ zIndex: 1 }}>
         <canvas
           id="spline-scene"
           className={`w-full h-full transition-opacity duration-700 ${
@@ -354,7 +372,7 @@ export default function Intro() {
 
       {/* Dark overlay with transition */}
       <div 
-        className={`absolute inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
+        className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out
           ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
         style={{ zIndex: 3, pointerEvents: isTransitioning ? 'none' : 'auto' }}
       />
@@ -362,7 +380,7 @@ export default function Intro() {
       {/* Loading overlay */}
       {isLoadingSpline && (
         <div 
-          className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center"
+          className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center"
           style={{ zIndex: 4 }}
         >
           {loadingError ? (
@@ -385,7 +403,7 @@ export default function Intro() {
 
       {/* Modal Terms */}
       {isModalOpen && (
-        <div style={{ zIndex: 5 }}>
+        <div style={{ zIndex: 5 }} className="fixed inset-0">
           <ModalTerms handleAgreeAndPlay={handleAgreeAndPlay} />
         </div>
       )}
