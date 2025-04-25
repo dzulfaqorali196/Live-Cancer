@@ -2,7 +2,7 @@
 
 import { CheckCircle2, Circle } from "lucide-react";
 import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import SectionHeader from "@/components/section-header";
 import { RoadmapItem, roadmapItems } from "@/data/roadmap";
@@ -17,10 +17,12 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.1, once: true });
+  const [isLit, setIsLit] = useState(false);
 
   useEffect(() => {
     if (inView) {
       controls.start({ opacity: 1, scale: 1 });
+      setIsLit(true);
     }
   }, [controls, inView]);
 
@@ -37,18 +39,24 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
     >
       {/* Mobile Timeline Dot */}
       <div className="absolute left-4 top-6 md:hidden">
-        <div
+        <motion.div
           className={cn(
-            "h-3 w-3 rounded-full",
-            item.completed ? "bg-purple-400" : "bg-gray-600"
+            "h-3 w-3 rounded-full transition-colors duration-300",
+            isLit || item.completed ? "bg-purple-400" : "bg-gray-600"
           )}
         />
       </div>
 
       <div className="md:w-1/2 md:px-8 pl-12 md:pl-0">
-        <div className="p-4 md:p-6 rounded-xl bg-black/20 backdrop-blur-sm hover:bg-purple-500/10 transition-all duration-300">
+        <div 
+          className={cn(
+            "p-4 md:p-6 rounded-xl transition-all duration-300",
+            isLit ? "bg-purple-500/10" : "bg-black/20",
+            "backdrop-blur-sm"
+          )}
+        >
           <div className="flex items-center mb-3 md:mb-4">
-            {item.completed ? (
+            {isLit || item.completed ? (
               <CheckCircle2
                 className="h-4 w-4 md:h-5 md:w-5 text-purple-400 mr-2"
                 aria-label="Completed"
@@ -62,7 +70,7 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
             <span
               className={cn(
                 "text-xs md:text-sm font-medium",
-                item.completed ? "text-purple-400" : "text-gray-500"
+                isLit || item.completed ? "text-purple-400" : "text-gray-500"
               )}
             >
               {item.quarter}
@@ -84,10 +92,10 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
 
       {/* Desktop Timeline Dot */}
       <div className="absolute left-1/2 top-6 -translate-x-1/2 hidden md:block">
-        <div
+        <motion.div
           className={cn(
-            "h-5 w-5 rounded-full",
-            item.completed ? "bg-purple-400" : "bg-gray-600"
+            "h-5 w-5 rounded-full transition-colors duration-300",
+            isLit || item.completed ? "bg-purple-400" : "bg-gray-600"
           )}
         />
       </div>
@@ -96,6 +104,46 @@ const MilestoneCard = ({ item, index, isEven }: MilestoneCardProps) => {
 };
 
 export function RoadmapSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollRef.current) {
+        const element = scrollRef.current;
+        const rect = element.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Hitung posisi relatif elemen terhadap viewport
+        const elementTop = rect.top;
+        const elementBottom = rect.bottom;
+        
+        // Hitung progress berdasarkan posisi scroll
+        let progress;
+        
+        if (elementTop >= windowHeight) {
+          // Elemen belum terlihat
+          progress = 0;
+        } else if (elementBottom <= 0) {
+          // Elemen sudah terlewati
+          progress = 1;
+        } else {
+          // Elemen sedang terlihat
+          const totalScrollDistance = rect.height + windowHeight;
+          const scrolled = windowHeight - elementTop;
+          progress = Math.max(0, Math.min(1, scrolled / totalScrollDistance));
+        }
+        
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section id="roadmap" className="py-12 md:py-32 relative overflow-hidden bg-black">
       <div className="absolute top-0 left-0 right-0 h-24 md:h-48 bg-gradient-to-t from-black via-black to-black pointer-events-none"></div>
@@ -110,12 +158,30 @@ export function RoadmapSection() {
             description="Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain."
           />
         </div>
-        <div className="relative mt-8 md:mt-12">
+        <div ref={scrollRef} className="relative mt-8 md:mt-12">
           {/* Mobile Timeline Line */}
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-700 md:hidden" />
+          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-700 md:hidden">
+            <motion.div 
+              className="absolute w-full bg-purple-400"
+              style={{ 
+                height: `${scrollProgress * 100}%`,
+                top: 0,
+                transition: 'height 0.2s ease-out'
+              }}
+            />
+          </div>
           
           {/* Desktop Timeline Line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-700 -translate-x-1/2 hidden md:block" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-700 -translate-x-1/2 hidden md:block">
+            <motion.div 
+              className="absolute w-full bg-purple-400"
+              style={{ 
+                height: `${scrollProgress * 100}%`,
+                top: 0,
+                transition: 'height 0.2s ease-out'
+              }}
+            />
+          </div>
           
           <div className="space-y-8 md:space-y-16">
             {roadmapItems.map((item, index) => (
