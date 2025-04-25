@@ -66,11 +66,11 @@ export function FaqSection() {
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
-      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-[#0f0f0f]/0 via-[#0f0f0f]/80 via-[#0f0f0f] to-web3-dark pointer-events-none"></div>
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0f0f0f]/0 via-[#0f0f0f]/80 via-[#0f0f0f] to-web3-dark pointer-events-none"></div>
 
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black to-web3-dark pointer-events-none"></div>
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 mb-16 md:mb-24">
         <motion.div 
           className="text-center max-w-3xl mx-auto mb-16"
           variants={containerVariants}
