@@ -64,7 +64,20 @@ export default function Intro() {
         // Set pointer-events untuk memastikan interaksi cursor
         canvas.style.pointerEvents = 'auto';
         canvas.style.cursor = 'pointer';
-        
+
+        // Tambahkan event listener untuk cursor
+        const handleMouseMove = (e: MouseEvent) => {
+          const rect = canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          // Gunakan koordinat untuk update scene
+          if (splineRef.current) {
+            splineRef.current.handleEvent('pointermove', { x, y });
+          }
+        };
+
+        canvas.addEventListener('mousemove', handleMouseMove);
+
         setLoadingProgress(100);
         clearInterval(progressInterval);
         
@@ -110,6 +123,10 @@ export default function Intro() {
       window.removeEventListener('resize', setViewportHeight);
       window.removeEventListener('orientationchange', setViewportHeight);
       if (splineRef.current) {
+        const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+        if (canvas) {
+          canvas.removeEventListener('mousemove', handleMouseMove);
+        }
         splineRef.current.dispose();
       }
       if (backgroundMusicRef.current) {
@@ -285,7 +302,7 @@ export default function Intro() {
       </audio>
 
       {/* Spline Scene - Layer Paling Bawah */}
-      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 1 }}>
+      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 1, pointerEvents: 'none' }}>
         <canvas
           id="spline-scene"
           className={`w-full h-full transition-opacity duration-700 ${
@@ -297,7 +314,9 @@ export default function Intro() {
             left: 0,
             width: '100%',
             height: '100%',
-            pointerEvents: 'auto'
+            pointerEvents: 'auto',
+            cursor: 'pointer',
+            touchAction: 'none'
           }}
         />
       </div>
@@ -306,7 +325,8 @@ export default function Intro() {
       <div 
         className="fixed inset-0 z-[2] md:hidden"
         style={{
-          pointerEvents: 'auto'
+          pointerEvents: 'auto',
+          touchAction: 'none'
         }}
       />
 
@@ -314,11 +334,17 @@ export default function Intro() {
       <div 
         className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out z-[3]
           ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
-        style={{ pointerEvents: isTransitioning ? 'none' : 'auto' }}
+        style={{ 
+          pointerEvents: isTransitioning ? 'none' : 'auto',
+          touchAction: 'none'
+        }}
       />
 
       {/* Base Content - Layer di atas Dark Overlay */}
-      <div className="fixed inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]">
+      <div 
+        className="fixed inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]"
+        style={{ pointerEvents: 'none' }}
+      >
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
           <div className="relative" style={{ pointerEvents: 'auto' }}>
             <Image
@@ -339,12 +365,12 @@ export default function Intro() {
             />
           </div>
           <div className="my-32" />
-          <div className="relative w-full max-w-[300px] mx-auto" style={{ pointerEvents: 'auto' }}>
+          <div className="relative w-full max-w-[200px] mx-auto" style={{ pointerEvents: 'auto' }}>
             <Button 
-              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-6 md:py-8"
+              className="bg-web3-primary hover:bg-web3-primary/90 w-full py-4 md:py-6"
               onClick={handleStartExplore}
             >
-              <span className="flex items-center justify-center gap-2 text-base md:text-lg font-medium">
+              <span className="flex items-center justify-center gap-2 text-sm md:text-base font-medium">
                 Start Explore <FaArrowRightLong />
               </span>
             </Button>
