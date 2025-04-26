@@ -13,6 +13,21 @@ interface RoadmapItem {
 export default function RoadmapSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    // Check on initial render
+    checkMobile()
+    
+    // Add listener for window resize
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,10 +97,10 @@ export default function RoadmapSection() {
   ]
 
   return (
-    <section className="bg-black text-white w-full py-16">
+    <section className="bg-black text-white w-full py-10 md:py-16">
       <div className="px-4 md:px-12 max-w-7xl mx-auto">
         <motion.h2 
-          className="text-4xl md:text-5xl font-bold text-center mb-12"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 md:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -96,39 +111,56 @@ export default function RoadmapSection() {
         </motion.h2>
 
         <div ref={scrollRef} className="relative">
-          {/* Center line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-blue-400/30 transform -translate-x-1/2 hidden md:block">
-            <motion.div 
-              className="absolute w-full bg-blue-400"
-              style={{ 
-                height: `${scrollProgress * 100}%`,
-                top: 0,
-                transition: 'height 0.3s ease-out'
-              }}
-            />
-          </div>
-
-          {/* Mobile line */}
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-blue-400/30 md:hidden">
-            <motion.div 
-              className="absolute w-full bg-blue-400"
-              style={{ 
-                height: `${scrollProgress * 100}%`,
-                top: 0,
-                transition: 'height 0.3s ease-out'
-              }}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {roadmapItems.map((item, index) => (
-              <RoadmapCard 
-                key={index}
-                item={item} 
-                index={index} 
-                isLeft={index % 2 === 0}
+          {/* Mobile view with vertical timeline */}
+          <div className="md:hidden">
+            {/* Mobile timeline line */}
+            <div className="absolute left-4 top-0 bottom-0 w-1 bg-blue-400/30">
+              <motion.div 
+                className="absolute w-full bg-blue-400"
+                style={{ 
+                  height: `${scrollProgress * 100}%`,
+                  top: 0,
+                  transition: 'height 0.3s ease-out'
+                }}
               />
-            ))}
+            </div>
+
+            {/* Mobile cards in vertical layout */}
+            <div className="space-y-6">
+              {roadmapItems.map((item, index) => (
+                <MobileRoadmapCard
+                  key={index}
+                  item={item}
+                  index={index} 
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop view with alternating layout */}
+          <div className="hidden md:block">
+            {/* Center line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-blue-400/30 transform -translate-x-1/2">
+              <motion.div 
+                className="absolute w-full bg-blue-400"
+                style={{ 
+                  height: `${scrollProgress * 100}%`,
+                  top: 0,
+                  transition: 'height 0.3s ease-out'
+                }}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-8">
+              {roadmapItems.map((item, index) => (
+                <RoadmapCard 
+                  key={index}
+                  item={item} 
+                  index={index} 
+                  isLeft={index % 2 === 0}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -136,6 +168,56 @@ export default function RoadmapSection() {
   )
 }
 
+// Mobile-specific card component
+function MobileRoadmapCard({ item, index }: { item: RoadmapItem, index: number }) {
+  const controls = useAnimation()
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { amount: 0.3, once: true })
+
+  useEffect(() => {
+    if (inView) {
+      controls.start({ opacity: 1, x: 0 })
+    }
+  }, [controls, inView])
+  
+  return (
+    <motion.div 
+      ref={ref}
+      className="flex flex-row relative pl-12"
+      initial={{ opacity: 0, x: -20 }}
+      animate={controls}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+    >
+      {/* Timeline dot */}
+      <div className="absolute left-4 top-4 w-3.5 h-3.5 rounded-full bg-blue-400 z-10"></div>
+      
+      {/* Card */}
+      <motion.div 
+        className="bg-green-300 rounded-2xl p-5 w-full transition-all duration-300"
+        whileHover={{ 
+          scale: 1.02, 
+          boxShadow: "0 8px 15px -5px rgba(0, 255, 0, 0.1)" 
+        }}
+      >
+        <h3 className="text-xl font-bold text-center mb-2 text-black">{item.quarter}</h3>
+        <ul className="list-disc pl-5 space-y-1.5 text-black text-sm">
+          {item.items.map((listItem, i) => (
+            <motion.li 
+              key={i}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 + i * 0.1 }}
+            >
+              {listItem}
+            </motion.li>
+          ))}
+        </ul>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// Desktop card component - kembali ke versi semula
 interface RoadmapCardProps {
   item: RoadmapItem
   index: number
@@ -159,13 +241,13 @@ function RoadmapCard({ item, index, isLeft }: RoadmapCardProps) {
       {isLeft ? (
         <motion.div 
           ref={ref}
-          className="md:pr-12 flex justify-end relative"
+          className="pl-0 pr-12 flex justify-end relative"
           initial={{ opacity: 0, x: -50 }}
           animate={controls}
           transition={{ duration: 0.6, delay: index * 0.2 }}
         >
           <motion.div 
-            className="bg-green-300 hover:bg-green-400 rounded-3xl p-6 w-full md:max-w-md transition-all duration-300 relative z-10"
+            className="bg-green-300 hover:bg-green-400 rounded-3xl p-6 w-full max-w-md transition-all duration-300 relative z-10"
             whileHover={{ 
               scale: 1.03, 
               boxShadow: "0 10px 25px -5px rgba(0, 255, 0, 0.1), 0 10px 10px -5px rgba(0, 255, 0, 0.04)" 
@@ -187,20 +269,20 @@ function RoadmapCard({ item, index, isLeft }: RoadmapCardProps) {
           </motion.div>
         </motion.div>
       ) : (
-        <div className="hidden md:block"></div>
+        <div></div>
       )}
 
       {/* Right side card */}
       {!isLeft ? (
         <motion.div 
           ref={ref}
-          className="md:pl-12 relative"
+          className="pl-12 relative"
           initial={{ opacity: 0, x: 50 }}
           animate={controls}
           transition={{ duration: 0.6, delay: index * 0.2 }}
         >
           <motion.div 
-            className="bg-green-300 hover:bg-green-400 rounded-3xl p-6 w-full md:max-w-md transition-all duration-300 relative z-10"
+            className="bg-green-300 hover:bg-green-400 rounded-3xl p-6 w-full max-w-md transition-all duration-300 relative z-10"
             whileHover={{ 
               scale: 1.03, 
               boxShadow: "0 10px 25px -5px rgba(0, 255, 0, 0.1), 0 10px 10px -5px rgba(0, 255, 0, 0.04)" 
@@ -222,7 +304,7 @@ function RoadmapCard({ item, index, isLeft }: RoadmapCardProps) {
           </motion.div>
         </motion.div>
       ) : (
-        <div className="hidden md:block"></div>
+        <div></div>
       )}
     </>
   )

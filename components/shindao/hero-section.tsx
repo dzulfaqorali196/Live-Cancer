@@ -187,16 +187,16 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="bg-black text-white w-full py-12 pt-24 overflow-hidden">
+    <section className="bg-black text-white w-full py-8 md:py-12 pt-16 md:pt-24 overflow-hidden">
       <div className="px-4 md:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
           {/* Left side - Video placeholder */}
           <motion.div 
             ref={videoRef}
             initial="hidden"
             animate={isVideoInView ? "visible" : "hidden"}
             variants={fadeInUpVariants}
-            className="bg-blue-600 rounded-3xl aspect-[4/3] flex items-center justify-center text-white text-xl font-medium overflow-hidden"
+            className="bg-blue-600 rounded-3xl aspect-[4/3] flex items-center justify-center text-white text-lg md:text-xl font-medium overflow-hidden"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
@@ -210,6 +210,7 @@ export default function HeroSection() {
                   duration: 0.8
                 }
               }}
+              className="text-center px-4"
             >
               VIDEO OF <span className="text-purple-400 font-bold">shin</span><span className="text-yellow-300 font-bold">DAO</span>
             </motion.div>
@@ -221,14 +222,14 @@ export default function HeroSection() {
             initial="hidden"
             animate={isContentInView ? "visible" : "hidden"}
             variants={staggerChildrenVariants}
-            className="flex flex-col space-y-6"
+            className="flex flex-col space-y-4 md:space-y-6 mt-4 md:mt-0"
           >
             <motion.div 
               variants={fadeInUpVariants}
-              className="flex items-center justify-between"
+              className="flex flex-col sm:flex-row items-center sm:justify-between gap-4"
             >
               <motion.h1 
-                className="text-4xl md:text-5xl font-bold"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold"
                 whileHover={{ 
                   scale: 1.05, 
                   transition: { duration: 0.2 } 
@@ -239,11 +240,11 @@ export default function HeroSection() {
 
               <motion.div 
                 variants={fadeInUpVariants}
-                className="flex space-x-4"
+                className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4"
               >
                 {/* Logo with project image */}
                 <motion.div 
-                  className="w-12 h-12 rounded-full overflow-hidden relative"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden relative"
                   whileHover={logoHoverVariants.hover}
                 >
                   <Image
@@ -282,7 +283,7 @@ export default function HeroSection() {
 
                 {/* Presale countdown - Now dynamic */}
                 <motion.div 
-                  className="bg-green-300 rounded-full px-4 min-w-32 flex items-center justify-center text-black text-sm font-medium h-8"
+                  className="bg-green-300 rounded-full px-3 sm:px-4 min-w-[120px] sm:min-w-32 flex items-center justify-center text-black text-xs sm:text-sm font-medium h-7 sm:h-8"
                   whileHover={{ scale: 1.05, backgroundColor: "#86efac" }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
@@ -294,10 +295,10 @@ export default function HeroSection() {
             {/* Description text */}
             <motion.div 
               variants={fadeInUpVariants}
-              className="text-base"
+              className="text-sm sm:text-base"
             >
               <motion.p 
-                className="mb-4"
+                className="mb-3 md:mb-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -308,7 +309,7 @@ export default function HeroSection() {
                 by the DAO.
               </motion.p>
               <motion.p 
-                className="font-bold"
+                className="font-bold text-sm sm:text-base"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.8 }}
@@ -320,7 +321,7 @@ export default function HeroSection() {
             {/* Action buttons */}
             <motion.div 
               variants={fadeInUpVariants}
-              className="flex space-x-6"
+              className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 md:space-x-6 pt-2"
             >
               <motion.div
                 onHoverStart={() => setContributeHover(true)}
@@ -328,8 +329,9 @@ export default function HeroSection() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
+                className="w-full sm:w-auto"
               >
-                <Button className="bg-yellow-300 hover:bg-yellow-400 text-black rounded-full px-12 py-8 text-xl font-bold shadow-lg">
+                <Button className="bg-yellow-300 hover:bg-yellow-400 text-black rounded-full px-6 md:px-12 py-6 md:py-8 text-lg md:text-xl font-bold shadow-lg w-full sm:w-auto">
                   <motion.span
                     animate={contributeHover ? { y: [0, -5, 0] } : {}}
                     transition={{ repeat: Infinity, duration: 1 }}
@@ -345,8 +347,9 @@ export default function HeroSection() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
+                className="w-full sm:w-auto"
               >
-                <Button className="bg-yellow-300 hover:bg-yellow-400 text-black rounded-full px-12 py-8 text-xl font-bold shadow-lg">
+                <Button className="bg-yellow-300 hover:bg-yellow-400 text-black rounded-full px-6 md:px-12 py-6 md:py-8 text-lg md:text-xl font-bold shadow-lg w-full sm:w-auto">
                   <motion.span
                     animate={whyHover ? { y: [0, -5, 0] } : {}}
                     transition={{ repeat: Infinity, duration: 1 }}
@@ -365,16 +368,16 @@ export default function HeroSection() {
           initial="hidden"
           animate={isProgressInView ? "visible" : "hidden"}
           variants={fadeInUpVariants}
-          className="mt-12"
+          className="mt-8 md:mt-12"
         >
           <motion.div 
-            className="bg-blue-600 rounded-3xl p-8"
+            className="bg-blue-600 rounded-3xl p-6 md:p-8"
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.3 }}
           >
             {/* Progress header */}
             <motion.div 
-              className="bg-green-300 text-black text-center py-3 rounded-full text-xl font-medium mb-12"
+              className="bg-green-300 text-black text-center py-2 md:py-3 rounded-full text-lg md:text-xl font-medium mb-8 md:mb-12"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -383,14 +386,14 @@ export default function HeroSection() {
               Creation Progress
             </motion.div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between mb-4">
+            <div className="flex flex-col md:flex-row items-center justify-between mb-4 gap-5 md:gap-0">
               {/* Left side - Creation Committed */}
               <motion.div 
-                className="text-center md:text-left mb-4 md:mb-0"
+                className="text-center md:text-left mb-2 md:mb-0 w-full md:w-auto"
                 variants={fadeInUpVariants}
               >
                 <motion.h3 
-                  className="text-2xl font-bold text-black"
+                  className="text-xl md:text-2xl font-bold text-black"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -398,7 +401,7 @@ export default function HeroSection() {
                   Creation Commited
                 </motion.h3>
                 <motion.p 
-                  className="text-3xl font-bold text-black"
+                  className="text-2xl md:text-3xl font-bold text-black"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -409,11 +412,11 @@ export default function HeroSection() {
 
               {/* Progress bar */}
               <motion.div 
-                className="w-full md:w-1/2 mx-4"
+                className="w-full md:w-1/2 mx-0 md:mx-4"
                 variants={fadeInUpVariants}
               >
                 <motion.div 
-                  className="h-8 bg-white rounded-full overflow-hidden"
+                  className="h-6 md:h-8 bg-white rounded-full overflow-hidden"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
@@ -428,7 +431,7 @@ export default function HeroSection() {
                   ></motion.div>
                 </motion.div>
                 <motion.div 
-                  className="text-center mt-2 text-xl text-black flex justify-center items-center"
+                  className="text-center mt-2 text-lg md:text-xl text-black flex justify-center items-center"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.9 }}
@@ -445,11 +448,11 @@ export default function HeroSection() {
 
               {/* Right side - Creation Limit */}
               <motion.div 
-                className="text-center md:text-right mt-4 md:mt-0"
+                className="text-center md:text-right mt-2 md:mt-0 w-full md:w-auto"
                 variants={fadeInUpVariants}
               >
                 <motion.h3 
-                  className="text-2xl font-bold text-black"
+                  className="text-xl md:text-2xl font-bold text-black"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -457,7 +460,7 @@ export default function HeroSection() {
                   Creation Limit
                 </motion.h3>
                 <motion.p 
-                  className="text-3xl font-bold text-black"
+                  className="text-2xl md:text-3xl font-bold text-black"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}

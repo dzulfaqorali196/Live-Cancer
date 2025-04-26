@@ -104,19 +104,19 @@ export default function BenefitSection() {
   return (
     <section 
       ref={sectionRef}
-      className="bg-black text-white w-full py-12"
+      className="bg-black text-white w-full py-8 md:py-12"
     >
       <div className="px-4 md:px-12 max-w-7xl mx-auto">
         <motion.div 
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="bg-blue-600 rounded-3xl p-8"
+          className="bg-blue-600 rounded-3xl p-4 sm:p-6 md:p-8"
         >
           {/* Benefit header */}
           <motion.div 
             variants={itemVariants}
-            className="bg-green-300 text-black text-center py-3 rounded-full text-xl font-medium mb-12 hover:bg-green-400 transition-colors duration-300"
+            className="bg-green-300 text-black text-center py-2 md:py-3 rounded-full text-lg md:text-xl font-medium mb-6 md:mb-12 hover:bg-green-400 transition-colors duration-300"
           >
             Creation Benefit for Contributor
           </motion.div>
@@ -124,7 +124,7 @@ export default function BenefitSection() {
           {/* Purple card with wavy background */}
           <motion.div 
             variants={cardVariants}
-            className="bg-purple-500 rounded-3xl p-8 relative overflow-hidden mx-4 transition-all duration-500 transform hover:scale-[1.01] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
+            className="bg-purple-500 rounded-3xl p-4 sm:p-6 md:p-8 relative overflow-hidden mx-0 sm:mx-4 transition-all duration-500 transform hover:scale-[1.01] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             onMouseMove={handleMouseMove}
@@ -162,23 +162,23 @@ export default function BenefitSection() {
               {/* Main heading */}
               <motion.div 
                 variants={textVariants}
-                className="text-center mb-4 mt-8"
+                className="text-center mb-3 md:mb-4 mt-4 md:mt-8"
               >
                 <motion.h2 
                   variants={textVariants}
-                  className="text-3xl md:text-5xl font-bold text-white mb-2 transition-transform duration-300 hover:scale-105"
+                  className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 md:mb-2 transition-transform duration-300 hover:scale-105"
                 >
                   Thank You For Contributing to
                 </motion.h2>
                 <motion.h2 
                   variants={textVariants}
-                  className="text-3xl md:text-5xl font-bold text-yellow-300 mb-2 animate-pulse"
+                  className="text-2xl sm:text-3xl md:text-5xl font-bold text-yellow-300 mb-1 md:mb-2 animate-pulse"
                 >
                   ShinDAO
                 </motion.h2>
                 <motion.p 
                   variants={textVariants}
-                  className="text-purple-300 text-xl"
+                  className="text-purple-300 text-lg sm:text-xl"
                 >
                   <span>Cancer</span> <span className="text-green-400">Fun</span>
                 </motion.p>
@@ -187,11 +187,11 @@ export default function BenefitSection() {
               {/* Main text */}
               <motion.div 
                 variants={textVariants}
-                className="max-w-3xl mx-auto text-white text-center mb-8"
+                className="max-w-3xl mx-auto text-white text-center mb-4 md:mb-8"
               >
                 <motion.p 
                   variants={textVariants}
-                  className="mb-2 transition-opacity duration-300 hover:opacity-90"
+                  className="text-sm sm:text-base mb-2 transition-opacity duration-300 hover:opacity-90"
                 >
                   Thank you for fueling the future of science. Your contribution unlocks $SHIN a utility token that grants{" "}
                   <span className="text-yellow-200 hover:text-yellow-100 transition-colors duration-300">voting rights</span>,{" "}
@@ -200,7 +200,7 @@ export default function BenefitSection() {
                 </motion.p>
                 <motion.p 
                   variants={textVariants}
-                  className="transition-opacity duration-300 hover:opacity-90"
+                  className="text-sm sm:text-base transition-opacity duration-300 hover:opacity-90"
                 >
                   Whether you contribute 10K or 10M $CANCER, you're part of a transparent, tokenized, community-driven
                   research movement.
@@ -210,17 +210,17 @@ export default function BenefitSection() {
               {/* Signature */}
               <motion.div 
                 variants={textVariants}
-                className="text-center text-yellow-200 mb-12 transition-all duration-300 hover:tracking-wider"
+                className="text-center text-yellow-200 mb-6 md:mb-12 text-sm sm:text-base transition-all duration-300 hover:tracking-wider"
               >
                 — Hsun4, ShinDAO Commitee
               </motion.div>
 
               {/* Character images */}
-              <div className="flex justify-between -mt-4">
+              <div className="flex justify-between mt-0 md:-mt-4">
                 {/* Left character */}
                 <motion.div 
                   variants={characterVariants}
-                  className="w-64 h-64 md:w-80 md:h-80 transition-transform duration-500 hover:scale-110 hover:-translate-y-2"
+                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-500 hover:scale-110 hover:-translate-y-2"
                 >
                   <img
                     src="/Shindao/Benefit/char.png"
@@ -237,7 +237,7 @@ export default function BenefitSection() {
                 {/* Right character */}
                 <motion.div 
                   variants={characterVariants}
-                  className="w-64 h-64 md:w-80 md:h-80 transition-transform duration-500 hover:scale-110 hover:-translate-y-2"
+                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-500 hover:scale-110 hover:-translate-y-2"
                 >
                   <img
                     src="/Shindao/Benefit/char.png"
