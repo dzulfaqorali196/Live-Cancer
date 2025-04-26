@@ -9,7 +9,7 @@ import { useInView } from "framer-motion"
 export default function RewardTiers() {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
-  const [activeIndex, setActiveIndex] = useState(null)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   // Variants untuk animasi
   const containerVariants = {
@@ -55,7 +55,7 @@ export default function RewardTiers() {
   }
 
   // Fungsi untuk handling mouse
-  const handleMouseEnter = (index) => {
+  const handleMouseEnter = (index: number) => {
     setActiveIndex(index)
   }
 
