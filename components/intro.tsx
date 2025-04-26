@@ -65,19 +65,6 @@ export default function Intro() {
         canvas.style.pointerEvents = 'auto';
         canvas.style.cursor = 'pointer';
 
-        // Tambahkan event listener untuk cursor
-        const handleMouseMove = (e: MouseEvent) => {
-          const rect = canvas.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          // Gunakan koordinat untuk update scene
-          if (splineRef.current) {
-            splineRef.current.handleEvent('pointermove', { x, y });
-          }
-        };
-
-        canvas.addEventListener('mousemove', handleMouseMove);
-
         setLoadingProgress(100);
         clearInterval(progressInterval);
         
@@ -123,10 +110,6 @@ export default function Intro() {
       window.removeEventListener('resize', setViewportHeight);
       window.removeEventListener('orientationchange', setViewportHeight);
       if (splineRef.current) {
-        const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
-        if (canvas) {
-          canvas.removeEventListener('mousemove', handleMouseMove);
-        }
         splineRef.current.dispose();
       }
       if (backgroundMusicRef.current) {
