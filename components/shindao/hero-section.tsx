@@ -109,7 +109,7 @@ export default function HeroSection() {
     
     // Simulasi loading selama 3 detik kemudian tampilkan pesan
     setTimeout(() => {
-      setLoadingMessage("Fitur ini sedang dalam pengembangan. Silakan coba lagi nanti.")
+      setLoadingMessage("This feature is currently under development. Please try again later.")
     }, 3000)
   }
   
