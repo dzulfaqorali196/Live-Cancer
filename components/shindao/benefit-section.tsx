@@ -214,7 +214,7 @@ export default function BenefitSection() {
               className="w-full h-full"
             >
               <img
-                src="/shindao/benefit/Benefit Banner.png"
+                src="/Shindao/Benefit/Benefit Banner.png"
                 alt="ShinDAO Benefit Banner"
                 className="w-full h-auto object-cover"
                 style={{
