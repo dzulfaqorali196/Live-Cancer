@@ -6,6 +6,7 @@ import {
   PresaleBanner,
   RewardTiers,
   BenefitSection,
+  HypothesisSection,
   RoadmapSection,
   MountainSection
 } from "@/components/shindao";
@@ -17,6 +18,7 @@ export default function ShindaoPage() {
       <PresaleBanner />
       <RewardTiers />
       <BenefitSection />
+      <HypothesisSection />
       <RoadmapSection />
       <MountainSection />
     </main>
