@@ -174,17 +174,6 @@ export default function HeroSection() {
       const startTime = Date.now();
       let currentPercentage = 0;
       
-      // Untuk committed dan limit value - animasi cepat
-      let startCommitted = 0;
-      let startLimit = 0;
-      
-      // Animasi cepat untuk angka
-      const fastDuration = 1500; // 1.5 detik
-      const steps = 50;
-      const stepTime = fastDuration / steps;
-      const committedIncrement = targetCommitted / steps;
-      const limitIncrement = targetLimit / steps;
-      
       // Fungsi easeOutQuart - cepat di awal lalu melambat
       // t: waktu saat ini, b: nilai awal, c: perubahan nilai, d: durasi total
       const easeOutQuart = (t: number, b: number, c: number, d: number) => {
@@ -193,7 +182,7 @@ export default function HeroSection() {
         return -c * (t * t * t * t - 1) + b;
       };
       
-      // Interval untuk progress bar - update setiap 1 detik
+      // Interval untuk progress bar dan committed value - update setiap 1 detik
       const progressInterval = setInterval(() => {
         const elapsedTime = Date.now() - startTime;
         
@@ -201,36 +190,44 @@ export default function HeroSection() {
           // Hitung nilai baru dengan easing (cepat di awal, lalu melambat)
           currentPercentage = easeOutQuart(elapsedTime, 0, targetPercentage, totalDuration);
           
-          // Update state dengan pembulatan 1 desimal
-          setProgressPercentage(Math.min(Math.round(currentPercentage * 10) / 10, targetPercentage));
+          // Update state progress bar dengan pembulatan 1 desimal
+          const newPercentage = Math.min(Math.round(currentPercentage * 10) / 10, targetPercentage);
+          setProgressPercentage(newPercentage);
+          
+          // Update committed value sinkron dengan persentase
+          const newCommittedValue = Math.min(Math.round((newPercentage / targetPercentage) * targetCommitted * 10) / 10, targetCommitted);
+          setCommittedValue(newCommittedValue);
         } else {
           // Animasi selesai
           clearInterval(progressInterval);
           setProgressPercentage(targetPercentage);
+          setCommittedValue(targetCommitted);
         }
       }, 1000);
       
-      // Interval untuk animasi angka - cepat
-      const numbersInterval = setInterval(() => {
-        if (startCommitted < targetCommitted) {
-          // Update committed value
-          startCommitted += committedIncrement;
-          setCommittedValue(Math.min(Math.round(startCommitted * 10) / 10, targetCommitted));
-          
+      // Animasi untuk limit value - tetap cepat
+      const fastDuration = 1500; // 1.5 detik
+      const steps = 50;
+      const stepTime = fastDuration / steps;
+      const limitIncrement = targetLimit / steps;
+      let startLimit = 0;
+      
+      // Interval untuk animasi limit value - cepat
+      const limitInterval = setInterval(() => {
+        if (startLimit < targetLimit) {
           // Update limit value
           startLimit += limitIncrement;
           setLimitValue(Math.min(Math.round(startLimit * 10) / 10, targetLimit));
         } else {
-          clearInterval(numbersInterval);
+          clearInterval(limitInterval);
           // Pastikan nilai akhir tepat
-          setCommittedValue(targetCommitted);
           setLimitValue(targetLimit);
         }
       }, stepTime);
       
       return () => {
         clearInterval(progressInterval);
-        clearInterval(numbersInterval);
+        clearInterval(limitInterval);
       };
     }
   }, [progressAnimation]);

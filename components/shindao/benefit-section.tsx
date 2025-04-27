@@ -197,7 +197,7 @@ export default function BenefitSection() {
           {/* Purple card with wavy background */}
           <motion.div 
             variants={cardVariants}
-            className="bg-gradient-to-br from-[#a857ff] to-[#9345e6] rounded-3xl p-4 sm:p-6 md:p-8 relative overflow-hidden mx-0 sm:mx-4 transition-all duration-500 transform hover:scale-[1.01] hover:shadow-[0_0_30px_rgba(168,87,255,0.5)]"
+            className="rounded-3xl overflow-hidden relative mx-0 sm:mx-4 transition-all duration-500 transform hover:scale-[1.01] hover:shadow-[0_0_30px_rgba(168,87,255,0.5)]"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             onMouseMove={handleMouseMove}
@@ -208,128 +208,23 @@ export default function BenefitSection() {
               transition: 'transform 0.3s ease'
             }}
           >
-            {/* Wavy background pattern - using CSS background for the waves */}
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.1) 20px, rgba(255,255,255,0.1) 40px)",
-                backgroundSize: "100px 100px",
-                animation: "moveWaves 20s linear infinite",
-              }}
-            ></div>
-            
-            {/* Tambahan diagonal lines dengan arah berbeda */}
-            <div
-              className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255,255,255,0.1) 20px, rgba(255,255,255,0.1) 40px)",
-                backgroundSize: "100px 100px",
-                animation: "moveWavesReverse 15s linear infinite",
-              }}
-            ></div>
-
-            {/* Content container */}
-            <div className="relative z-10">
-              {/* Main heading */}
-              <motion.div 
-                variants={textVariants}
-                className="text-center mb-3 md:mb-4 mt-4 md:mt-8"
-              >
-                <motion.h2 
-                  variants={textVariants}
-                  className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 md:mb-2 transition-transform duration-300 hover:scale-105"
-                >
-                  Thank You For Contributing to
-                </motion.h2>
-                <motion.h2 
-                  variants={textVariants}
-                  className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-1 md:mb-2"
-                  style={{
-                    textShadow: "0 0 8px rgba(255, 255, 255, 0.5)"
-                  }}
-                >
-                  ShinDAO
-                </motion.h2>
-                <motion.p 
-                  variants={textVariants}
-                  className="text-white/80 text-lg sm:text-xl"
-                >
-                  <span>Cancer</span> <span className="text-white font-bold">Fun</span>
-                </motion.p>
-              </motion.div>
-
-              {/* Main text */}
-              <motion.div 
-                variants={textVariants}
-                className="max-w-3xl mx-auto text-white text-center mb-4 md:mb-8"
-              >
-                <motion.p 
-                  variants={textVariants}
-                  className="text-sm sm:text-base mb-2 transition-opacity duration-300 hover:opacity-90"
-                >
-                  Thank you for fueling the future of science. Your contribution unlocks $SHIN a utility token that grants{" "}
-                  <span className="text-yellow-200 hover:text-yellow-100 transition-colors duration-300">voting rights</span>,{" "}
-                  <span className="text-yellow-200 hover:text-yellow-100 transition-colors duration-300">early research access</span>, and a{" "}
-                  <span className="text-yellow-200 hover:text-yellow-100 transition-colors duration-300">stake</span> in biotech breakthroughs.
-                </motion.p>
-                <motion.p 
-                  variants={textVariants}
-                  className="text-sm sm:text-base transition-opacity duration-300 hover:opacity-90"
-                >
-                  Whether you contribute 10K or 10M $CANCER, you're part of a transparent, tokenized, community-driven
-                  research movement.
-                </motion.p>
-              </motion.div>
-
-              {/* Signature */}
-              <motion.div 
-                variants={textVariants}
-                className="text-center text-yellow-200 mb-6 md:mb-12 text-sm sm:text-base transition-all duration-300 hover:tracking-wider"
-              >
-                — Hsun4, ShinDAO Commitee
-              </motion.div>
-
-              {/* Character images */}
-              <div className="flex justify-between mt-0 md:-mt-4">
-                {/* Left character */}
-                <motion.div 
-                  variants={characterVariants}
-                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-500 hover:scale-110 hover:-translate-y-2"
-                >
-                  <img
-                    src="/Shindao/Benefit/char.png"
-                    alt="ShinDAO Character"
-                    className="w-full h-full object-contain transform -scale-x-100"
-                    style={{
-                      transform: isHovering 
-                        ? `translateX(${(mousePosition.x - 0.5) * -20}px) translateY(${(mousePosition.y - 0.5) * -10}px) scale(-1, 1)` 
-                        : 'scale(-1, 1)',
-                      filter: "drop-shadow(0 0 8px rgba(168, 87, 255, 0.3))"
-                    }}
-                  />
-                </motion.div>
-
-                {/* Right character */}
-                <motion.div 
-                  variants={characterVariants}
-                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-500 hover:scale-110 hover:-translate-y-2"
-                >
-                  <img
-                    src="/Shindao/Benefit/char.png"
-                    alt="ShinDAO Character"
-                    className="w-full h-full object-contain"
-                    style={{
-                      transform: isHovering 
-                        ? `translateX(${(mousePosition.x - 0.5) * 20}px) translateY(${(mousePosition.y - 0.5) * -10}px)` 
-                        : 'none',
-                      filter: "drop-shadow(0 0 8px rgba(168, 87, 255, 0.3))"
-                    }}
-                  />
-                </motion.div>
-              </div>
-            </div>
+            {/* Gambar Benefit Banner mengisi seluruh kartu */}
+            <motion.div
+              variants={textVariants}
+              className="w-full h-full"
+            >
+              <img
+                src="/shindao/benefit/Benefit Banner.png"
+                alt="ShinDAO Benefit Banner"
+                className="w-full h-auto object-cover"
+                style={{
+                  transform: isHovering 
+                    ? `translateX(${(mousePosition.x - 0.5) * -10}px) translateY(${(mousePosition.y - 0.5) * -10}px)` 
+                    : 'none',
+                  transition: 'transform 0.3s ease'
+                }}
+              />
+            </motion.div>
           </motion.div>
 
           {/* Animasi CSS */}
