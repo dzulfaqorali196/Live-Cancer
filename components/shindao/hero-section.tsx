@@ -374,7 +374,7 @@ export default function HeroSection() {
                   onClick={handleClosePopup}
                   className="mt-4 bg-[#a857ff] hover:bg-[#a857ff]/90 text-white rounded-[100px] px-6 py-2 font-medium w-full sm:w-auto"
                 >
-                  Tutup
+                  Close
                 </Button>
               </motion.div>
             </motion.div>
