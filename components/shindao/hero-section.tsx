@@ -164,48 +164,76 @@ export default function HeroSection() {
   useEffect(() => {
     // Animasi persentase dan nilai committed/limit
     if (progressAnimation) {
-      // Animasi persentase dari 0 ke 50
-      let startPercentage = 0
-      const targetPercentage = 50
-      const duration = 1500 // 1.5s
-      const steps = 50 // Jumlah langkah (1% per langkah)
-      const stepTime = duration / steps
+      // Durasi animasi: 10 menit (600 detik)
+      const totalDuration = 600000; // 10 menit dalam milidetik
+      const targetPercentage = 50;
+      const targetCommitted = 50;
+      const targetLimit = 100;
       
-      // Animasi nilai committed dari 0M ke 50M
-      let startCommitted = 0
-      const targetCommitted = 50
-      const committedIncrement = targetCommitted / steps
+      // Untuk progress bar - 10 menit
+      const startTime = Date.now();
+      let currentPercentage = 0;
       
-      // Animasi nilai limit dari 0M ke 100M
-      let startLimit = 0
-      const targetLimit = 100
-      const limitIncrement = targetLimit / steps
+      // Untuk committed dan limit value - animasi cepat
+      let startCommitted = 0;
+      let startLimit = 0;
       
-      const interval = setInterval(() => {
-        if (startPercentage < targetPercentage) {
-          // Update persentase
-          startPercentage += 1
-          setProgressPercentage(startPercentage)
+      // Animasi cepat untuk angka
+      const fastDuration = 1500; // 1.5 detik
+      const steps = 50;
+      const stepTime = fastDuration / steps;
+      const committedIncrement = targetCommitted / steps;
+      const limitIncrement = targetLimit / steps;
+      
+      // Fungsi easeOutQuart - cepat di awal lalu melambat
+      // t: waktu saat ini, b: nilai awal, c: perubahan nilai, d: durasi total
+      const easeOutQuart = (t: number, b: number, c: number, d: number) => {
+        t /= d;
+        t--;
+        return -c * (t * t * t * t - 1) + b;
+      };
+      
+      // Interval untuk progress bar - update setiap 1 detik
+      const progressInterval = setInterval(() => {
+        const elapsedTime = Date.now() - startTime;
+        
+        if (elapsedTime < totalDuration) {
+          // Hitung nilai baru dengan easing (cepat di awal, lalu melambat)
+          currentPercentage = easeOutQuart(elapsedTime, 0, targetPercentage, totalDuration);
           
+          // Update state dengan pembulatan 1 desimal
+          setProgressPercentage(Math.min(Math.round(currentPercentage * 10) / 10, targetPercentage));
+        } else {
+          // Animasi selesai
+          clearInterval(progressInterval);
+          setProgressPercentage(targetPercentage);
+        }
+      }, 1000);
+      
+      // Interval untuk animasi angka - cepat
+      const numbersInterval = setInterval(() => {
+        if (startCommitted < targetCommitted) {
           // Update committed value
-          startCommitted += committedIncrement
-          setCommittedValue(Math.min(Math.round(startCommitted * 10) / 10, targetCommitted))
+          startCommitted += committedIncrement;
+          setCommittedValue(Math.min(Math.round(startCommitted * 10) / 10, targetCommitted));
           
           // Update limit value
-          startLimit += limitIncrement
-          setLimitValue(Math.min(Math.round(startLimit * 10) / 10, targetLimit))
+          startLimit += limitIncrement;
+          setLimitValue(Math.min(Math.round(startLimit * 10) / 10, targetLimit));
         } else {
-          clearInterval(interval)
+          clearInterval(numbersInterval);
           // Pastikan nilai akhir tepat
-          setProgressPercentage(targetPercentage)
-          setCommittedValue(targetCommitted)
-          setLimitValue(targetLimit)
+          setCommittedValue(targetCommitted);
+          setLimitValue(targetLimit);
         }
-      }, stepTime)
+      }, stepTime);
       
-      return () => clearInterval(interval)
+      return () => {
+        clearInterval(progressInterval);
+        clearInterval(numbersInterval);
+      };
     }
-  }, [progressAnimation])
+  }, [progressAnimation]);
 
   // Variants untuk animasi
   const fadeInUpVariants = {
@@ -479,7 +507,7 @@ export default function HeroSection() {
                     whileHover={{ scale: 1.05, boxShadow: "0 0 15px -5px rgba(168, 87, 255, 0.5)" }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
-                    Presale Ends {formatTime(timeLeft.days, timeLeft.minutes)}
+                    Creation Ends {formatTime(timeLeft.days, timeLeft.minutes)}
                   </motion.div>
                 </motion.div>
               </motion.div>
@@ -607,7 +635,7 @@ export default function HeroSection() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.6 }}
                   >
-                    {committedValue}M $Cancer
+                    {committedValue}M $CANCER
                   </motion.p>
                 </motion.div>
 
@@ -627,9 +655,9 @@ export default function HeroSection() {
                       className="h-full bg-gradient-to-r from-[#a857ff] via-[#ae65ff] to-[#9345e6] rounded-full relative"
                       initial={{ width: "0%" }}
                       animate={{ 
-                        width: progressAnimation ? "50%" : "0%"
+                        width: progressAnimation ? `${progressPercentage}%` : "0%"
                       }}
-                      transition={{ duration: 1.5, ease: "easeOut", delay: 1 }}
+                      transition={{ duration: 0.5, ease: "linear" }}
                     >
                       <motion.div
                         className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-r from-transparent to-white/30"
@@ -683,7 +711,7 @@ export default function HeroSection() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.6 }}
                   >
-                    {limitValue}M $Cancer
+                    {limitValue}M $CANCER
                   </motion.p>
                 </motion.div>
               </div>

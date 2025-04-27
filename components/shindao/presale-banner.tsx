@@ -105,7 +105,7 @@ const styles = `
 }
 
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 90s linear infinite;
 }
 `;
 

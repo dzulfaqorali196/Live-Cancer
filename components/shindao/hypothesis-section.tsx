@@ -239,8 +239,8 @@ export default function HypothesisSection() {
             variants={slideInVariants}
             className="md:col-span-4 pr-0 md:pr-8 mb-8 md:mb-0 border-r-0 md:border-r md:border-r-2 border-[#a857ff]/40"
           >
-            <p className="text-lg sm:text-xl font-bold leading-relaxed text-justify bg-gradient-to-r from-[#a857ff] to-white bg-clip-text text-transparent">
-              ShinDAO accelerates therapeutic enzyme innovation by funding and developing decentralized technologies that
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed text-justify bg-gradient-to-r from-[#a857ff] to-white bg-clip-text text-transparent">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold">ShinDAO</span> accelerates therapeutic enzyme innovation by funding and developing decentralized technologies that
               unleash protease engineering to combat cancer, neurodegeneration, and undruggable diseases.
             </p>
           </motion.div>

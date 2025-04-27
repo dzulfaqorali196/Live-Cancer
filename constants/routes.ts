@@ -30,7 +30,7 @@ export enum Routes {
   WHITEPAPER = "/whitepaper",
 
   // Resources
-  DOCUMENTATION = "/docs",
+  DOCUMENTATION = "https://cancerfun.gitbook.io/cancerfun/",
   API = "/api",
   TUTORIALS = "/tutorials",
   BLOG = "/blog",
