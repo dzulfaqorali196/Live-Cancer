@@ -218,6 +218,20 @@ export default function RoadmapSection() {
                   transition: 'height 0.3s ease-out'
                 }}
               />
+              
+              {/* Desktop timeline dots */}
+              {roadmapItems.map((item, index) => (
+                <motion.div 
+                  key={index}
+                  className="absolute w-5 h-5 rounded-full border-2 border-[#a857ff] bg-blue-400 shadow-[0_0_15px_rgba(168,87,255,0.5)] left-1/2 transform -translate-x-1/2"
+                  style={{ 
+                    top: `${(index * 33) + 12}%`
+                  }}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.3 + 0.5 }}
+                />
+              ))}
             </div>
 
             <div className="grid grid-cols-2 gap-8">
@@ -258,8 +272,30 @@ function MobileRoadmapCard({ item, index }: { item: RoadmapItem, index: number }
       animate={controls}
       transition={{ duration: 0.5, delay: index * 0.2 }}
     >
-      {/* Timeline dot */}
-      <div className="absolute left-4 top-4 w-3.5 h-3.5 rounded-full bg-blue-400 z-10"></div>
+      {/* Timeline dot - Improved mobile dot */}
+      <motion.div 
+        className="absolute z-10"
+        style={{
+          left: "10.5px",
+          top: "10px",
+          width: "14px",
+          height: "14px",
+          transform: "translateX(-50%)" 
+        }}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.4, delay: 0.3 + index * 0.2 }}
+      >
+        <div className="absolute bg-blue-400 rounded-full w-full h-full shadow-[0_0_10px_rgba(168,87,255,0.6)]"></div>
+        <motion.div 
+          className="absolute w-full h-full border-2 border-[#a857ff] rounded-full"
+          animate={{ 
+            scale: [1, 1.6, 1],
+            opacity: [1, 0.4, 1]
+          }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+        />
+      </motion.div>
       
       {/* Card */}
       <motion.div 
