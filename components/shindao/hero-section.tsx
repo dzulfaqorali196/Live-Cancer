@@ -575,12 +575,12 @@ export default function HeroSection() {
             >
               {/* Progress header */}
               <motion.div 
-                className="bg-gradient-to-r from-[#a857ff]/20 via-[#1c1c2d50] to-[#a857ff]/20 text-white text-center py-2 md:py-3 rounded-full text-lg md:text-xl font-medium mb-8 md:mb-12 border border-[#a857ff]/40 backdrop-blur-md shadow-md"
+                className="bg-gradient-to-r from-[#a857ff]/30 via-[#1c1c2d50] to-[#a857ff]/30 text-white text-center py-2 md:py-3 rounded-full text-lg md:text-xl font-medium mb-8 md:mb-12 border border-[#a857ff]/40 backdrop-blur-md shadow-md"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
                 whileHover={{ 
-                  boxShadow: "0 0 20px -5px rgba(168, 87, 255, 0.4)", 
+                  boxShadow: "0 0 20px -5px rgba(168, 87, 255, 0.5)", 
                   backgroundColor: "rgba(28, 28, 45, 0.6)" 
                 }}
               >
@@ -617,14 +617,14 @@ export default function HeroSection() {
                   variants={fadeInUpVariants}
                 >
                   <motion.div 
-                    className="h-6 md:h-8 bg-gradient-to-r from-[#1c1c2d70] to-[#23233870] backdrop-blur-md rounded-full overflow-hidden border border-[#a857ff]/30"
+                    className="h-6 md:h-8 bg-gradient-to-r from-[#1c1c2d90] to-[#232338a0] backdrop-blur-md rounded-full overflow-hidden border border-[#a857ff]/40 shadow-inner shadow-black/30"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.7 }}
-                    whileHover={{ boxShadow: "0 0 15px rgba(168, 87, 255, 0.4)" }}
+                    whileHover={{ boxShadow: "0 0 15px rgba(168, 87, 255, 0.5)" }}
                   >
                     <motion.div 
-                      className="h-full bg-gradient-to-r from-[#a857ff] to-[#9345e6] rounded-full relative"
+                      className="h-full bg-gradient-to-r from-[#a857ff] via-[#ae65ff] to-[#9345e6] rounded-full relative"
                       initial={{ width: "0%" }}
                       animate={{ 
                         width: progressAnimation ? "50%" : "0%"
@@ -632,15 +632,15 @@ export default function HeroSection() {
                       transition={{ duration: 1.5, ease: "easeOut", delay: 1 }}
                     >
                       <motion.div
-                        className="absolute top-0 right-0 bottom-0 w-6 bg-white/20"
+                        className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-r from-transparent to-white/30"
                         animate={{ 
-                          x: [0, 10, 0],
-                          opacity: [0, 0.5, 0]
+                          x: [0, 15, 0],
+                          opacity: [0, 0.7, 0]
                         }}
                         transition={{ 
                           repeat: Infinity, 
                           duration: 2,
-                          repeatDelay: 1
+                          repeatDelay: 0.5
                         }}
                       />
                     </motion.div>
@@ -655,9 +655,9 @@ export default function HeroSection() {
                       className="font-bold bg-gradient-to-r from-[#a857ff] to-[#9345e6] bg-clip-text text-transparent px-2"
                       animate={{ 
                         scale: [1, 1.1, 1],
-                        textShadow: ["0 0 0px rgba(168, 87, 255, 0)", "0 0 3px rgba(168, 87, 255, 0.5)", "0 0 0px rgba(168, 87, 255, 0)"]
+                        textShadow: ["0 0 0px rgba(168, 87, 255, 0)", "0 0 5px rgba(168, 87, 255, 0.6)", "0 0 0px rgba(168, 87, 255, 0)"]
                       }}
-                      transition={{ repeat: Infinity, duration: 2, repeatDelay: 1 }}
+                      transition={{ repeat: Infinity, duration: 2, repeatDelay: 0.5 }}
                     >
                       {progressPercentage}%
                     </motion.span>
