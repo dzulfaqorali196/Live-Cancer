@@ -110,8 +110,8 @@ export const ProjectSection = () => {
   const projects = [
     {
       id: 1,
-      title: "SHINDhao",
-      description: "Lorem ipsum dolor amet",
+      title: "ShinDAO",
+      description: "Targeting IFI6 pathways in esophageal cancer through decentralized research funding.",
       isActive: true,
       image: "/project/Shindao.jpeg",
       link: "/projects/shindao"
@@ -119,31 +119,31 @@ export const ProjectSection = () => {
     {
       id: 2,
       title: "Propose Your Project",
-      description: "Lorem ipsum dolor amet",
+      description: "Bring your scientific vision to life with community-backed support.",
       isActive: false,
     },
     {
       id: 3,
       title: "Propose Your Project",
-      description: "Lorem ipsum dolor amet",
+      description: "Bring your scientific vision to life with community-backed support.",
       isActive: false,
     },
     {
       id: 4,
       title: "Propose Your Project",
-      description: "Lorem ipsum dolor amet",
+      description: "Bring your scientific vision to life with community-backed support.",
       isActive: false,
     },
     {
       id: 5,
       title: "Propose Your Project",
-      description: "Lorem ipsum dolor amet",
+      description: "Bring your scientific vision to life with community-backed support.",
       isActive: false,
     },
     {
       id: 6,
       title: "Propose Your Project",
-      description: "Lorem ipsum dolor amet",
+      description: "Bring your scientific vision to life with community-backed support.",
       isActive: false,
     }
   ];

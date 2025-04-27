@@ -69,20 +69,23 @@ const hexagonVariants = {
 const statCards = [
   {
     id: "01",
-    value: "8BioDAOs",
-    description: "Launched & Funded",
+    value: "1 BioDAO",
+    description: "First Research Launched",
+    subtext: "Focused on protease engineering to fight esophageal cancer",
     color: "#FF6B6B"
   },
   {
     id: "02",
-    value: "$30.3M",
-    description: "Related For Research",
+    value: "15 Researchers",
+    description: "Joining CancerFun",
+    subtext: "Scientists from top institutions collaborating through CancerFun & ShinDAO structure",
     color: "#4ECDC4"
   },
   {
     id: "03",
-    value: "$7.2M",
-    description: "Deployed For Research",
+    value: "$250k",
+    description: "Committed To Kickstart Early Research",
+    subtext: "Seed bootstrap funding by researchers to launch the first project",
     color: "#a857ff"
   },
 ];
@@ -216,8 +219,11 @@ export function StatsSection() {
                     <div className="[font-family:'Neue_Montreal-Regular',Helvetica] text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-[#a857ff] to-white">
                       {card.value}
                     </div>
-                    <div className="[font-family:'Neue_Montreal-Regular',Helvetica] text-gray-400 text-lg uppercase tracking-wider">
+                    <div className="[font-family:'Neue_Montreal-Regular',Helvetica] text-gray-300 text-lg uppercase tracking-wider">
                       {card.description}
+                    </div>
+                    <div className="[font-family:'Neue_Montreal-Regular',Helvetica] text-gray-400 text-sm leading-tight">
+                      {card.subtext}
                     </div>
                   </div>
 

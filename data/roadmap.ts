@@ -8,77 +8,55 @@ export interface RoadmapItem {
 export const roadmapItems: RoadmapItem[] = [
   {
     quarter: "Q2 2025",
-    title: "Launch CancerFun Platform",
-    completed: true,
+    title: "Foundation Phase",
+    completed: false,
     items: [
-      "Deploy BIO token smart contracts on Solana",
-      "Launch CancerFun web platform for funding",
-      "Fund initial immunotherapy and diagnostic projects",
-      "Onboard early adopters and community members",
+      "Launch $CANCER token on PumpSwap",
+      "Open first research proposal submissions",
+      "Initiate community onboarding campaign",
+      "Begin funding first pilot project (e.g., ShinDAO)",
     ],
   },
   {
     quarter: "Q4 2025",
-    title: "Activate Community Governance",
+    title: "Growth Phase",
     completed: false,
     items: [
-      "Enable BIO token voting for research projects",
-      "Form initial research DAOs for funding",
-      "Release governance documentation and guides",
-      "Engage community through voting campaigns",
+      "Deploy Research DAO smart contracts",
+      "Launch voting for funding allocations",
+      "Reach 10 funded early-stage proposals",
+      "Build partnerships with 3+ research groups",
     ],
   },
   {
     quarter: "Q2 2026",
-    title: "Expand Global Research Network",
+    title: "Expansion Phase",
     completed: false,
     items: [
-      "Fund research projects in 10+ countries",
-      "Partner with labs in Asia, Europe, and beyond",
-      "Translate platform into multiple languages",
-      "Host global virtual research summits",
-    ],
-  },
-  {
-    quarter: "Q3 2026",
-    title: "Launch Transparency Dashboard",
-    completed: false,
-    items: [
-      "Develop public dashboard for BIO token tracking",
-      "Integrate Solana blockchain data for transparency",
-      "Ensure accessibility for non-technical users",
-      "Promote dashboard through community channels",
+      "Scale to 5+ active BioDAOs",
+      "Translate platform into 3 languages",
+      "Host first CancerFun Research Summit",
+      "Launch researcher socials for transparency",
     ],
   },
   {
     quarter: "Q4 2026",
-    title: "Achieve Key Research Milestones",
+    title: "Maturity Phase",
     completed: false,
     items: [
-      "Fund 50+ projects across immunotherapy and AI",
-      "Support diverse research in 5+ fields",
-      "Publish project outcomes on public dashboard",
-      "Celebrate breakthroughs with global community",
-    ],
-  },
-  {
-    quarter: "Q4 2026",
-    title: "Build Developer Ecosystem",
-    completed: false,
-    items: [
-      "Release APIs for CancerCoin platform integrations",
-      "Offer developer grants for tool creation",
-      "Host hackathons for research funding solutions",
-      "Integrate third-party tools for enhanced functionality",
+      "Reach $3M+ research funding deployed",
+      "Fund first clinical-stage research project",
+      "Release open-source API for integrations",
+      "Publish public impact report to community",
     ],
   },
 ];
 
 export function RoadmapSection() {
   return {
-    title: "CancerCoin's Roadmap to a Cure",
+    title: "CancerFun's Roadmap to a Cure",
     subtitle:
-      "Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain.",
+      "Our journey to revolutionize cancer research through decentralized science, powered by $CANCER tokens.",
     milestones: roadmapItems,
   };
 }

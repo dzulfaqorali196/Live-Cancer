@@ -158,7 +158,7 @@ export function RoadmapSection() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A855F7] to-[#E9D5FF]">Roadmap to a Cure</span>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center">
-              Our journey to revolutionize cancer research through decentralized science, powered by BIO tokens and Solana's blockchain.
+              Our journey to revolutionize cancer research through decentralized science, powered by $CANCER tokens.
             </p>
           </div>
         </div>
