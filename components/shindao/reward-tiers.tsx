@@ -26,21 +26,23 @@ export default function RewardTiers() {
   }
 
   const tierVariants = {
-    hidden: { 
-      y: 50, 
+    hidden: {
+      y: 50,
       opacity: 0,
-      backgroundColor: "rgba(31, 41, 55, 0)"
+      background:
+        "linear-gradient(135deg, rgba(31, 41, 55, 0), rgba(31, 41, 55, 0))",
     },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
-      backgroundColor: "rgba(31, 41, 55, 0)",
+      background:
+        "linear-gradient(135deg, rgba(31, 41, 55, 0.6), rgba(17, 24, 39, 0.8))",
       transition: {
         duration: 0.5,
         type: "spring",
-        stiffness: 100
-      }
-    }
+        stiffness: 100,
+      },
+    },
   }
 
   const noteVariants = {

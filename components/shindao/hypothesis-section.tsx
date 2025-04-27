@@ -237,9 +237,9 @@ export default function HypothesisSection() {
             initial="hidden"
             animate={isContentLeftInView ? "visible" : "hidden"}
             variants={slideInVariants}
-            className="md:col-span-4 pr-0 md:pr-8 mb-8 md:mb-0 border-r-0 md:border-r border-[#a857ff]/20"
+            className="md:col-span-4 pr-0 md:pr-8 mb-8 md:mb-0 border-r-0 md:border-r md:border-r-2 border-[#a857ff]/40"
           >
-            <p className="text-lg sm:text-xl font-medium leading-relaxed text-justify text-white">
+            <p className="text-lg sm:text-xl font-bold leading-relaxed text-justify bg-gradient-to-r from-[#a857ff] to-white bg-clip-text text-transparent">
               ShinDAO accelerates therapeutic enzyme innovation by funding and developing decentralized technologies that
               unleash protease engineering to combat cancer, neurodegeneration, and undruggable diseases.
             </p>
@@ -254,12 +254,12 @@ export default function HypothesisSection() {
             className="md:col-span-8 pl-0 md:pl-8"
           >
             <motion.div 
-              className="bg-gradient-to-r from-[#a857ff]/20 via-[#a857ff]/30 to-[#a857ff]/20 rounded-3xl p-4 mb-6 border border-[#a857ff]/30"
+              className="bg-gradient-to-r from-[#a857ff]/30 via-[#a857ff]/40 to-[#a857ff]/30 rounded-3xl p-4 mb-6 border-2 border-[#a857ff]/50 shadow-md shadow-[#a857ff]/20"
               initial={{ scaleX: 0 }}
               animate={isContentRightInView ? { scaleX: 1 } : { scaleX: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <h3 className="text-lg sm:text-xl font-bold text-center text-white">Main Hypothesis</h3>
+              <h3 className="text-lg sm:text-xl font-extrabold text-center bg-gradient-to-r from-[#a857ff] via-white to-[#a857ff] bg-clip-text text-transparent">Main Hypothesis</h3>
             </motion.div>
   
             <motion.p 
