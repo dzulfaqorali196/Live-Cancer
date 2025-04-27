@@ -106,11 +106,6 @@ export default function HeroSection() {
   const handleContributeClick = () => {
     setLoadingMessage("Loading...")
     setShowLoadingPopup(true)
-    
-    // Simulasi loading selama 3 detik kemudian tampilkan pesan
-    setTimeout(() => {
-      setLoadingMessage("This feature is currently under development. Please try again later.")
-    }, 3000)
   }
   
   // Handler untuk menutup popup
@@ -385,16 +380,8 @@ export default function HeroSection() {
                 exit={{ scale: 0.9, opacity: 0 }}
                 className="bg-[#12121290] backdrop-blur-xl p-8 rounded-xl shadow-xl flex flex-col items-center gap-4 max-w-md w-full mx-4 border border-[#a857ff]/20"
               >
-                {loadingMessage === "Loading..." ? (
-                  <div className="w-12 h-12 border-4 border-[#a857ff] border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <svg className="w-full h-full text-[#a857ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                )}
-                <p className="text-white text-xl font-medium text-center">{loadingMessage}</p>
+                <div className="w-12 h-12 border-4 border-[#a857ff] border-t-transparent rounded-full animate-spin" />
+                <p className="text-white text-xl font-medium text-center">Loading...</p>
                 <Button 
                   onClick={handleClosePopup}
                   className="mt-4 bg-[#a857ff] hover:bg-[#a857ff]/90 text-white rounded-[100px] px-6 py-2 font-medium w-full sm:w-auto"
@@ -553,8 +540,12 @@ export default function HeroSection() {
                     className="bg-[#a857ff]/80 backdrop-blur-md hover:bg-[#a857ff]/90 text-white rounded-[100px] px-6 md:px-12 py-6 md:py-8 text-lg md:text-xl font-bold shadow-lg shadow-[#a857ff]/20 border border-[#a857ff]/50 w-full sm:w-auto"
                   >
                     <motion.span
-                      animate={contributeHover ? { y: [0, -5, 0] } : {}}
-                      transition={{ repeat: Infinity, duration: 1 }}
+                      animate={contributeHover ? { y: [0, -5, 0] } : { y: 0 }}
+                      transition={{ 
+                        repeat: contributeHover ? Infinity : 0, 
+                        duration: 1,
+                        ease: "easeInOut"
+                      }}
                     >
                       Contribute
                     </motion.span>
@@ -574,8 +565,12 @@ export default function HeroSection() {
                     className="bg-white/80 backdrop-blur-md hover:bg-white/90 text-black rounded-[100px] px-6 md:px-12 py-6 md:py-8 text-lg md:text-xl font-bold shadow-lg shadow-white/20 border border-white/50 w-full sm:w-auto"
                   >
                     <motion.span
-                      animate={whyHover ? { y: [0, -5, 0] } : {}}
-                      transition={{ repeat: Infinity, duration: 1 }}
+                      animate={whyHover ? { y: [0, -5, 0] } : { y: 0 }}
+                      transition={{ 
+                        repeat: whyHover ? Infinity : 0, 
+                        duration: 1,
+                        ease: "easeInOut"
+                      }}
                     >
                       Why This Matters
                     </motion.span>

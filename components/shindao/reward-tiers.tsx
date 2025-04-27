@@ -535,7 +535,7 @@ export default function RewardTiers() {
           <motion.span
             className="relative inline-block"
           >
-            <Link href="/docs" className="underline font-medium relative z-10 text-[#a857ff]">
+            <Link href="https://cancerfun.gitbook.io/cancerfun/" target="_blank" className="underline font-medium relative z-10 text-[#a857ff]">
               Docs
             </Link>
             <motion.div
