@@ -337,8 +337,10 @@ export function Navbar() {
               >
             <Link
               href={item.href ?? "#"}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
+                  onClick={(e) => item.isExternal ? null : handleSmoothScroll(e, item.href)}
               className="text-sm text-muted-foreground hover:text-[#a857ff] transition-all duration-300 relative group transform hover:scale-105"
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
             >
               {item.label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>
@@ -462,10 +464,13 @@ export function Navbar() {
                   <Link
                     href={item.href}
                           onClick={(e) => {
+                            if (item.isExternal) return;
                             handleSmoothScroll(e, item.href);
                             setIsOpen(false);
                           }}
                           className="text-base hover:text-[#a857ff] transition-all duration-300 relative group inline-block transform hover:scale-105"
+                          target={item.isExternal ? "_blank" : undefined}
+                          rel={item.isExternal ? "noopener noreferrer" : undefined}
                   >
                     {item.label}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a857ff] transition-all duration-300 group-hover:w-full group-hover:shadow-[0_0_10px_#a857ff] group-hover:blur-[1px]"></span>

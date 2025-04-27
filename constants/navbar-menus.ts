@@ -4,6 +4,7 @@ export type NavMenuItem = {
   label: string;
   href: string;
   isSection?: boolean;
+  isExternal?: boolean;
 };
 
 export const navMenuItems: NavMenuItem[] = [
@@ -11,5 +12,5 @@ export const navMenuItems: NavMenuItem[] = [
   { label: "Projects", href: "#projects", isSection: true },
   { label: "Blog", href: "#blog", isSection: true },
   { label: "Contact", href: Routes.CONTACT },
-  { label: "Docs", href: Routes.DOCUMENTATION },
+  { label: "Docs", href: Routes.DOCUMENTATION, isExternal: true },
 ];
