@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const path = require('path');
 
 const nextConfig = {
   eslint: {
@@ -16,10 +12,6 @@ const nextConfig = {
     unoptimized: true,
   },
   transpilePackages: ['ajv', 'json-schema-traverse', 'fast-deep-equal', 'uri-js'],
-  experimental: {
-    swcMinify: false, // Menonaktifkan swc minifier
-    esmExternals: 'loose', // Membantu dengan modul ESM
-  },
   webpack: (config, { isServer }) => {
     // Mengabaikan masalah lightningcss.node dan menambahkan penanganan ajv
     if (!isServer) {
@@ -37,8 +29,8 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       'ajv/dist/compile/codegen': path.resolve(__dirname, './lib/ajv/codegen.js'),
-      'ajv/dist/compile/resolve': path.resolve('node_modules/ajv/dist/compile/resolve/index.js'),
-      'ajv/dist/runtime/validation_error': path.resolve('node_modules/ajv/dist/runtime/validation_error.js'),
+      'ajv/dist/compile/resolve': path.join(__dirname, 'node_modules/ajv/dist/compile/resolve/index.js'),
+      'ajv/dist/runtime/validation_error': path.join(__dirname, 'node_modules/ajv/dist/runtime/validation_error.js'),
     };
 
     // Gunakan babel-loader untuk js/ts files
@@ -85,4 +77,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

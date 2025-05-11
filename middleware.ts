@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { isProtectedRoute } from "@/auth/protected-routes";
 
-export async function middleware(request: NextRequest) {
+// Gunakan fungsi fetch di edge runtime
+export const middleware = async (request: NextRequest) => {
   const { pathname, search } = request.nextUrl;
 
   // Check if user has visited the intro page
@@ -28,18 +29,24 @@ export async function middleware(request: NextRequest) {
 
   // Check protected routes
   if (isProtectedRoute(pathname)) {
-    const session = await auth();
-    if (!session) {
-      // Preserve the original URL as callbackUrl
-      const callbackUrl = encodeURIComponent(`${pathname}${search}`);
-      return NextResponse.redirect(
-        new URL(`/signin?callbackUrl=${callbackUrl}`, request.url)
-      );
+    try {
+      const session = await auth();
+      if (!session) {
+        // Preserve the original URL as callbackUrl
+        const callbackUrl = encodeURIComponent(`${pathname}${search}`);
+        return NextResponse.redirect(
+          new URL(`/signin?callbackUrl=${callbackUrl}`, request.url)
+        );
+      }
+    } catch (error) {
+      console.error("Auth error in middleware:", error);
+      // Fallback to redirect to signin
+      return NextResponse.redirect(new URL('/signin', request.url));
     }
   }
 
   return NextResponse.next();
-}
+};
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
