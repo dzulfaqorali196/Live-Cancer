@@ -110,7 +110,7 @@ export default function HeroSection() {
       .toString()
       .padStart(2, "0")}m`;
   }; 
-
+ 
   // State untuk animasi progress bar
   const [progressAnimation, setProgressAnimation] = useState(false);
   const [progressPercentage, setProgressPercentage] = useState(0);
