@@ -10,6 +10,24 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    swcMinify: false // Menonaktifkan swc minifier
+  },
+  webpack: (config) => {
+    // Gunakan babel-loader untuk js/ts files
+    config.module.rules.push({
+      test: /\.(js|jsx|ts|tsx)$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['next/babel'],
+        },
+      },
+    });
+
+    return config;
+  },
   env: {
     AUTH_FACEBOOK_ID: process.env.AUTH_FACEBOOK_ID,
     AUTH_FACEBOOK_SECRET: process.env.AUTH_FACEBOOK_SECRET,
