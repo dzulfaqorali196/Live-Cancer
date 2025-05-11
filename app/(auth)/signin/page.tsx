@@ -19,17 +19,17 @@ export default function SignIn() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/85 to-black/30"></div>
             <div className="relative z-20 flex items-center">
               <Link href={Routes.HOME}>
-                <Logo variant="text" className="text-3xl" />
+                <Logo className="text-3xl" />
               </Link>
             </div>
             <div className="relative z-20 mt-auto">
               <blockquote className="space-y-2">
                 <p className="text-lg">
-                  “This library has saved me countless hours of work and helped
-                  me deliver stunning designs to my clients faster than ever
-                  before.”
+                  “CancerFun is a platform for cancer research and development,
+                  engineered by researchers to accelerate Cancer Focused
+                  Decentralized Science”
                 </p>
-                <footer className="text-sm">Sofia Davis</footer>
+                <footer className="text-sm">Hsun Hung - Founder</footer>
               </blockquote>
             </div>
           </div>

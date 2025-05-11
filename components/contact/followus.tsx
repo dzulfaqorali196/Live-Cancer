@@ -21,7 +21,7 @@ export default function FollowUs() {
     <div>
       <h3 className="text-xl font-semibold text-white mb-4">Follow Us</h3>
       <p className="text-gray-300 mb-4">
-        Join our community on social platforms to stay updated with CancerFun's
+        Join our community on social platforms to stay updated with CancerCoin’s
         mission and announcements.
       </p>
       <div className="flex gap-4">
@@ -34,7 +34,7 @@ export default function FollowUs() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-purple-400 hover:text-purple-300"
-              aria-label={`Follow CancerFun on ${social.name}`}
+              aria-label={`Follow CancerCoin on ${social.name}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}

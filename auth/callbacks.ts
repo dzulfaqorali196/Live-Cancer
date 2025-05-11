@@ -7,8 +7,18 @@ export const authCallbacks: NextAuthConfig["callbacks"] = {
   },
 
   async redirect({ url, baseUrl }) {
-    // Prevent open redirects
-    return url.startsWith(baseUrl) ? url : baseUrl;
+    // Allow relative URLs (e.g., /committee/application/page/1)
+    if (url.startsWith("/")) {
+      return `${baseUrl}${url}`;
+    }
+
+    // Allow full URLs within the same origin
+    if (url.startsWith(baseUrl)) {
+      return url;
+    }
+
+    // Fallback to baseUrl (homepage) for invalid URLs
+    return baseUrl;
   },
 
   async session({ session, token }) {
@@ -26,7 +36,6 @@ export const authCallbacks: NextAuthConfig["callbacks"] = {
       // `user` only available on sign-in
       token.role = "user"; // or fetch from DB
     }
-
     return token;
   },
 };

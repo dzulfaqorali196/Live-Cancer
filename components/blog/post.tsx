@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 
 import type { motion as motionType } from "framer-motion";
 import { ArticleDoc } from "@/types";
@@ -63,7 +57,7 @@ export default function PostCard({
       <Link href={`/blog/${post.id}`} className="group block h-full">
         <Card
           className={cn(
-            "bg-web3-darker border-web3-gray/50 transition-all duration-300 group-hover:border-web3-primary/50",
+            "bg-web3-darker py-0 border-web3-gray/50 transition-all duration-300 group-hover:border-web3-primary/50",
             "h-[500px] overflow-hidden"
           )}
         >
@@ -71,10 +65,12 @@ export default function PostCard({
             {/* Thumbnail Image Container - Fixed Height */}
             <div className="relative w-full h-[60%]">
               {post.coverImage && (
-                <div className={cn(
-                  "absolute inset-0 transition-transform duration-500 ease-out",
-                  "group-hover:scale-[1.02]"
-                )}>
+                <div
+                  className={cn(
+                    "absolute inset-0 transition-transform duration-500 ease-out",
+                    "group-hover:scale-[1.02]"
+                  )}
+                >
                   <MotionImage
                     src={post.coverImage}
                     alt={`${post.title} cover`}
@@ -85,7 +81,7 @@ export default function PostCard({
                     animate={{
                       opacity: 1,
                       scale: 1,
-                      transition: { duration: 0.8, ease: "easeOut" }
+                      transition: { duration: 0.8, ease: "easeOut" },
                     }}
                   />
                 </div>
@@ -95,8 +91,8 @@ export default function PostCard({
             {/* Content Section - Fixed Height */}
             <div className="relative h-[40%] p-6 flex flex-col bg-web3-darker">
               <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-web3-darker to-transparent" />
-              
-              <CardTitle 
+
+              <CardTitle
                 className={cn(
                   "text-white transition-colors duration-300 group-hover:text-[#a857ff] mb-3 font-normal",
                   isLarge ? "text-2xl" : "text-xl"

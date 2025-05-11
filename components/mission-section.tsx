@@ -8,8 +8,8 @@ export function MissionSection() {
         <Card className="border-web3-gray bg-web3-darker/50 backdrop-blur-sm">
           <CardContent className="text-center">
             <p className="text-muted-foreground text-lg">
-              CancerFun is revolutionizing cancer research by leveraging
-              Solana&apos;s blockchain and BIO tokens to democratize funding,
+              CancerCoin is revolutionizing cancer research by leveraging
+              Solana&apos;s blockchain and $CANCER to democratize funding,
               empower community governance, and ensure transparency. We connect
               patients, researchers, and crypto enthusiasts worldwide to
               accelerate breakthroughs in immunotherapy, AI diagnostics, and

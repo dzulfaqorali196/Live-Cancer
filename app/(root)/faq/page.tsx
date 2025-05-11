@@ -5,7 +5,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "FAQ | CancerCoin",
   description:
-    "Explore answers to common questions about CancerCoin, BIO tokens, and funding decentralized cancer research on Solana’s blockchain.",
+    "Explore answers to common questions about CancerCoin, $CANCER, and funding decentralized cancer research on Solana’s blockchain.",
   keywords: [
     "CancerCoin FAQ",
     "BIO token",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "FAQ | CancerCoin",
     description:
-      "Explore answers to common questions about CancerCoin, BIO tokens, and funding decentralized cancer research on Solana’s blockchain.",
+      "Explore answers to common questions about CancerCoin, $CANCER, and funding decentralized cancer research on Solana’s blockchain.",
     url: "https://cancercoin.fun/faq",
     siteName: "CancerCoin",
     images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "FAQ | CancerCoin",
     description:
-      "Explore answers to common questions about CancerCoin, BIO tokens, and funding decentralized cancer research on Solana.",
+      "Explore answers to common questions about CancerCoin, $CANCER, and funding decentralized cancer research on Solana.",
     images: ["/images/og-image.png"],
     site: "@cancercoin",
   },

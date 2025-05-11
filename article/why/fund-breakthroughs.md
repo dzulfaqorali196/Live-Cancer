@@ -4,12 +4,12 @@ date: 2025-04-18
 author: Dr. Michael Chen
 excerpt: Discover how Decentralized Science (DeSci) is transforming cancer research funding through transparency, community involvement, and blockchain technology.
 coverImage: "/images/why/fund-breakthroughs.jpg"
-tags: [CancerCoin, decentralized research, BIO tokens, cancer funding, Solana]
+tags: [CancerCoin, decentralized research, $CANCER, cancer funding, Solana]
 ---
 
 # How CancerCoin Powers Cancer Research Breakthroughs
 
-Cancer touches millions of lives, yet the journey to new treatments is hindered by outdated funding systems. Centralized grants, bureaucratic delays, and limited access for smaller labs slow progress toward breakthroughs. CancerCoin, a Decentralized Science (DeSci) platform, is changing this by enabling anyone—patients, researchers, or crypto enthusiasts—to fund innovative cancer research directly with BIO tokens on Solana’s high-speed blockchain. Here’s how CancerCoin is accelerating the fight against cancer.
+Cancer touches millions of lives, yet the journey to new treatments is hindered by outdated funding systems. Centralized grants, bureaucratic delays, and limited access for smaller labs slow progress toward breakthroughs. CancerCoin, a Decentralized Science (DeSci) platform, is changing this by enabling anyone—patients, researchers, or crypto enthusiasts—to fund innovative cancer research directly with $CANCER on Solana’s high-speed blockchain. Here’s how CancerCoin is accelerating the fight against cancer.
 
 ## The Barriers of Traditional Funding
 
@@ -21,15 +21,15 @@ Traditional cancer research funding is riddled with challenges that stifle innov
 
 These obstacles keep promising treatments out of reach for patients. CancerCoin’s decentralized approach breaks down these barriers, making funding faster, fairer, and more inclusive.
 
-## Direct Funding with BIO Tokens on Solana
+## Direct Funding with $CANCER on Solana
 
-CancerCoin harnesses the power of Solana’s blockchain and BIO tokens, capped at 1 billion, to democratize research funding. This model offers:
+CancerCoin harnesses the power of Solana’s blockchain and $CANCER, capped at 1 billion, to democratize research funding. This model offers:
 
-- **No Intermediaries**: Fund projects directly using BIO tokens, whether it’s immunotherapy trials or precision medicine, without gatekeepers.
+- **No Intermediaries**: Fund projects directly using $CANCER, whether it’s immunotherapy trials or precision medicine, without gatekeepers.
 - **Instant Transactions**: Solana’s 65,000 transactions per second and $0.01 fees ensure funds reach researchers in moments, not months.
 - **Broad Research Support**: From immunotherapy advancements in Europe to AI diagnostics in Asia, CancerCoin backs diverse, cutting-edge projects.
 
-For instance, a patient could use BIO tokens to support a small lab’s immunotherapy trial, or a crypto user could fund a precision medicine initiative—all with a single, transparent transaction on Solana’s blockchain.
+For instance, a patient could use $CANCER to support a small lab’s immunotherapy trial, or a crypto user could fund a precision medicine initiative—all with a single, transparent transaction on Solana’s blockchain.
 
 ## A Global Impact on Cancer Research
 
@@ -43,10 +43,10 @@ Picture a world where a single BIO token donation sparks a breakthrough in cance
 
 ## Take Action: Fund the Next Breakthrough
 
-CancerCoin is more than a platform—it’s a global movement to redefine how cancer research is funded. With BIO tokens, you can support the next big discovery, from novel immunotherapies to advanced diagnostic tools. Solana’s transparent blockchain ensures every contribution is tracked, so you know your impact is real. Join CancerCoin today and help shape a future free from cancer.
+CancerCoin is more than a platform—it’s a global movement to redefine how cancer research is funded. With $CANCER, you can support the next big discovery, from novel immunotherapies to advanced diagnostic tools. Solana’s transparent blockchain ensures every contribution is tracked, so you know your impact is real. Join CancerCoin today and help shape a future free from cancer.
 
 [Explore Projects Now](/projects)
 
 ---
 
-_Ready to fund the cure? Support cancer research with CancerCoin’s BIO tokens now._
+_Ready to fund the cure? Support cancer research with CancerCoin’s $CANCER now._

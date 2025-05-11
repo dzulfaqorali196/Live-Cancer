@@ -1,7 +1,7 @@
 import { MissionSection } from "@/components/mission-section";
 import { ValuesSection } from "@/components/values-section";
 import SectionHeader from "@/components/section-header";
-import { CommitteeSection } from "@/components/committee-section";
+import { CommitteeSection } from "@/components/committee/section";
 
 export const metadata = {
   title: "About Us | Web3Project",

@@ -101,7 +101,7 @@ export default function ProposalSubmission() {
         />
 
         {/* Form Section */}
-        <section className="max-w-3xl mx-auto bg-indigo-950 p-8 rounded-lg shadow-lg">
+        <section className="max-w-3xl mx-auto p-8 rounded-lg shadow-lg border">
           <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             {/* Name Field */}
             <div className="mb-4">

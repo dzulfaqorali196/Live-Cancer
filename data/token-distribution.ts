@@ -58,7 +58,7 @@ export const tokenDistributionData: DistributionData = {
       percentage: 10,
       tokens: 100000000,
       description:
-        "Allocated to DEX liquidity pools to ensure smooth trading of BIO tokens, supporting instant, low-fee transactions on Solana’s blockchain.",
+        "Allocated to DEX liquidity pools to ensure smooth trading of $CANCER, supporting instant, low-fee transactions on Solana’s blockchain.",
       icon: "SiSolana",
     },
   ],

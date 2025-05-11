@@ -2,15 +2,14 @@
 title: Governing the Cure - How CancerCoin Empowers Community-Driven Research
 date: 2025-04-18
 author: Dr. Michael Chen
-excerpt: Learn how CancerCoin’s BIO tokens enable community governance, allowing you to vote on cancer research projects and shape scientific outcomes.
+excerpt: Learn how CancerCoin’s $CANCER enable community governance, allowing you to vote on cancer research projects and shape scientific outcomes.
 coverImage: "/images/why/govern-with-impact.jpg"
-tags:
-  [CancerCoin, decentralized governance, BIO tokens, cancer research, Solana]
+tags: [CancerCoin, decentralized governance, $CANCER, cancer research, Solana]
 ---
 
 # Governing the Cure: How CancerCoin Empowers Community-Driven Research
 
-Cancer research often suffers from top-down decision-making, where a few gatekeepers dictate which projects receive funding. CancerCoin flips this model by putting governance in the hands of its community. Through BIO tokens on Solana’s blockchain, anyone—patients, researchers, or crypto enthusiasts—can vote on research projects and protocol upgrades, ensuring science serves the people. Here’s how CancerCoin’s decentralized governance is reshaping cancer research.
+Cancer research often suffers from top-down decision-making, where a few gatekeepers dictate which projects receive funding. CancerCoin flips this model by putting governance in the hands of its community. Through $CANCER on Solana’s blockchain, anyone—patients, researchers, or crypto enthusiasts—can vote on research projects and protocol upgrades, ensuring science serves the people. Here’s how CancerCoin’s decentralized governance is reshaping cancer research.
 
 ## The Limits of Centralized Governance
 
@@ -22,11 +21,11 @@ Traditional research funding is controlled by centralized institutions, creating
 
 These issues disconnect research from those it aims to help. CancerCoin’s community-driven approach changes that.
 
-## Empowering Votes with BIO Tokens
+## Empowering Votes with $CANCER
 
-CancerCoin uses BIO tokens, capped at 1 billion, to enable decentralized governance on Solana’s blockchain. This system offers:
+CancerCoin uses $CANCER, capped at 1 billion, to enable decentralized governance on Solana’s blockchain. This system offers:
 
-- **Community Voting**: Hold BIO tokens to vote on which research projects—immunotherapy, diagnostics, or beyond—receive funding.
+- **Community Voting**: Hold $CANCER to vote on which research projects—immunotherapy, diagnostics, or beyond—receive funding.
 - **Protocol Upgrades**: Propose and vote on platform improvements, ensuring CancerCoin evolves with community needs.
 - **Fast and Affordable**: Solana’s 65,000 transactions per second and $0.01 fees make voting quick and cost-effective.
 
@@ -44,7 +43,7 @@ Imagine token holders funding a breakthrough immunotherapy project because the c
 
 ## Shape the Future of Cancer Research
 
-CancerCoin’s governance isn’t just about voting—it’s about giving you a stake in curing cancer. With BIO tokens, you can influence which projects thrive, from lab trials to platform upgrades. Solana’s transparent blockchain ensures every vote is secure and visible. Ready to govern the cure? Learn how to participate and make your voice heard.
+CancerCoin’s governance isn’t just about voting—it’s about giving you a stake in curing cancer. With $CANCER, you can influence which projects thrive, from lab trials to platform upgrades. Solana’s transparent blockchain ensures every vote is secure and visible. Ready to govern the cure? Learn how to participate and make your voice heard.
 
 [Learn About Governance](/developers)
 

@@ -29,7 +29,7 @@ export default function Logo({ variant = "image", className = "" }: LogoProps) {
     <Image
       src="/images/cancercoin-logo.png"
       alt={SiteSettings.title.full}
-      className={`w-32 h-32 object-contain ${className}`}
+      className={cn("w-32 h-32 object-contain", className)}
       width={200}
       height={200}
     />

@@ -63,9 +63,7 @@ export default function BlogPosts({ posts }: { posts: ArticleDoc[] }) {
             {nonFeaturedPosts.map((post, index) => {
               // Menentukan ukuran card berdasarkan posisi
               const isLarge = index % 5 === 0; // Setiap card kelipatan 5 akan besar
-              const gridClass = isLarge 
-                ? "lg:col-span-8" 
-                : "lg:col-span-4";
+              const gridClass = isLarge ? "lg:col-span-8" : "lg:col-span-4";
 
               return (
                 <div key={post.id} className={`${gridClass} h-full`}>

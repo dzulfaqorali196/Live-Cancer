@@ -1,13 +1,14 @@
 export enum Routes {
   // General
-  INTRO = "/",
-  HOME = "/home",
+  INTRO = "/intro",
+  HOME = "/",
   PROJECTS = "/projects",
   TOKEN_METRICS = "/token-metrics",
   FAQ = "/faq",
   CONTACT = "/contact",
   ABOUT = "/about",
   COMMITTEE = "/committee",
+  COMMITTEE_APPLICATION = "/jobs/623e95f0-e574-4f06-a120-ec46449f4976",
 
   // Auth
   SIGNIN = "/signin",
@@ -43,4 +44,5 @@ export enum Routes {
   PRIVACY_POLICY = "/privacy-policy",
   TERMS_OF_SERVICE = "/terms-of-service",
   COOKIE_POLICY = "/cookie-policy",
+  TERMS_AND_CONDITIONS = "https://cancerfun.gitbook.io/cancerfun/documentation/terms-and-condition",
 }

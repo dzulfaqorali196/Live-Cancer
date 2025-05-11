@@ -6,11 +6,6 @@ import { tokenMetricsData } from "@/data/token-metrics";
 import { tokenUtilities } from "@/data/token-utility";
 
 export function TokenomicsSection() {
-  // Mengembalikan null untuk menyembunyikan section
-  return null;
-  
-  // Kode section yang disimpan untuk penggunaan di masa depan
-  /*
   const {
     totalSupply,
     distributions,
@@ -22,7 +17,7 @@ export function TokenomicsSection() {
         <SectionHeader
           title1="CancerCoin"
           title2="Token Metrics"
-          description="Discover the BIO token's structure, powering decentralized cancer research on Solana's blockchain."
+          description="Discover the BIO token’s structure, powering decentralized cancer research on Solana’s blockchain."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -61,7 +56,7 @@ export function TokenomicsSection() {
                 <div className="flex flex-col gap-4 mt-12">
                   <h3 className="text-xl font-semibold">BIO Token Utility</h3>
                   <p className="text-sm">
-                    Unlock the power of BIO tokens to fund, govern, and reward
+                    Unlock the power of $CANCER to fund, govern, and reward
                     decentralized cancer research on Solana.
                   </p>
                   <ul className="space-y-2">
@@ -100,5 +95,4 @@ export function TokenomicsSection() {
       </div>
     </section>
   );
-  */
 }

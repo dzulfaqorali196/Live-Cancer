@@ -5,12 +5,15 @@ import { Routes } from "@/constants/routes";
 import { Button } from "@/components/ui/button";
 import { authSocials } from "@/constants/auth-social";
 import { authConfig } from "@/auth/config";
+import { useSearchParams } from "next/navigation";
 
 export default function SocialLogin() {
   const auth_provides = authConfig.providers.map((p) => p.name);
   const auth_socials = authSocials.filter((a) =>
     auth_provides.includes(a.name)
   );
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || Routes.DASHBOARD;
 
   return (
     <>
@@ -28,7 +31,7 @@ export default function SocialLogin() {
         {auth_socials.map((social) => (
           <Button
             key={social.name}
-            onClick={() => signIn(social.id, { callbackUrl: Routes.DASHBOARD })}
+            onClick={() => signIn(social.id, { callbackUrl })}
             variant="outline"
             className="flex flex-row gap-2 items-center"
           >

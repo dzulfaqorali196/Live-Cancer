@@ -2,12 +2,15 @@
 
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { Routes } from "@/constants/routes";
 
 interface SignOutButtonProps {
   redirectUrl?: string;
 }
 
-export function SignOutButton({ redirectUrl = "/home" }: SignOutButtonProps) {
+export function SignOutButton({
+  redirectUrl = Routes.HOME,
+}: SignOutButtonProps) {
   const handleSignOut = async () => {
     try {
       await signOut({ callbackUrl: redirectUrl });

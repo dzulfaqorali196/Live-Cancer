@@ -1,15 +1,25 @@
 export const SiteSettings = {
   title: {
-    short: "CancerFun",
+    short: "CancerCoin",
     full: "We are the catalyst driving decentralized in cancer research",
     part1: "Fund the Cure,",
     part2: "Together",
   },
   description:
-    "CancerFun democratizes cancer research funding via BIO tokens on Solana's blockchain, empowering patients, researchers, and crypto users to innovate in immunotherapy and AI diagnostics.",
+    "CancerCoin democratizes cancer research funding via $CANCER on Solana’s blockchain, empowering patients, researchers, and crypto users to innovate in immunotherapy and AI diagnostics.",
   generator: "v0.dev",
   contact: {
-    email: "info@cancercoin.fun",
+    address: {
+      line1: "1720 Research Park Dr",
+      line2: "",
+      country: "United States",
+      state: "California",
+      city: "Davis",
+      postalCode: "95618",
+    },
+    email: "cancerfunn@gmail.com",
+    phone: "+1.6474772056",
+    fax: "+1.6474772056",
   },
   socials: [
     {
@@ -19,14 +29,9 @@ export const SiteSettings = {
     },
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/in/hsun-hung-33098a351/",
+      // url: "https://www.linkedin.com/in/hsun-hung-33098a351/",
+      url: "https://www.walterhung.com/",
       icon: "FaLinkedin",
     },
   ],
-};
-
-export const VideoSources = {
-  desktop: '/HeroSection/spline.webm',
-  mobile: '/HeroSection/spline-mobile.webm',
-  breakpoint: 768
 };

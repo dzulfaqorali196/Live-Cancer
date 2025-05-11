@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FormFooter from "@/components/auth/footer";
 import SocialLogin from "@/components/auth/social";
 import HeaderForm from "@/components/auth/header";
@@ -30,6 +30,9 @@ export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || Routes.DASHBOARD;
 
   const form = useForm<FormData>({
     resolver: yupResolver(loginSchemaValidator),
@@ -46,13 +49,14 @@ export default function LoginForm() {
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
+        callbackUrl,
         redirect: false,
       });
 
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push(Routes.DASHBOARD);
+        router.push(callbackUrl);
       }
     } catch (err) {
       if (err instanceof Error) {

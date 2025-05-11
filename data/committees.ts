@@ -58,7 +58,7 @@ export const committeeMembers: CommitteeMember[] = [
   {
     name: "Emma Chen",
     role: "Community Advocate",
-    bio: "Emma Chen builds CancerCoin’s global community, amplifying patient voices and rewarding contributors with BIO tokens. Her outreach fosters collaboration across continents, uniting people in the fight against cancer.",
+    bio: "Emma Chen builds CancerCoin’s global community, amplifying patient voices and rewarding contributors with $CANCER. Her outreach fosters collaboration across continents, uniting people in the fight against cancer.",
     icon: "SiStarship",
     profileImage: "/images/team/emma-chen.jpg",
     socials: {

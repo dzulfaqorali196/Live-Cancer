@@ -4,12 +4,12 @@ date: 2025-04-18
 author: Dr. Michael Chen
 excerpt: See how CancerCoin’s decentralized platform connects patients, researchers, and crypto users across 5+ countries to fund global cancer research.
 coverImage: "/images/why/global-research-network.jpg"
-tags: [CancerCoin, global research, decentralized science, BIO tokens, Solana]
+tags: [CancerCoin, global research, decentralized science, $CANCER, Solana]
 ---
 
 # Uniting the World: CancerCoin’s Global Network for Cancer Research
 
-Cancer knows no borders, yet research is often siloed by geography, funding, and institutional barriers. CancerCoin breaks these walls by building a decentralized global network that connects patients, researchers, and crypto users across over five countries. Using BIO tokens on Solana’s blockchain, this community funds innovative cancer research, from immunotherapy to diagnostics, fostering collaboration and hope worldwide. Here’s how CancerCoin’s global network is transforming the fight against cancer.
+Cancer knows no borders, yet research is often siloed by geography, funding, and institutional barriers. CancerCoin breaks these walls by building a decentralized global network that connects patients, researchers, and crypto users across over five countries. Using $CANCER on Solana’s blockchain, this community funds innovative cancer research, from immunotherapy to diagnostics, fostering collaboration and hope worldwide. Here’s how CancerCoin’s global network is transforming the fight against cancer.
 
 ## The Challenge of Fragmented Research
 
@@ -21,11 +21,11 @@ Traditional cancer research faces significant obstacles to global collaboration:
 
 These barriers hinder the diversity and speed needed for breakthroughs. CancerCoin’s decentralized platform creates a unified, inclusive solution.
 
-## A Global Community Powered by BIO Tokens
+## A Global Community Powered by $CANCER
 
-CancerCoin leverages Solana’s blockchain and BIO tokens, capped at 1 billion, to unite a worldwide community. Key features include:
+CancerCoin leverages Solana’s blockchain and $CANCER, capped at 1 billion, to unite a worldwide community. Key features include:
 
-- **Cross-Border Funding**: Contributors from 5+ countries use BIO tokens to support projects, like precision medicine in Asia or diagnostics in Europe.
+- **Cross-Border Funding**: Contributors from 5+ countries use $CANCER to support projects, like precision medicine in Asia or diagnostics in Europe.
 - **Seamless Transactions**: Solana’s 65,000 transactions per second and $0.01 fees enable instant, affordable donations across borders.
 - **Collaborative Platform**: Patients and researchers connect through CancerCoin’s network, sharing ideas and priorities.
 
@@ -43,7 +43,7 @@ Imagine a world where a crypto user’s donation in Asia funds a trial in Europe
 
 ## Join the Global Movement
 
-CancerCoin is more than a funding platform—it’s a global community dedicated to curing cancer. With BIO tokens, you can support research across continents, from labs to clinics, and see your impact on Solana’s transparent blockchain. Ready to unite for a cause? Join CancerCoin and help build a world without cancer.
+CancerCoin is more than a funding platform—it’s a global community dedicated to curing cancer. With $CANCER, you can support research across continents, from labs to clinics, and see your impact on Solana’s transparent blockchain. Ready to unite for a cause? Join CancerCoin and help build a world without cancer.
 
 [Join the Community](/contact)
 

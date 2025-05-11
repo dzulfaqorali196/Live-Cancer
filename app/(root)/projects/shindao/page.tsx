@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { 
+import {
   HeroSection,
   PresaleBanner,
   RewardTiers,
   BenefitSection,
   HypothesisSection,
   RoadmapSection,
-  MountainSection
+  MountainSection,
 } from "@/components/shindao";
 
 export default function ShindaoPage() {
@@ -23,4 +23,4 @@ export default function ShindaoPage() {
       <MountainSection />
     </main>
   );
-} 
+}

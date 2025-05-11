@@ -29,7 +29,7 @@ CancerCoin uses Solana’s high-performance blockchain to make every transaction
 - **Real-Time Tracking**: Solana’s 65,000 transactions per second ensure instant updates on fund allocations.
 - **Immutable Records**: Transactions are tamper-proof, guaranteeing trust in project funding.
 
-For example, a patient funding a precision medicine project can verify their BIO tokens reached the lab, while researchers can showcase their project’s funding history transparently.
+For example, a patient funding a precision medicine project can verify their $CANCER reached the lab, while researchers can showcase their project’s funding history transparently.
 
 ## Building Confidence Worldwide
 

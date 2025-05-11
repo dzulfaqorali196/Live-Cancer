@@ -7,12 +7,12 @@ import { ModalTerms } from "@/components/modal-terms";
 import { Button } from "@/components/ui/button";
 import { Linkedin } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaArrowRightLong, FaXTwitter } from "react-icons/fa6";
 
 export default function Intro() {
-  const router = useRouter();
+  // const router = useRouter();
   const dingSoundRef = useRef<HTMLAudioElement | null>(null);
   const backgroundMusicRef = useRef<HTMLAudioElement | null>(null);
   const splineRef = useRef<Application | null>(null);
@@ -30,19 +30,21 @@ export default function Intro() {
     // Fungsi untuk mengatur viewport height
     const setViewportHeight = () => {
       const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
     };
 
     // Set viewport height saat pertama kali load
     setViewportHeight();
 
     // Update viewport height saat resize atau orientasi berubah
-    window.addEventListener('resize', setViewportHeight);
-    window.addEventListener('orientationchange', setViewportHeight);
+    window.addEventListener("resize", setViewportHeight);
+    window.addEventListener("orientationchange", setViewportHeight);
 
     const initializeSpline = async () => {
       try {
-        const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+        const canvas = document.getElementById(
+          "spline-scene"
+        ) as HTMLCanvasElement;
         if (!canvas) throw new Error("Canvas not found");
 
         // Set canvas dimensions
@@ -50,7 +52,7 @@ export default function Intro() {
         canvas.height = window.innerHeight;
 
         progressInterval = setInterval(() => {
-          setLoadingProgress(prev => {
+          setLoadingProgress((prev) => {
             if (prev >= 90) return prev;
             return prev + Math.random() * 10;
           });
@@ -59,19 +61,20 @@ export default function Intro() {
         const app = new Application(canvas);
         splineRef.current = app;
 
-        await app.load("https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode");
-        
+        await app.load(
+          "https://prod.spline.design/oqHYtZFwqq7sElL9/scene.splinecode"
+        );
+
         // Set pointer-events untuk memastikan interaksi cursor
-        canvas.style.pointerEvents = 'auto';
-        canvas.style.cursor = 'pointer';
+        canvas.style.pointerEvents = "auto";
+        canvas.style.cursor = "pointer";
 
         setLoadingProgress(100);
         clearInterval(progressInterval);
-        
+
         setTimeout(() => {
           setIsLoadingSpline(false);
         }, 500);
-
       } catch (error) {
         console.error("Spline load error:", error);
         setLoadingError("Failed to load 3D scene. Please refresh the page.");
@@ -82,18 +85,20 @@ export default function Intro() {
 
     // Handle window resize
     const handleResize = () => {
-      const canvas = document.getElementById("spline-scene") as HTMLCanvasElement;
+      const canvas = document.getElementById(
+        "spline-scene"
+      ) as HTMLCanvasElement;
       if (canvas) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Initialize audio
-    dingSoundRef.current = new Audio('/sound/ding.aac');
-    backgroundMusicRef.current = new Audio('/sound/backsound.aac');
+    dingSoundRef.current = new Audio("/sound/ding.aac");
+    backgroundMusicRef.current = new Audio("/sound/backsound.aac");
     if (backgroundMusicRef.current) {
       backgroundMusicRef.current.loop = true;
       backgroundMusicRef.current.volume = 0.5;
@@ -101,14 +106,15 @@ export default function Intro() {
       dingSoundRef.current.preload = "auto";
     }
 
+    /* eslint-disable prefer-const */
     loadTimeout = setTimeout(initializeSpline, 100);
 
     return () => {
       clearTimeout(loadTimeout);
       clearInterval(progressInterval);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('resize', setViewportHeight);
-      window.removeEventListener('orientationchange', setViewportHeight);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", setViewportHeight);
+      window.removeEventListener("orientationchange", setViewportHeight);
       if (splineRef.current) {
         splineRef.current.dispose();
       }
@@ -132,15 +138,18 @@ export default function Intro() {
       if (dingSoundRef.current) {
         await dingSoundRef.current.play();
         setIsModalOpen(false);
-        
+
         // Fade in background music
         if (backgroundMusicRef.current) {
           backgroundMusicRef.current.volume = 0;
           await backgroundMusicRef.current.play();
-          
+
           // Smooth volume transition
           const fadeInInterval = setInterval(() => {
-            if (backgroundMusicRef.current && backgroundMusicRef.current.volume < 0.5) {
+            if (
+              backgroundMusicRef.current &&
+              backgroundMusicRef.current.volume < 0.5
+            ) {
               backgroundMusicRef.current.volume += 0.05;
             } else {
               clearInterval(fadeInInterval);
@@ -159,27 +168,27 @@ export default function Intro() {
     // Set immediate navigation timeout
     const navigationTimeout = setTimeout(() => {
       // Pastikan audio berhenti sebelum navigasi fallback
-      const audioElements = document.querySelectorAll('audio');
-      audioElements.forEach(audio => {
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
         if (audio instanceof HTMLAudioElement) {
           audio.pause();
           audio.currentTime = 0;
         }
       });
-      window.location.href = '/home';
+      window.location.href = "/";
     }, 1000);
 
     try {
-      const audioElements = document.querySelectorAll('audio');
+      const audioElements = document.querySelectorAll("audio");
       let isAnyPlaying = false;
-      
+
       // Force stop background music immediately
       if (backgroundMusicRef.current) {
         backgroundMusicRef.current.pause();
         backgroundMusicRef.current.currentTime = 0;
       }
 
-      audioElements.forEach(audio => {
+      audioElements.forEach((audio) => {
         if (audio instanceof HTMLAudioElement && !audio.paused) {
           isAnyPlaying = true;
         }
@@ -188,7 +197,7 @@ export default function Intro() {
       // If no audio is playing, navigate immediately
       if (!isAnyPlaying) {
         clearTimeout(navigationTimeout);
-        window.location.href = '/home';
+        window.location.href = "/";
         return;
       }
 
@@ -196,8 +205,8 @@ export default function Intro() {
       const fadeOutPromise = new Promise<void>((resolve) => {
         const fadeOutInterval = setInterval(() => {
           let allStopped = true;
-          
-          audioElements.forEach(audio => {
+
+          audioElements.forEach((audio) => {
             if (audio instanceof HTMLAudioElement && !audio.paused) {
               if (audio.volume > 0) {
                 audio.volume = Math.max(0, audio.volume - 0.02);
@@ -213,7 +222,7 @@ export default function Intro() {
           if (allStopped) {
             clearInterval(fadeOutInterval);
             // Pastikan semua audio benar-benar berhenti
-            audioElements.forEach(audio => {
+            audioElements.forEach((audio) => {
               if (audio instanceof HTMLAudioElement) {
                 audio.pause();
                 audio.currentTime = 0;
@@ -227,11 +236,11 @@ export default function Intro() {
       // Wait for fadeout with timeout
       await Promise.race([
         fadeOutPromise,
-        new Promise(resolve => setTimeout(resolve, 800))
+        new Promise((resolve) => setTimeout(resolve, 800)),
       ]);
 
       // Final cleanup sebelum navigasi
-      audioElements.forEach(audio => {
+      audioElements.forEach((audio) => {
         if (audio instanceof HTMLAudioElement) {
           audio.pause();
           audio.currentTime = 0;
@@ -239,12 +248,12 @@ export default function Intro() {
       });
 
       clearTimeout(navigationTimeout);
-      window.location.href = '/home';
+      window.location.href = "/";
     } catch (error) {
       console.error("Error during transition:", error);
       // Pastikan audio berhenti meskipun ada error
-      const audioElements = document.querySelectorAll('audio');
-      audioElements.forEach(audio => {
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
         if (audio instanceof HTMLAudioElement) {
           audio.pause();
           audio.currentTime = 0;
@@ -262,7 +271,7 @@ export default function Intro() {
         backgroundMusicRef.current.currentTime = 0;
       }
     };
-    
+
     // Cleanup pada unmount
     return () => {
       handleNavigation();
@@ -270,9 +279,9 @@ export default function Intro() {
   }, []);
 
   return (
-    <div 
-      className="fixed inset-0 w-full overflow-hidden" 
-      style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+    <div
+      className="fixed inset-0 w-full overflow-hidden"
+      style={{ height: "calc(var(--vh, 1vh) * 100)" }}
     >
       <audio ref={dingSoundRef} preload="auto">
         <source src="/sound/ding.aac" type="audio/aac" />
@@ -285,51 +294,58 @@ export default function Intro() {
       </audio>
 
       {/* Spline Scene - Layer Paling Bawah */}
-      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 1, pointerEvents: 'none' }}>
+      <div
+        className="fixed inset-0 w-full h-full"
+        style={{ zIndex: 1, pointerEvents: "none" }}
+      >
         <canvas
           id="spline-scene"
           className={`w-full h-full transition-opacity duration-700 ${
-            !isLoadingSpline ? 'opacity-100' : 'opacity-0'
+            !isLoadingSpline ? "opacity-100" : "opacity-0"
           }`}
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'auto',
-            cursor: 'pointer',
-            touchAction: 'none'
+            width: "100%",
+            height: "100%",
+            pointerEvents: "auto",
+            cursor: "pointer",
+            touchAction: "none",
           }}
         />
       </div>
 
       {/* Mobile Interaction Blocker - Layer di atas Spline */}
-      <div 
+      <div
         className="fixed inset-0 z-[2] md:hidden"
         style={{
-          pointerEvents: 'auto',
-          touchAction: 'none'
+          pointerEvents: "auto",
+          touchAction: "none",
         }}
       />
 
       {/* Dark Overlay - Layer di atas Mobile Blocker */}
-      <div 
+      <div
         className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-all duration-1000 ease-in-out z-[3]
-          ${isTransitioning ? 'opacity-0 backdrop-blur-none pointer-events-none' : 'opacity-100 backdrop-blur-sm'}`}
-        style={{ 
-          pointerEvents: isTransitioning ? 'none' : 'auto',
-          touchAction: 'none'
+          ${
+            isTransitioning
+              ? "opacity-0 backdrop-blur-none pointer-events-none"
+              : "opacity-100 backdrop-blur-sm"
+          }`}
+        style={{
+          pointerEvents: isTransitioning ? "none" : "auto",
+          touchAction: "none",
         }}
       />
 
       {/* Base Content - Layer di atas Dark Overlay */}
-      <div 
+      <div
         className="fixed inset-0 flex flex-col justify-center items-center text-center px-4 pb-20 pt-4 z-[15]"
-        style={{ pointerEvents: 'none' }}
+        style={{ pointerEvents: "none" }}
       >
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-          <div className="relative" style={{ pointerEvents: 'auto' }}>
+          <div className="relative" style={{ pointerEvents: "auto" }}>
             <Image
               src="/images/cancercoin-logo.png"
               alt={SiteSettings.title.full}
@@ -338,7 +354,7 @@ export default function Intro() {
               height={200}
             />
           </div>
-          <div className="relative" style={{ pointerEvents: 'auto' }}>
+          <div className="relative" style={{ pointerEvents: "auto" }}>
             <Image
               src="/images/cancercoin-text.png"
               alt={SiteSettings.title.full}
@@ -348,8 +364,11 @@ export default function Intro() {
             />
           </div>
           <div className="my-32" />
-          <div className="relative w-full max-w-[200px] mx-auto" style={{ pointerEvents: 'auto' }}>
-            <Button 
+          <div
+            className="relative w-full max-w-[200px] mx-auto"
+            style={{ pointerEvents: "auto" }}
+          >
+            <Button
               className="bg-web3-primary hover:bg-web3-primary/90 w-full py-4 md:py-6"
               onClick={handleStartExplore}
             >
@@ -358,7 +377,7 @@ export default function Intro() {
               </span>
             </Button>
           </div>
-          <div className="flex gap-4 mt-4" style={{ pointerEvents: 'auto' }}>
+          <div className="flex gap-4 mt-4" style={{ pointerEvents: "auto" }}>
             {SiteSettings.socials.map((social) => (
               <Button
                 key={social.name}
@@ -388,15 +407,13 @@ export default function Intro() {
 
       {/* Loading Overlay - Layer di atas Content */}
       {isLoadingSpline && (
-        <div 
-          className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-[20]"
-        >
+        <div className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-[20]">
           {loadingError ? (
             <div className="text-red-500 text-sm">{loadingError}</div>
           ) : (
             <>
               <div className="w-48 h-1 bg-gray-700 rounded-full mb-3">
-                <div 
+                <div
                   className="h-full bg-web3-primary rounded-full transition-all duration-300"
                   style={{ width: `${loadingProgress}%` }}
                 />

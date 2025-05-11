@@ -1,4 +1,4 @@
-import { CommitteeSection } from "@/components/committee-section";
+import { CommitteeSection } from "@/components/committee/section";
 
 export const metadata = {
   title: "About Us | Web3Project",

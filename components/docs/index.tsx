@@ -7,13 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { motion } from "framer-motion";
 import { useAnimation, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { docTopics } from "@/data/docs";
-
-const MotionCard = motion(Card);
 
 export function DocsSection() {
   const controls = useAnimation();
@@ -30,7 +27,7 @@ export function DocsSection() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       {docTopics.map((doc, index) => (
-        <MotionCard
+        <Card
           key={index}
           className={cn(
             "h-full bg-web3-darker bg-border-spin border animate-border",
@@ -85,7 +82,7 @@ export function DocsSection() {
               ))}
             </ul>
           </CardContent>
-        </MotionCard>
+        </Card>
       ))}
     </div>
   );

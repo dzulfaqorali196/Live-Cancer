@@ -11,11 +11,11 @@ export const HasuraForgotPassword = async (email: string) => {
       }
     `;
 
-    const res = await fetch(process.env.AUTH_HASURA_GRAPHQL!, {
+    const res = await fetch(process.env.HASURA_GRAPHQL_ENDPOINT!, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-hasura-admin-secret": process.env.AUTH_HASURA_SECRET!,
+        "x-hasura-admin-secret": process.env.HASURA_SECRET!,
       },
       body: JSON.stringify({
         query,

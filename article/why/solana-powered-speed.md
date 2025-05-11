@@ -29,7 +29,7 @@ CancerCoin harnesses Solana’s cutting-edge blockchain to ensure funding is sea
 - **Low-Cost Transactions**: With fees as low as $0.01, anyone can fund research without financial barriers.
 - **Scalable Infrastructure**: Solana supports CancerCoin’s growing community, handling millions of transactions without congestion.
 
-For example, a patient donating BIO tokens to an immunotherapy trial can see their contribution processed instantly, with funds transparently tracked on Solana’s blockchain.
+For example, a patient donating $CANCER to an immunotherapy trial can see their contribution processed instantly, with funds transparently tracked on Solana’s blockchain.
 
 ## Accelerating Global Research
 
@@ -43,7 +43,7 @@ Picture a researcher launching a precision medicine project, funded in moments b
 
 ## Join the Fast Lane to Cures
 
-CancerCoin’s choice of Solana isn’t just technical—it’s a commitment to urgency in the fight against cancer. With BIO tokens and Solana’s 65,000 TPS, you can fund research instantly, from diagnostics to therapies, with every transaction visible on the blockchain. Ready to accelerate science? Discover how CancerCoin and Solana are transforming research funding.
+CancerCoin’s choice of Solana isn’t just technical—it’s a commitment to urgency in the fight against cancer. With $CANCER and Solana’s 65,000 TPS, you can fund research instantly, from diagnostics to therapies, with every transaction visible on the blockchain. Ready to accelerate science? Discover how CancerCoin and Solana are transforming research funding.
 
 [Discover Solana](/developers)
 

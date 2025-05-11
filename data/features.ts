@@ -20,14 +20,14 @@ export const whyCancerCoin: WhyItem[] = [
     title: "Fund Breakthroughs",
     slug: "fund-breakthroughs",
     description:
-      "Use BIO tokens to directly support innovative cancer research, from immunotherapy to precision medicine.",
+      "Use $CANCER to directly support innovative cancer research, from immunotherapy to precision medicine.",
   },
   {
     icon: SiHiveBlockchain,
     title: "Govern with Impact",
     slug: "govern-with-impact",
     description:
-      "Vote on research projects and protocol upgrades using BIO tokens to shape cancer treatment.",
+      "Vote on research projects and protocol upgrades using $CANCER to shape cancer treatment.",
   },
   {
     icon: SiSolana,
@@ -48,7 +48,7 @@ export const whyCancerCoin: WhyItem[] = [
     title: "Earn Rewards",
     slug: "earn-rewards",
     description:
-      "Contribute to governance or research and earn BIO tokens or DAO allocations.",
+      "Contribute to governance or research and earn $CANCER or DAO allocations.",
   },
   {
     icon: SiInternetcomputer,

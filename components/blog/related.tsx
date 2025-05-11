@@ -48,7 +48,10 @@ export default function PostRelated({ posts }: { posts: ArticleDoc[] }) {
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
       >
-        <motion.h2 className="text-2xl font-normal mb-8" variants={itemVariants}>
+        <motion.h2
+          className="text-2xl font-normal mb-8"
+          variants={itemVariants}
+        >
           Related Posts
         </motion.h2>
 

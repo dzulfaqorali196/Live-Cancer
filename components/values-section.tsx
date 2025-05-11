@@ -6,7 +6,7 @@ export function ValuesSection() {
     {
       title: "Transparency",
       description:
-        "Every BIO token transaction is tracked on Solana's public blockchain, ensuring trust and accountability. Our upcoming transparency dashboard (Q3 2026) will let you see the impact of every funded project in real-time.",
+        "Every BIO token transaction is tracked on Solana’s public blockchain, ensuring trust and accountability. Our upcoming transparency dashboard (Q3 2026) will let you see the impact of every funded project in real-time.",
       icon: "SiInternetcomputer",
     },
     {
@@ -18,14 +18,14 @@ export function ValuesSection() {
     {
       title: "Innovation",
       description:
-        "CancerCoin fuels cutting-edge research in immunotherapy, AI diagnostics, and more, bypassing traditional barriers. By rewarding contributors and leveraging Solana's speed, we accelerate scientific breakthroughs worldwide.",
+        "CancerCoin fuels cutting-edge research in immunotherapy, AI diagnostics, and more, bypassing traditional barriers. By rewarding contributors and leveraging Solana’s speed, we accelerate scientific breakthroughs worldwide.",
       icon: "SiStarship",
     },
   ];
 
   return (
     <div>
-      <h2 className="text-3xl font-normal text-center mb-8">Our Values</h2>
+      <h2 className="text-3xl font-semibold text-center mb-8">Our Values</h2>
       <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {values.map((value) => {
           const Icon = SiIcons[value.icon as keyof typeof SiIcons];

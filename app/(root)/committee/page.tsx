@@ -1,4 +1,5 @@
-import { CommitteeSection } from "@/components/committee-section";
+import { CommitteeSection } from "@/components/committee/section";
+import { CtaSection } from "@/components/cta-section";
 
 export const metadata = {
   title: "About Us | Web3Project",
@@ -10,6 +11,7 @@ export default function CommitteePage() {
   return (
     <>
       <CommitteeSection />
+      <CtaSection />
     </>
   );
 }
