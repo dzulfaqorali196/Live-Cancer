@@ -11,9 +11,22 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
-    swcMinify: false // Menonaktifkan swc minifier
+    swcMinify: false, // Menonaktifkan swc minifier
+    esmExternals: 'loose', // Membantu dengan modul ESM
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    // Mengabaikan masalah lightningcss.node
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        module: false,
+        path: false,
+        os: false,
+        crypto: false,
+      };
+    }
+
     // Gunakan babel-loader untuk js/ts files
     config.module.rules.push({
       test: /\.(js|jsx|ts|tsx)$/,

@@ -2,7 +2,8 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install --legacy-peer-deps",
   "framework": "nextjs",
-  "buildEnvironment": {
-    "NEXT_FORCE_EDGE_IMAGES": "true"
+  "env": {
+    "NEXT_FORCE_EDGE_IMAGES": "true",
+    "NODE_OPTIONS": "--max_old_space_size=4096"
   }
 } 
