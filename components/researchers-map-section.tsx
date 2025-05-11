@@ -83,15 +83,15 @@ const researcherCountryCodes = new Set(researcherLocations.map(location => locat
 // Kita menggunakan dynamic import untuk Leaflet karena ia bergantung pada window
 const MapComponent = dynamic(() => import('./map/researcher-map'), {
   ssr: false,
-  loading: () => <div className="h-[600px] bg-muted/20 flex items-center justify-center">Loading Map...</div>
+  loading: () => <div className="h-[600px] bg-transparent flex items-center justify-center">Loading Map...</div>
 });
 
 export function ResearchersMapSection() {
   return (
     <section className="py-12 md:py-20 lg:py-32 container relative">
       {/* Background effects */}
-      <div className="absolute -bottom-16 md:-bottom-32 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full bg-[#a857ff]/3 blur-[60px] md:blur-[120px] pointer-events-none z-0"></div>
-      <div className="absolute -top-16 md:-top-32 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full bg-[#a857ff]/3 blur-[60px] md:blur-[120px] pointer-events-none z-0"></div>
+      <div className="absolute -bottom-32 md:-bottom-64 left-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] rounded-full bg-[#a857ff]/5 blur-[80px] md:blur-[150px] pointer-events-none z-0"></div>
+      <div className="absolute -top-32 md:-top-64 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] rounded-full bg-[#a857ff]/5 blur-[80px] md:blur-[150px] pointer-events-none z-0"></div>
       
       <div className="text-center max-w-5xl mx-auto mb-10 relative z-10">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 text-center">
@@ -106,9 +106,19 @@ export function ResearchersMapSection() {
       </div>
       
       <div className="mt-10 rounded-xl overflow-hidden relative z-10" style={{ 
-        background: 'linear-gradient(180deg, rgba(25,25,25,0.7) 0%, rgba(20,20,20,0.5) 100%)',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.3), inset 0 0 30px rgba(138, 61, 217, 0.1)'
+        background: 'rgba(25, 25, 25, 0.05)',
+        backdropFilter: 'blur(5px)',
+        boxShadow: 'inset 0 0 20px rgba(138, 61, 217, 0.15), 0 5px 25px rgba(0, 0, 0, 0.1), 0 0 30px rgba(168, 87, 255, 0.1)',
+        border: '1px solid rgba(168, 87, 255, 0.15)',
+        position: 'relative'
       }}>
+        {/* Subtle gradient overlay */}
+        <div 
+          className="absolute inset-0 z-0 pointer-events-none opacity-30"
+          style={{ 
+            background: 'radial-gradient(circle at 50% 50%, rgba(168, 87, 255, 0.05) 0%, transparent 70%)',
+          }}
+        ></div>
         <MapComponent 
           researcherLocations={researcherLocations} 
           researcherCountryCodes={Array.from(researcherCountryCodes)} 
