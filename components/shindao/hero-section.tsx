@@ -109,7 +109,7 @@ export default function HeroSection() {
     return `in ${days.toString().padStart(2, "0")}d ${minutes
       .toString()
       .padStart(2, "0")}m`;
-  };
+  }; 
 
   // State untuk animasi progress bar
   const [progressAnimation, setProgressAnimation] = useState(false);
