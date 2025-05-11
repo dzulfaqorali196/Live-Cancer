@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const nextConfig = {
   eslint: {
@@ -10,12 +15,13 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  transpilePackages: ['ajv', 'json-schema-traverse', 'fast-deep-equal', 'uri-js'],
   experimental: {
     swcMinify: false, // Menonaktifkan swc minifier
     esmExternals: 'loose', // Membantu dengan modul ESM
   },
   webpack: (config, { isServer }) => {
-    // Mengabaikan masalah lightningcss.node
+    // Mengabaikan masalah lightningcss.node dan menambahkan penanganan ajv
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -26,6 +32,14 @@ const nextConfig = {
         crypto: false,
       };
     }
+
+    // Memastikan semua subdirektori dari ajv di-resolve dengan benar
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'ajv/dist/compile/codegen': path.resolve(__dirname, './lib/ajv/codegen.js'),
+      'ajv/dist/compile/resolve': path.resolve('node_modules/ajv/dist/compile/resolve/index.js'),
+      'ajv/dist/runtime/validation_error': path.resolve('node_modules/ajv/dist/runtime/validation_error.js'),
+    };
 
     // Gunakan babel-loader untuk js/ts files
     config.module.rules.push({
